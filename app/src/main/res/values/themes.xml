@@ -1,0 +1,24 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.FindCertificateApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/cottonBall</item>
+        <item name="colorPrimaryVariant">@color/paleWhite</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/cottonBall</item>
+        <!-- Customize your theme here. -->
+    </style>
+<!--    <style name="Theme.FindCertificateApplication.NoActionBar">-->
+<!--        <item name="windowActionBar">false</item>-->
+<!--        <item name="windowNoTitle">true</item>-->
+<!--        <item name="android:statusBarColor" tools:targetApi="l">@color/cottonBall</item>-->
+<!--    </style>-->
+    <style name="Theme.FindCertificateApplication.BottomBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/annapolosBlue</item>
+        <item name="colorPrimaryVariant">@color/cottonBall</item>
+        <item name="colorOnPrimary">@color/lightSilver</item>
+    </style>
+</resources>
