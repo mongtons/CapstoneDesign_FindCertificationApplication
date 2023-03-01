@@ -7,22 +7,22 @@
         android:icon="@drawable/home"
         android:title="HOME"/>
     <item
-        android:id="@+id/favorite"
+        android:id="@+id/search"
         android:enabled="true"
         android:icon="@drawable/search_bottom"
         android:title="SEARCH"/>
     <item
-        android:id="@+id/community"
+        android:id="@+id/ai"
         android:enabled="true"
         android:icon="@drawable/ai"
         android:title="A.I."/>
     <item
-        android:id="@+id/setting"
+        android:id="@+id/community"
         android:enabled="true"
         android:icon="@drawable/community"
         android:title="COMMUNITY"/>
     <item
-        android:id="@+id/user"
+        android:id="@+id/my_page"
         android:enabled="true"
         android:icon="@drawable/user"
         android:title="MY PAGE"/>
