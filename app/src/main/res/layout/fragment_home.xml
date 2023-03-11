@@ -1,50 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_fragment"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
-    <LinearLayout
-        android:id="@+id/home_fragment"
+    android:orientation="vertical"
+    android:background="@color/cottonBall"
+    android:paddingLeft="13dp"
+    android:paddingRight="13dp"
+    android:paddingTop="69dp"
+    tools:context=".mainfragment.HomeFragment">
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/cottonBall"
-        android:paddingLeft="13dp"
-        android:paddingRight="13dp"
-        android:paddingTop="69dp"
-        tools:context=".mainfragment.HomeFragment">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="SW자격증 HOME"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:textColor="@color/annapolosBlue"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/popularRecycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"/>
-        <TextView
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="SW자격증 HOME"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/annapolosBlue"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/popularRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="카테고리 별 자격증"
+        android:textSize="20sp"
+        android:textColor="@color/annapolosBlue"
+        android:textStyle="bold"/>
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@color/annapolosBlue"
+        app:tabTextAppearance="@style/tabTextStyle"
+        android:background="@color/cottonBall">
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="카테고리 별 자격증"
-            android:textSize="20sp"
-            android:textColor="@color/annapolosBlue"
-            android:textStyle="bold"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/categoryRecycler"
-            android:layout_width="match_parent"
+            android:text="전체"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"/>
-        <androidx.viewpager2.widget.ViewPager2
-            android:layout_width="match_parent"
-            android:layout_height="320dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="104dp"
-            android:id="@+id/category_view"/>
-    </LinearLayout>
-</ScrollView>
+            android:text="정보기술"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="정보통신"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="통신"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="프로그래밍"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="데이터베이스"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="클라우드"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="네트워크"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="데이터 분석"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="기타"/>
+    </com.google.android.material.tabs.TabLayout>
+    <androidx.viewpager2.widget.ViewPager2
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/category_view"/>
+</LinearLayout>

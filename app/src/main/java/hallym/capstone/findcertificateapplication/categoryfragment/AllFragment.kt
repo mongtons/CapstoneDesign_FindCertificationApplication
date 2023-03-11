@@ -25,9 +25,9 @@ class AllFragment : Fragment() {
         val binding= FragmentAllBinding.inflate(inflater, container, false)
 
         val categoryItem= mutableListOf<Certification>(
-            Certification(R.mipmap.ic_launcher, "정보처리기사", "한국산업인력공단"),
-            Certification(R.mipmap.ic_launcher_round, "빅데이터분석기사", "한국데이터산업진흥원"),
-            Certification(R.mipmap.ic_launcher, "네트워크관리사 2급", "한국정보통신자격협회")
+            Certification("국가자격", "정보처리기사", "한국산업인력공단"),
+            Certification("국가자격", "빅데이터분석기사", "한국데이터산업진흥원"),
+            Certification("국가자격", "네트워크관리사 2급", "한국정보통신자격협회")
         )
         val layoutManager= LinearLayoutManager(activity)
         layoutManager.orientation= LinearLayoutManager.HORIZONTAL
@@ -46,7 +46,7 @@ class AllCategoryAdapter(val contents: MutableList<Certification>): RecyclerView
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val binding=(holder as AllCategoryViewHolder).itemBinding
-        binding.itemImg.setImageResource(contents[position].img)
+        binding.itmeType.text=contents[position].type
         binding.itemTitle.text=contents[position].title
         binding.itemFrom.text=contents[position].from
         binding.itemRoot.setOnClickListener {

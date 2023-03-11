@@ -6,33 +6,29 @@
     app:cardCornerRadius="16dp"
     app:cardElevation="5dp"
     android:id="@+id/popular_root">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="12dp">
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp">
-            <ImageView
-                android:id="@+id/popular_img"
-                android:layout_width="32dp"
-                android:layout_height="64dp"
-                android:scaleType="centerCrop"/>
-        </androidx.cardview.widget.CardView>
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="12dp"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Indoor"
-                android:textSize="12sp"
-                android:textColor="@color/annapolosBlue"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/popular_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/annapolosBlue"/>
+                <TextView
+                    android:id="@+id/popular_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/annapolosBlue"/>
+            </LinearLayout>
             <TextView
                 android:id="@+id/popular_title"
                 android:layout_width="wrap_content"
@@ -48,5 +44,4 @@
                 android:textSize="12sp"
                 android:textColor="@color/annapolosBlue"/>
         </LinearLayout>
-    </LinearLayout>
 </androidx.cardview.widget.CardView>

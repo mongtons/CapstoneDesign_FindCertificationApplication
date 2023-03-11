@@ -55,8 +55,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val menu1:MenuItem? = menu?.add(0,0,0,"설정")
-        val menu2:MenuItem? = menu?.add(0,1,0,"도움말")
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 }
