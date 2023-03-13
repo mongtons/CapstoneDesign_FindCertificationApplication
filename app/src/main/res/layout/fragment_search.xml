@@ -20,7 +20,7 @@
         android:textColor="@color/annapolosBlue"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_marginTop="15dp"
         android:orientation="horizontal">
         <androidx.cardview.widget.CardView
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="10dp"
             app:cardBackgroundColor="@color/white"
-            app:cardElevation="0dp">
+            app:cardElevation="3dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,10 +42,12 @@
                     android:layout_gravity="center"
                     android:src="@drawable/search"/>
                 <EditText
+                    android:id="@+id/search_text"
                     android:layout_width="271dp"
                     android:layout_height="50dp"
                     android:layout_marginRight="10dp"
-                    android:hint="Search"/>
+                    android:singleLine="true"
+                    android:hint="검색"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
@@ -54,8 +56,9 @@
             android:layout_marginLeft="10dp"
             app:cardCornerRadius="10dp"
             app:cardBackgroundColor="@color/green"
-            app:cardElevation="0dp">
+            app:cardElevation="3dp">
             <ImageButton
+                android:id="@+id/search_btn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:backgroundTint="@color/green"
@@ -68,10 +71,18 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="104dp"
         app:cardCornerRadius="10dp"
-        app:cardElevation="0dp">
-        <androidx.recyclerview.widget.RecyclerView
+        app:cardElevation="3dp">
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/searchRecycler"/>
+            android:layout_margin="3dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            android:backgroundTint="@color/cottonBall">
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/searchRecycler"/>
+        </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
