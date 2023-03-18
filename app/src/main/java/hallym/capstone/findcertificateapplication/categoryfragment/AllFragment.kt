@@ -1,6 +1,7 @@
 package hallym.capstone.findcertificateapplication.categoryfragment
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import hallym.capstone.findcertificateapplication.CertificationActivity
 import hallym.capstone.findcertificateapplication.R
 import hallym.capstone.findcertificateapplication.databinding.FragmentAllBinding
 import hallym.capstone.findcertificateapplication.databinding.FragmentAllItemBinding
@@ -30,9 +32,9 @@ class AllFragment : Fragment() {
             Certification("국가자격", "네트워크관리사 2급", "한국정보통신자격협회")
         )
         val layoutManager= LinearLayoutManager(activity)
-        layoutManager.orientation= LinearLayoutManager.HORIZONTAL
+        layoutManager.orientation= LinearLayoutManager.VERTICAL
         binding.allRecyclerView.layoutManager=layoutManager
-        binding.allRecyclerView.adapter= AllCategoryAdapter(categoryItem)
+        binding.allRecyclerView.adapter= context?.let { AllCategoryAdapter(categoryItem, it) }
         binding.allRecyclerView.addItemDecoration(AllCategoryDecoration(activity as Context))
 
         return binding.root
@@ -40,7 +42,7 @@ class AllFragment : Fragment() {
 
 }
 class AllCategoryViewHolder(val itemBinding: FragmentAllItemBinding): RecyclerView.ViewHolder(itemBinding.root)
-class AllCategoryAdapter(val contents: MutableList<Certification>): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class AllCategoryAdapter(val contents: MutableList<Certification>, val context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
             = AllCategoryViewHolder(FragmentAllItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
@@ -50,7 +52,11 @@ class AllCategoryAdapter(val contents: MutableList<Certification>): RecyclerView
         binding.itemTitle.text=contents[position].title
         binding.itemFrom.text=contents[position].from
         binding.itemRoot.setOnClickListener {
-            Log.d("Kim", "All Category $position item Click")
+            val intent= Intent(context, CertificationActivity::class.java)
+            intent.putExtra("Title", binding.itemTitle.text)
+            intent.putExtra("Type", binding.itmeType.text)
+            intent.putExtra("Subtitle", binding.itemFrom.text)
+            context.startActivity(intent)
         }
     }
 

@@ -10,8 +10,11 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import hallym.capstone.findcertificateapplication.*
 import hallym.capstone.findcertificateapplication.categoryfragment.AllFragment
+import hallym.capstone.findcertificateapplication.categoryfragment.InfoComFragment
+import hallym.capstone.findcertificateapplication.categoryfragment.InfoTechFragment
 import hallym.capstone.findcertificateapplication.databinding.CategoryItemBinding
 import hallym.capstone.findcertificateapplication.databinding.FragmentHomeBinding
 import hallym.capstone.findcertificateapplication.databinding.PopularItemBinding
@@ -30,8 +33,16 @@ class HomeFragment : Fragment() {
             Popular("보안", "국가자격", "정보보안기사", "한국정보통신전파진흥원")
         )
 
+        val tab=binding.tab
         val viewPager=binding.categoryView
         viewPager.adapter= activity?.let { CategoryFragmentAdapter(it) }
+
+        TabLayoutMediator(tab, viewPager){ tab, position ->
+            val categoryList= mutableListOf<String>(
+                "전체", "정보기술", "정보통신", "통신", "프로그래밍", "데이터베이스", "클라우드", "네트워크", "데이터 분석", "기타"
+            )
+            tab.text=categoryList[position]
+        }.attach()
 
         val layoutManager= LinearLayoutManager(activity)
         layoutManager.orientation= LinearLayoutManager.HORIZONTAL
@@ -82,7 +93,7 @@ class PopularDecoration(val context: Context): RecyclerView.ItemDecoration(){
 class CategoryFragmentAdapter(activity: FragmentActivity): FragmentStateAdapter(activity){
     val fragments:List<Fragment>
     init {
-        fragments= listOf(AllFragment())
+        fragments= listOf(AllFragment(), InfoTechFragment(), InfoComFragment())
     }
     override fun getItemCount(): Int = fragments.size
 

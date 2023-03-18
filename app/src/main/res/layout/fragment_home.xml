@@ -33,56 +33,16 @@
         android:textColor="@color/annapolosBlue"
         android:textStyle="bold"/>
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/annapolosBlue"
         app:tabTextAppearance="@style/tabTextStyle"
-        android:background="@color/cottonBall">
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="전체"/>
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="정보기술"/>
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="정보통신"/>
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="통신"/>
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="프로그래밍"/>
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="데이터베이스"/>
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="클라우드"/>
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="네트워크"/>
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="데이터 분석"/>
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="기타"/>
-    </com.google.android.material.tabs.TabLayout>
+        android:background="@color/cottonBall"/>
     <androidx.viewpager2.widget.ViewPager2
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="250dp"
         android:layout_marginTop="5dp"
         android:id="@+id/category_view"/>
 </LinearLayout>
