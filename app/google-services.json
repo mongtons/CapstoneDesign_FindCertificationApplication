@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1094739092319",
+    "firebase_url": "https://findcertificationapplication-default-rtdb.firebaseio.com",
+    "project_id": "findcertificationapplication",
+    "storage_bucket": "findcertificationapplication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094739092319:android:39b4ce260797195a0a4cea",
+        "android_client_info": {
+          "package_name": "hallym.capstone.findcertificateapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094739092319-n0gq7e7q6e9cvpnbu1olt2msc7ffb0q0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hallym.capstone.findcertificateapplication",
+            "certificate_hash": "927d5a2a27a4ff6bcfb84e5afa159fc854ba6313"
+          }
+        },
+        {
+          "client_id": "1094739092319-2942big0ri6cedjftf0l8qedkcnu1urv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBGwlMdCikPKx7XIIbyjui9LKyok9m1gw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094739092319-2942big0ri6cedjftf0l8qedkcnu1urv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

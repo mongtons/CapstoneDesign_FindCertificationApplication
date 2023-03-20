@@ -27,9 +27,9 @@ class AllFragment : Fragment() {
         val binding= FragmentAllBinding.inflate(inflater, container, false)
 
         val categoryItem= mutableListOf<Certification>(
-            Certification("국가자격", "정보처리기사", "한국산업인력공단"),
-            Certification("국가자격", "빅데이터분석기사", "한국데이터산업진흥원"),
-            Certification("국가자격", "네트워크관리사 2급", "한국정보통신자격협회")
+            Certification("국가자격", "정보처리기사", "한국산업인력공단", 3, "정보통신"),
+            Certification("국가자격", "빅데이터분석기사", "한국데이터산업진흥원", 4, "데이터 분석"),
+            Certification("국가자격", "네트워크관리사 2급", "한국정보통신자격협회", 5, "네트워크")
         )
         val layoutManager= LinearLayoutManager(activity)
         layoutManager.orientation= LinearLayoutManager.VERTICAL
