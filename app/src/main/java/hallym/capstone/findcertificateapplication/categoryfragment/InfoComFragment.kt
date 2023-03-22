@@ -16,16 +16,15 @@ import java.util.Objects
 class InfoComFragment : Fragment() {
     val database:FirebaseDatabase=FirebaseDatabase.getInstance()
     val infoComRef:DatabaseReference=database.getReference("Certification")
-    var dataMutableList:MutableList<Certification> = mutableListOf()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding= FragmentInfoComBinding.inflate(inflater, container, false)
+        var dataMutableList:MutableList<Certification> = mutableListOf()
         infoComRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(ds in snapshot.children){
-                    Log.d("kkang", ds.value.toString())
                     if (ds != null) {
                         val cert=Certification(
                             ds.child("type").value.toString(),
@@ -34,9 +33,16 @@ class InfoComFragment : Fragment() {
                             ds.child("id").value as Long,
                             ds.child("category").value.toString())
                         dataMutableList.add(cert)
+                        Log.d("kkang", ds.value.toString())
+                        val layoutManager= LinearLayoutManager(activity)
+                        layoutManager.orientation= LinearLayoutManager.VERTICAL
+                        binding.infoComRecyclerView.layoutManager=layoutManager
+                        binding.infoComRecyclerView.adapter= context?.let {
+                            AllCategoryAdapter(dataMutableList, it)
+                        }
+                        binding.infoComRecyclerView.addItemDecoration(AllCategoryDecoration(activity as Context))
                     }
                 }
-                Log.d("kkang", "data list => ${dataMutableList.toString()}")
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -52,14 +58,8 @@ class InfoComFragment : Fragment() {
 //            Certification("국가자격", "정보통신기사", "한국산업인력공단", 1, "정보통신"),
 //            Certification("국가자격", "정보통신산업기사", "한국산업인력공단", 2, "정보통신")
 //        )
+        Log.d("kkang", "data list => ${dataMutableList.toString()}")
 
-        val layoutManager= LinearLayoutManager(activity)
-        layoutManager.orientation= LinearLayoutManager.VERTICAL
-        binding.infoComRecyclerView.layoutManager=layoutManager
-        binding.infoComRecyclerView.adapter= context?.let {
-            AllCategoryAdapter(dataMutableList, it)
-        }
-//        binding.infoComRecyclerView.addItemDecoration(AllCategoryDecoration(activity as Context))
 
         return binding.root
     }
