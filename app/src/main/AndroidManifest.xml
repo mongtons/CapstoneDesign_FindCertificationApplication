@@ -12,6 +12,9 @@
         android:theme="@style/Theme.FindCertificateApplication"
         tools:targetApi="31">
         <activity
+            android:name=".Examday"
+            android:exported="false" />
+        <activity
             android:name=".BoardActivity"
             android:exported="false" />
         <activity
