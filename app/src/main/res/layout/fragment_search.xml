@@ -26,6 +26,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             app:cardCornerRadius="10dp"
             app:cardBackgroundColor="@color/white"
             app:cardElevation="3dp">
@@ -43,7 +44,7 @@
                     android:src="@drawable/search"/>
                 <EditText
                     android:id="@+id/search_text"
-                    android:layout_width="271dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginRight="10dp"
                     android:singleLine="true"

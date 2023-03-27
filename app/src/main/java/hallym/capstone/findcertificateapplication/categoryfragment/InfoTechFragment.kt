@@ -20,10 +20,10 @@ class InfoTechFragment : Fragment() {
         val binding=FragmentInfoTechBinding.inflate(inflater, container, false)
 
         val categoryItem= mutableListOf<Certification>(
-            Certification("국가자격", "정보처리기사", "한국산업인력공단"),
-            Certification("국가자격", "컴퓨터활용능력 1급", "대한상공회의소"),
-            Certification("국가자격", "정보처리산업기사", "한국산업인력공단"),
-            Certification("국가자격", "전자계산기기사", "한국산업인력공단")
+            Certification("국가자격", "정보처리기사", "한국산업인력공단", 3, "정보기술"),
+            Certification("국가자격", "컴퓨터활용능력 1급", "대한상공회의소", 6, "정보기술"),
+            Certification("국가자격", "정보처리산업기사", "한국산업인력공단", 7, "정보기술"),
+            Certification("국가자격", "전자계산기기사", "한국산업인력공단", 8, "기타")
         )
 
         val layoutManager=LinearLayoutManager(activity)
