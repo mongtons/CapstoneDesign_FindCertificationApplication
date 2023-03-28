@@ -46,9 +46,7 @@ class InfoComFragment : Fragment() {
             override fun onCancelled(error: DatabaseError) {
                 try {
                     error.toException()
-                }catch (e:java.lang.Exception){
-
-                }
+                }catch (e:java.lang.Exception){ }
             }
         })
         return binding.root

@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.CertificationActivity
 import hallym.capstone.findcertificateapplication.R
 import hallym.capstone.findcertificateapplication.databinding.FragmentAllBinding
@@ -19,23 +20,41 @@ import hallym.capstone.findcertificateapplication.databinding.FragmentAllItemBin
 import hallym.capstone.findcertificateapplication.datatype.Certification
 
 class AllFragment : Fragment() {
+    val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    val allRef: DatabaseReference =database.getReference("Certification")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val binding= FragmentAllBinding.inflate(inflater, container, false)
+        var dataMutableList:MutableList<Certification> = mutableListOf()
+        allRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(ds in snapshot.children){
+                    val cert=Certification(
+                        ds.child("type").value.toString(),
+                        ds.child("title").value.toString(),
+                        ds.child("from").value.toString(),
+                        ds.child("id").value as Long,
+                        ds.child("category").value.toString()
+                    )
+                    dataMutableList.add(cert)
 
-        val categoryItem= mutableListOf<Certification>(
-            Certification("국가자격", "정보처리기사", "한국산업인력공단", 3, "정보통신"),
-            Certification("국가자격", "빅데이터분석기사", "한국데이터산업진흥원", 4, "데이터 분석"),
-            Certification("국가자격", "네트워크관리사 2급", "한국정보통신자격협회", 5, "네트워크")
-        )
-        val layoutManager= LinearLayoutManager(activity)
-        layoutManager.orientation= LinearLayoutManager.VERTICAL
-        binding.allRecyclerView.layoutManager=layoutManager
-        binding.allRecyclerView.adapter= context?.let { AllCategoryAdapter(categoryItem, it) }
-        binding.allRecyclerView.addItemDecoration(AllCategoryDecoration(activity as Context))
+                    val layoutManager= LinearLayoutManager(activity)
+                    layoutManager.orientation= LinearLayoutManager.VERTICAL
+                    binding.allRecyclerView.layoutManager=layoutManager
+                    binding.allRecyclerView.adapter= context?.let {
+                        AllCategoryAdapter(dataMutableList, it)
+                    }
+                    binding.allRecyclerView.addItemDecoration(AllCategoryDecoration(activity as Context))
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                try {
+                    error.toException()
+                }catch (e:java.lang.Exception){ }
+            }
+        })
 
         return binding.root
     }
@@ -72,6 +91,6 @@ class AllCategoryDecoration(val context: Context): RecyclerView.ItemDecoration()
         state: RecyclerView.State
     ) {
         super.getItemOffsets(outRect, view, parent, state)
-        outRect.set(20, 20, 20, 20)
+        outRect.set(0, 5, 0, 5)
     }
 }

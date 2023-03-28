@@ -56,13 +56,13 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             app:cardCornerRadius="10dp"
-            app:cardBackgroundColor="@color/green"
+            app:cardBackgroundColor="@color/summerSky"
             app:cardElevation="3dp">
             <ImageButton
                 android:id="@+id/search_btn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:backgroundTint="@color/green"
+                android:backgroundTint="@color/summerSky"
                 android:src="@drawable/filter"/>
         </androidx.cardview.widget.CardView>
     </LinearLayout>

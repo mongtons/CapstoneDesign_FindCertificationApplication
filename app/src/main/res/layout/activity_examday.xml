@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/cottonBall"
+        android:background="@color/whiteCapGray"
         android:paddingLeft="13dp"
         android:paddingRight="13dp"
         android:paddingTop="69dp">
@@ -55,7 +55,7 @@
             app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/annapolosBlue"
             app:tabTextAppearance="@style/tabTextStyle"
-            android:background="@color/cottonBall"/>
+            android:background="@color/whiteCapGray"/>
         <androidx.viewpager2.widget.ViewPager2
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,5 +63,25 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="55dp"
             android:id="@+id/category_view"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_marginLeft="7dp"
+            android:text="자격기한"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/annapolosBlue"/>
+        <Button
+            android:id="@+id/examsub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="검정방법 , 응시과목"
+            android:textSize="16sp"
+            android:textAlignment="textStart"
+            android:textColor="@color/annapolosBlue"
+            android:background="@drawable/button_design"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

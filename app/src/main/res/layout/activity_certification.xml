@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@color/cottonBall"
+            android:background="@color/whiteCapGray"
             android:paddingTop="69dp"
             android:paddingHorizontal="13dp"
             android:paddingBottom="104dp">
@@ -34,8 +34,9 @@
                 android:layout_marginTop="28dp"
                 android:orientation="horizontal">
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="7"
                     android:orientation="vertical">
                     <TextView
                         android:id="@+id/certification_title"
@@ -73,12 +74,12 @@
                 <ImageButton
                     android:id="@+id/favorite_certification"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/heart"
                     android:scaleType="fitCenter"
-                    android:backgroundTint="@color/lightSilver"/>
+                    android:backgroundTint="@color/lightYellow"/>
             </LinearLayout>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -96,87 +97,42 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:background="@color/cottonBall">
+                        android:background="@color/whiteCapGray">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
-                            android:text="응시"
+                            android:text="시험"
                             android:textSize="20sp"
                             android:textStyle="bold"
                             android:textColor="@color/annapolosBlue"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="3dp"
-                            android:background="@color/white"/>
+                            android:background="@color/lightGrayish"/>
+                        <TextView
+                            android:id="@+id/exam_cost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:layout_marginLeft="7dp"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/annapolosBlue"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:background="@color/lightGrayish"/>
                         <Button
-                            android:id="@+id/examdayButton"
+                            android:id="@+id/exam_button"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="응시일 , 응시자격"
+                            android:text="시험 상세 정보"
                             android:textSize="16sp"
-                            android:textStyle="bold"
                             android:textAlignment="textStart"
                             android:textColor="@color/annapolosBlue"
-                            android:background="@drawable/button_design"/>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:orientation="horizontal"
-                            android:background="@color/cottonBall">
-                        <TextView
-                            android:layout_weight="0.2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:paddingLeft="16dp"
-                            android:text="응시료 : "
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:gravity="center|start"
-                            android:textColor="@color/annapolosBlue"
-                            android:background="@drawable/button_design"/>
-                            <TextView
-                                android:id="@+id/exampay"
-                                android:layout_weight="0.3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:gravity="start|center"
-                                android:textColor="@color/annapolosBlue"
-                                android:background="@drawable/button_design"/>
-                        <TextView
-                            android:layout_weight="0.3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center|start"
-                            android:paddingLeft="16dp"
-                            android:text="자격기한 : "
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/annapolosBlue"
-                            android:background="@drawable/button_design"/>
-                            <TextView
-                                android:id="@+id/examdead"
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:gravity="center|start"
-                                android:textColor="@color/annapolosBlue"
-                                android:background="@drawable/button_design"/>
-                        </LinearLayout>
-                        <Button
-                            android:id="@+id/examsub"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="검정방법 , 응시과목"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/annapolosBlue"
-                            android:background="@drawable/button_design"/>
+                            android:background="@drawable/button_design"
+                            style="@style/Widget.AppCompat.Button.Borderless"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </androidx.cardview.widget.CardView>
@@ -196,7 +152,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:background="@color/cottonBall">
+                        android:background="@color/whiteCapGray">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -208,79 +164,48 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="3dp"
-                            android:background="@color/white"/>
+                            android:background="@color/lightGrayish"/>
                         <Button
                             android:id="@+id/challenge"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="기출문제집"
                             android:textSize="16sp"
-                            android:textStyle="bold"
                             android:textAlignment="textStart"
                             android:textColor="@color/annapolosBlue"
-                            android:background="@drawable/button_design"/>
+                            android:background="@drawable/button_design"
+                            style="@style/Widget.AppCompat.Button.Borderless"/>
                         <Button
                             android:id="@+id/exam"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="모의고사"
                             android:textSize="16sp"
-                            android:textStyle="bold"
                             android:textAlignment="textStart"
                             android:textColor="@color/annapolosBlue"
-                            android:background="@drawable/button_design"/>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="0dp">
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="0dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:background="@color/cottonBall">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:text="관련분야"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/annapolosBlue"/>
+                            android:background="@drawable/button_design"
+                            style="@style/Widget.AppCompat.Button.Borderless"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="3dp"
-                            android:background="@color/white"/>
-                        <Button
-                            android:id="@+id/examfiled"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="관련분야"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/annapolosBlue"
-                            android:background="@drawable/button_design"/>
-                        <Button
-                            android:id="@+id/exambook"
+                            android:background="@color/lightGrayish"/>
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="관련교재"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:textAlignment="textStart"
-                            android:textColor="@color/annapolosBlue"
-                            android:background="@drawable/button_design"/>
+                            android:padding="10dp"
+                            android:layout_marginLeft="7dp"
+                            android:textColor="@color/annapolosBlue"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:background="@color/lightGrayish"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/book_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="170dp"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </androidx.cardview.widget.CardView>
@@ -300,7 +225,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:background="@color/cottonBall">
+                        android:background="@color/whiteCapGray">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -312,79 +237,45 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="3dp"
-                            android:background="@color/white"/>
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
+                            android:background="@color/lightGrayish"/>
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
-                            app:cardCornerRadius="10dp"
-                            app:cardElevation="0dp">
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="3dp"
-                                app:cardCornerRadius="10dp"
-                                app:cardElevation="0dp">
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical"
-                                    android:background="@color/cottonBall">
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:padding="10dp"
-                                        android:text="공무원 및 공기업"
-                                        android:textSize="20sp"
-                                        android:textStyle="bold"
-                                        android:textColor="@color/annapolosBlue"/>
-                                    <View
-                                        android:layout_width="match_parent"
-                                        android:layout_height="3dp"
-                                        android:background="@color/white"/>
-                                    <androidx.recyclerview.widget.RecyclerView
-                                        android:id="@+id/public_company"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"/>
-                                </LinearLayout>
-                            </androidx.cardview.widget.CardView>
-                        </androidx.cardview.widget.CardView>
-                        <androidx.cardview.widget.CardView
+                            android:padding="10dp"
+                            android:layout_marginLeft="7dp"
+                            android:text="공무원 및 공기업"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/annapolosBlue"/>
+                        <View
                             android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:background="@color/lightGrayish"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/public_company"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:background="@color/lightGrayish"/>
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
-                            app:cardCornerRadius="10dp"
-                            app:cardElevation="0dp">
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="3dp"
-                                app:cardCornerRadius="10dp"
-                                app:cardElevation="0dp">
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical"
-                                    android:background="@color/cottonBall">
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:padding="10dp"
-                                        android:text="우대기업"
-                                        android:textSize="20sp"
-                                        android:textStyle="bold"
-                                        android:textColor="@color/annapolosBlue"/>
-                                    <View
-                                        android:layout_width="match_parent"
-                                        android:layout_height="3dp"
-                                        android:background="@color/white"/>
-                                    <androidx.recyclerview.widget.RecyclerView
-                                        android:id="@+id/company"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"/>
-                                </LinearLayout>
-                            </androidx.cardview.widget.CardView>
-                        </androidx.cardview.widget.CardView>
+                            android:padding="10dp"
+                            android:layout_marginLeft="7dp"
+                            android:text="우대기업"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/annapolosBlue"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:background="@color/lightGrayish"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/company"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </androidx.cardview.widget.CardView>
