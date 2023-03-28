@@ -22,53 +22,46 @@ class Examday : AppCompatActivity() {
     val binding by lazy {
         ActivityExamdayBinding.inflate(layoutInflater)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_examday)
-
-        val examdayList= mutableListOf<Examdaydata>(
-            Examdaydata("응시일정", "123",),
-            Examdaydata("응시일정", "456",)
-        )
-        val layoutManager= LinearLayoutManager(this)
-        layoutManager.orientation= LinearLayoutManager.VERTICAL
-        binding.examdayRecycler.layoutManager=layoutManager
-        binding.examdayRecycler.adapter=ExamdaydataAdapter(examdayList, this)
-        binding.examdayRecycler.addItemDecoration(ExamdaydataDecoration(this))
+        setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-    class ExamdaydataViewHolder(val itemBinding: ExamdayItemBinding): RecyclerView.ViewHolder(itemBinding.root)
-    class ExamdaydataAdapter(val contents:MutableList<Examdaydata>, val context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
-                =ExamdaydataViewHolder(ExamdayItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            val binding=(holder as ExamdaydataViewHolder).itemBinding
-            binding.examdayTitle.text=contents[position].title
-            binding.examdayText.text=contents[position].text
-//            binding.itemRoot.setOnClickListener {
-//                val intent= Intent(context, BoardActivity::class.java)
-//                intent.putExtra("title", binding.examdayTitle.text)
-//                intent.putExtra("text", binding.examdayText.text)
-//                context.startActivity(intent)
-//            }
-        }
-
-        override fun getItemCount(): Int {
-            return contents.size
-        }
+        val examdayList = mutableListOf<Examdaydata>(
+            Examdaydata("응시일정", "123",),
+            Examdaydata("응시일정", "456",)
+        )
+        val layoutManager = LinearLayoutManager(this)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        binding.examdayRecycler.layoutManager = layoutManager
+        binding.examdayRecycler.adapter = ExamdaydataAdapter(examdayList)
+        binding.examdayRecycler.addItemDecoration(ExamdaydataDecoration(this))
     }
-    class ExamdaydataDecoration(val context: Context): RecyclerView.ItemDecoration(){
-        override fun getItemOffsets(
-            outRect: Rect,
-            view: View,
-            parent: RecyclerView,
-            state: RecyclerView.State
-        ) {
-            super.getItemOffsets(outRect, view, parent, state)
-            outRect.set(10, 10, 10, 10)
-        }
+}
+class ExamdaydataViewHolder(val itemBinding: ExamdayItemBinding): RecyclerView.ViewHolder(itemBinding.root)
+class ExamdaydataAdapter(val contents:MutableList<Examdaydata>): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
+    =ExamdaydataViewHolder(ExamdayItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val binding=(holder as ExamdaydataViewHolder).itemBinding
+        binding.examdayTitle.text=contents[position].title
+        binding.examdayText.text=contents[position].text
+    }
+    override fun getItemCount(): Int {
+        return contents.size
+    }
+}
+class ExamdaydataDecoration(val context: Context): RecyclerView.ItemDecoration(){
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
+        super.getItemOffsets(outRect, view, parent, state)
+        outRect.set(10, 10, 10, 10)
     }
 }
