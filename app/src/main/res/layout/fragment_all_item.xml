@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="16dp"
-    android:backgroundTint="@color/lightYellow"
+    android:backgroundTint="@color/silverWhite"
     app:cardElevation="5dp"
     android:id="@+id/item_root">
     <LinearLayout

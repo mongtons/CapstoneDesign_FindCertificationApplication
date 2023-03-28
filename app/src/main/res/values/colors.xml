@@ -13,7 +13,8 @@
     <color name="annapolosBlue">#364964</color>
     <color name="grey">#83838D</color>
     <color name="summerSky">#579BB1</color>
-    <color name="whiteCapGray">#E1D7C6</color>
-    <color name="lightGrayish">#ECE8DD</color>
-    <color name="lightYellow">#F8F4EA</color>
+    <color name="silverWhite">#EFF5F5</color>
+    <color name="iceTeal">#D6E4E5</color>
+    <color name="mediaDarkShadeOfCyan">#497174</color>
+    <color name="lightCarret">#EB6440</color>
 </resources>

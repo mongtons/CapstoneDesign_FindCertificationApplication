@@ -20,7 +20,7 @@
         android:paddingTop="68dp"
         android:paddingHorizontal="12dp"
         android:orientation="vertical"
-        android:background="@color/whiteCapGray">
+        android:background="@color/iceTeal">
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
@@ -49,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:backgroundTint="@color/silverWhite"
             app:cardCornerRadius="10dp"
             app:cardElevation="2dp">
             <LinearLayout

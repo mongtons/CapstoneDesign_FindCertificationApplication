@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@color/whiteCapGray"
+            android:background="@color/iceTeal"
             android:paddingTop="69dp"
             android:paddingHorizontal="13dp"
             android:paddingBottom="104dp">
@@ -79,25 +79,26 @@
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/heart"
                     android:scaleType="fitCenter"
-                    android:backgroundTint="@color/lightYellow"/>
+                    android:backgroundTint="@color/lightCarret"/>
             </LinearLayout>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:backgroundTint="@color/mediaDarkShadeOfCyan"
                 app:cardCornerRadius="10dp"
-                app:cardElevation="0dp">
+                app:cardElevation="5dp">
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
+                    android:layout_margin="2dp"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="0dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:background="@color/whiteCapGray">
+                        android:background="@color/silverWhite">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -108,8 +109,8 @@
                             android:textColor="@color/annapolosBlue"/>
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="3dp"
-                            android:background="@color/lightGrayish"/>
+                            android:layout_height="2dp"
+                            android:background="@color/mediaDarkShadeOfCyan"/>
                         <TextView
                             android:id="@+id/exam_cost"
                             android:layout_width="wrap_content"
@@ -121,8 +122,8 @@
                             android:textColor="@color/annapolosBlue"/>
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="3dp"
-                            android:background="@color/lightGrayish"/>
+                            android:layout_height="2dp"
+                            android:background="@color/mediaDarkShadeOfCyan"/>
                         <Button
                             android:id="@+id/exam_button"
                             android:layout_width="match_parent"
@@ -140,19 +141,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:backgroundTint="@color/mediaDarkShadeOfCyan"
                 app:cardCornerRadius="10dp"
-                app:cardElevation="0dp">
+                app:cardElevation="5dp">
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
+                    android:layout_margin="2dp"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="0dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:background="@color/whiteCapGray">
+                        android:background="@color/silverWhite">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -163,8 +165,8 @@
                             android:textColor="@color/annapolosBlue"/>
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="3dp"
-                            android:background="@color/lightGrayish"/>
+                            android:layout_height="2dp"
+                            android:background="@color/mediaDarkShadeOfCyan"/>
                         <Button
                             android:id="@+id/challenge"
                             android:layout_width="match_parent"
@@ -187,8 +189,8 @@
                             style="@style/Widget.AppCompat.Button.Borderless"/>
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="3dp"
-                            android:background="@color/lightGrayish"/>
+                            android:layout_height="2dp"
+                            android:background="@color/mediaDarkShadeOfCyan"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -200,8 +202,8 @@
                             android:textColor="@color/annapolosBlue"/>
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="3dp"
-                            android:background="@color/lightGrayish"/>
+                            android:layout_height="2dp"
+                            android:background="@color/mediaDarkShadeOfCyan"/>
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/book_recycler"
                             android:layout_width="match_parent"
@@ -213,19 +215,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/mediaDarkShadeOfCyan"
                 app:cardCornerRadius="10dp"
-                app:cardElevation="0dp">
+                app:cardElevation="5dp">
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
+                    android:layout_margin="2dp"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="0dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:background="@color/whiteCapGray">
+                        android:background="@color/silverWhite">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -236,8 +240,8 @@
                             android:textColor="@color/annapolosBlue"/>
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="3dp"
-                            android:background="@color/lightGrayish"/>
+                            android:layout_height="2dp"
+                            android:background="@color/mediaDarkShadeOfCyan"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -249,16 +253,16 @@
                             android:textColor="@color/annapolosBlue"/>
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="3dp"
-                            android:background="@color/lightGrayish"/>
+                            android:layout_height="2dp"
+                            android:background="@color/mediaDarkShadeOfCyan"/>
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/public_company"
                             android:layout_width="match_parent"
                             android:layout_height="100dp"/>
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="3dp"
-                            android:background="@color/lightGrayish"/>
+                            android:layout_height="2dp"
+                            android:background="@color/mediaDarkShadeOfCyan"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -270,8 +274,8 @@
                             android:textColor="@color/annapolosBlue"/>
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="3dp"
-                            android:background="@color/lightGrayish"/>
+                            android:layout_height="2dp"
+                            android:background="@color/mediaDarkShadeOfCyan"/>
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/company"
                             android:layout_width="match_parent"
