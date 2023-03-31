@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Rect
 import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
+import android.text.Selection.selectAll
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -27,7 +28,9 @@ class AllFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding= FragmentAllBinding.inflate(inflater, container, false)
-        var dataMutableList:MutableList<Certification> = mutableListOf()
+
+        val dataMutableList:MutableList<Certification> = mutableListOf()
+
         allRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(ds in snapshot.children){
@@ -52,7 +55,9 @@ class AllFragment : Fragment() {
             override fun onCancelled(error: DatabaseError) {
                 try {
                     error.toException()
-                }catch (e:java.lang.Exception){ }
+                }catch (e:java.lang.Exception){
+                    Log.d("kkang", e.toString())
+                }
             }
         })
 

@@ -7,30 +7,49 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.R
 import hallym.capstone.findcertificateapplication.databinding.FragmentInfoTechBinding
 import hallym.capstone.findcertificateapplication.datatype.Certification
 
 class InfoTechFragment : Fragment() {
-
+    val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    val infoTechRef: DatabaseReference =database.getReference("Certification")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding=FragmentInfoTechBinding.inflate(inflater, container, false)
+        var dataMutableList:MutableList<Certification> = mutableListOf()
+        infoTechRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(ds in snapshot.children){
+                    if (ds.child("category").value == "정보기술") {
+                        val cert=Certification(
+                            ds.child("type").value.toString(),
+                            ds.child("title").value.toString(),
+                            ds.child("from").value.toString(),
+                            ds.child("id").value as Long,
+                            ds.child("category").value.toString())
+                        dataMutableList.add(cert)
 
-        val categoryItem= mutableListOf<Certification>(
-            Certification("국가자격", "정보처리기사", "한국산업인력공단", 3, "정보기술"),
-            Certification("국가자격", "컴퓨터활용능력 1급", "대한상공회의소", 6, "정보기술"),
-            Certification("국가자격", "정보처리산업기사", "한국산업인력공단", 7, "정보기술"),
-            Certification("국가자격", "전자계산기기사", "한국산업인력공단", 8, "기타")
-        )
+                        val layoutManager= LinearLayoutManager(activity)
+                        layoutManager.orientation= LinearLayoutManager.VERTICAL
+                        binding.infoTechRecyclerView.layoutManager=layoutManager
+                        binding.infoTechRecyclerView.adapter= context?.let {
+                            AllCategoryAdapter(dataMutableList, it)
+                        }
+                        binding.infoTechRecyclerView.addItemDecoration(AllCategoryDecoration(activity as Context))
+                    }
+                }
+            }
 
-        val layoutManager=LinearLayoutManager(activity)
-        layoutManager.orientation=LinearLayoutManager.VERTICAL
-        binding.infoTechRecyclerView.layoutManager=layoutManager
-        binding.infoTechRecyclerView.adapter= context?.let { AllCategoryAdapter(categoryItem, it) }
-        binding.infoTechRecyclerView.addItemDecoration(AllCategoryDecoration(activity as Context))
+            override fun onCancelled(error: DatabaseError) {
+                try {
+                    error.toException()
+                }catch (e:java.lang.Exception){ }
+            }
+        })
 
         return binding.root
     }
