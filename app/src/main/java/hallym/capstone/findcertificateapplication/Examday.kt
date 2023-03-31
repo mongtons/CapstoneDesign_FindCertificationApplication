@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.databinding.ActivityExamdayBinding
 import hallym.capstone.findcertificateapplication.databinding.ExamdayItemBinding
 import hallym.capstone.findcertificateapplication.databinding.FreeCommunityItemBinding
@@ -22,7 +23,8 @@ class Examday : AppCompatActivity() {
     val binding by lazy {
         ActivityExamdayBinding.inflate(layoutInflater)
     }
-
+    val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    val ref: DatabaseReference =database.getReference("Certification")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -39,6 +41,63 @@ class Examday : AppCompatActivity() {
         binding.examdayRecycler.layoutManager = layoutManager
         binding.examdayRecycler.adapter = ExamdaydataAdapter(examdayList)
         binding.examdayRecycler.addItemDecoration(ExamdaydataDecoration(this))
+
+        ref.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(ds in snapshot.children){
+                    if(ds.child("title").value == intent.getStringExtra("title")){
+                        if (ds.child("period").hasChildren()){
+                            val dataChild=ds.child("period")
+                            var periodText="필기: "
+                            periodText+=dataChild.child("note").value.toString()
+                            periodText+=", 실기: "
+                            periodText+=dataChild.child("practice").value.toString()
+                            binding.period.text=periodText
+                        }else{
+                            binding.period.append(ds.child("period").value.toString())
+                        }
+                        if(ds.child("condition").hasChildren()){
+
+                        }else{
+
+                        }
+                        if(ds.child("testMethod").hasChildren()){
+                            val dataChild=ds.child("testMethod")
+                            var testMethodText="필기: "
+                            testMethodText+=dataChild.child("note").value.toString()
+                            testMethodText+="\n\n실기: "
+                            testMethodText+=dataChild.child("practice").value.toString()
+                            binding.testMethod.text=testMethodText
+                        }else{
+                            binding.testMethod.append(ds.child("testMethod").value.toString())
+                        }
+                        if(ds.child("subject").hasChildren()){
+                            val dataChild=ds.child("subject")
+                            var subjectText="필기: \n"
+                            if(dataChild.child("note").hasChildren()){
+                                var i=1
+                                for (data in dataChild.child("note").children){
+                                    subjectText+=("${i++}과목: ")+data.value.toString()+"\n"
+                                }
+                            }
+                            subjectText+="\n실기: "+dataChild.child("practice").value.toString()
+                            binding.subject.text=subjectText
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                try {
+                    error.toException()
+                }catch (_:java.lang.Exception){ }
+            }
+        })
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 }
 class ExamdaydataViewHolder(val itemBinding: ExamdayItemBinding): RecyclerView.ViewHolder(itemBinding.root)

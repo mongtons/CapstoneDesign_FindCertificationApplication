@@ -74,14 +74,14 @@ class CertificationActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
                 try {
                     error.toException()
-                }catch (e:java.lang.Exception){ }
+                }catch (_:java.lang.Exception){ }
             }
         })
 
         binding.examButton.setOnClickListener{
             val intent = Intent(this, Examday::class.java)
+            intent.putExtra("title", this.intent.getStringExtra("Title"))
             startActivity(intent)
-            finish()
         }
     }
 
