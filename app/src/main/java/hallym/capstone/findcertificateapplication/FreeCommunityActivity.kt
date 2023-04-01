@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.databinding.ActivityFreeCommunityBinding
 import hallym.capstone.findcertificateapplication.databinding.FreeCommunityItemBinding
+import hallym.capstone.findcertificateapplication.datatype.Comment
 import hallym.capstone.findcertificateapplication.datatype.FreeBoard
 import java.text.SimpleDateFormat
 import java.util.*
@@ -36,14 +37,22 @@ class FreeCommunityActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val boardList= mutableListOf<FreeBoard>()
                 for (board in snapshot.children){
-                    val data = board.key?.let {
-                        FreeBoard(
-                            it.toLong(),
-                            board.child("title").value.toString(),
-                            board.child("user").value.toString(),
-                            Date(board.child("date").value as Long)
+                    val commentList= mutableListOf<Comment>()
+                    for(comment in board.child("comment").children){
+                        commentList.add(
+                            Comment(
+                                comment.child("user").value.toString(),
+                                comment.child("letter").value.toString()
+                            )
                         )
                     }
+                    val data = FreeBoard(
+                        board.key!!,
+                        board.child("title").value.toString(),
+                        board.child("user").value.toString(),
+                        board.child("date").value as Long,
+                        commentList
+                    )
                     if (data != null) {
                         boardList.add(data)
                     }
@@ -94,7 +103,7 @@ class FreeBoardAdapter(val contents:MutableList<FreeBoard>, val context: Context
         binding.boardTitle.text=contents[position].title
         binding.boardUser.text=contents[position].user
         val timeFormat=SimpleDateFormat("yyyy-MM-dd", Locale("ko", "KR"))
-        binding.boardTime.text=timeFormat.format(contents[position].time)
+        binding.boardTime.text=timeFormat.format(contents[position].date)
         binding.itemRoot.setOnClickListener {
             val intent= Intent(context, BoardActivity::class.java)
             intent.putExtra("title", binding.boardTitle.text)

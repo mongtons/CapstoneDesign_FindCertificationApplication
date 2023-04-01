@@ -34,7 +34,7 @@ class BoardActivity : AppCompatActivity() {
         freeBoardRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(board in snapshot.children){
-                    if(intent.getLongExtra("id", 0)==(board.key?.toLong())){
+                    if(intent.getStringExtra("id")==board.key.toString()){
                         binding.summary.text=board.child("body").value.toString()
                         if(board.child("comment").hasChildren()) {
                             val commentList= mutableListOf<Comment>()
