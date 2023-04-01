@@ -73,14 +73,24 @@ class Examday : AppCompatActivity() {
                         }
                         if(ds.child("subject").hasChildren()){
                             val dataChild=ds.child("subject")
-                            var subjectText="필기: \n"
+                            var subjectText="필기\n"
                             if(dataChild.child("note").hasChildren()){
                                 var i=1
                                 for (data in dataChild.child("note").children){
-                                    subjectText+=("${i++}과목: ")+data.value.toString()+"\n"
+                                    subjectText+=(" ${i++}과목: ")+data.value.toString()+"\n"
                                 }
+                            }else{
+                                subjectText+=" "+dataChild.child("note").value.toString()
                             }
-                            subjectText+="\n실기: "+dataChild.child("practice").value.toString()
+                            subjectText += "\n실기\n"
+                            if(dataChild.child("practice").hasChildren()){
+                                var i=1
+                                for (data in dataChild.child("practice").children){
+                                    subjectText+=(" ${i++}과목: ")+data.value.toString()+"\n"
+                                }
+                            }else {
+                                subjectText += " "+dataChild.child("practice").value.toString()
+                            }
                             binding.subject.text=subjectText
                         }
                     }
