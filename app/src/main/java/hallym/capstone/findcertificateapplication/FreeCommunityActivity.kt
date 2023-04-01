@@ -9,8 +9,10 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.databinding.ActivityFreeCommunityBinding
 import hallym.capstone.findcertificateapplication.databinding.FreeCommunityItemBinding
 import hallym.capstone.findcertificateapplication.datatype.FreeBoard
@@ -21,22 +23,55 @@ class FreeCommunityActivity : AppCompatActivity() {
     val binding by lazy {
         ActivityFreeCommunityBinding.inflate(layoutInflater)
     }
+    val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    val freeBoardRef: DatabaseReference =database.getReference("Free_Board")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val boardList= mutableListOf<FreeBoard>(
-            FreeBoard("제목 1", "가나다", Date(System.currentTimeMillis())),
-            FreeBoard("제목 2", "김김김", Date(System.currentTimeMillis()))
-        )
-        val layoutManager=LinearLayoutManager(this)
-        layoutManager.orientation=LinearLayoutManager.VERTICAL
-        binding.freeCommunityText.layoutManager=layoutManager
-        binding.freeCommunityText.adapter=FreeBoardAdapter(boardList, this)
-        binding.freeCommunityText.addItemDecoration(FreeBoardDecoration(this))
-
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        freeBoardRef.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val boardList= mutableListOf<FreeBoard>()
+                for (board in snapshot.children){
+                    val data = board.key?.let {
+                        FreeBoard(
+                            it.toLong(),
+                            board.child("title").value.toString(),
+                            board.child("user").value.toString(),
+                            Date(board.child("date").value as Long)
+                        )
+                    }
+                    if (data != null) {
+                        boardList.add(data)
+                    }
+                }
+                val layoutManager=LinearLayoutManager(this@FreeCommunityActivity)
+                layoutManager.orientation=LinearLayoutManager.VERTICAL
+                binding.freeCommunityText.layoutManager=layoutManager
+                binding.freeCommunityText.adapter=FreeBoardAdapter(boardList, this@FreeCommunityActivity)
+                binding.freeCommunityText.addItemDecoration(FreeBoardDecoration(this@FreeCommunityActivity))
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                try {
+                    error.toException()
+                }catch (_:java.lang.Exception){ }
+            }
+        })
+        binding.addBoard.shrink()
+        binding.addBoard.setOnClickListener {
+            when(binding.addBoard.isExtended){
+                true ->{
+                    binding.addBoard.shrink()
+                    val intent=Intent(this, AddBoardActivity::class.java)
+                    startActivity(intent)
+                }
+                false -> binding.addBoard.extend()
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -65,6 +100,7 @@ class FreeBoardAdapter(val contents:MutableList<FreeBoard>, val context: Context
             intent.putExtra("title", binding.boardTitle.text)
             intent.putExtra("user", binding.boardUser.text)
             intent.putExtra("time", binding.boardTime.text)
+            intent.putExtra("id", contents[position].id)
             context.startActivity(intent)
         }
     }
