@@ -39,7 +39,7 @@ class InfoTechFragment : Fragment() {
                         binding.infoTechRecyclerView.adapter= context?.let {
                             AllCategoryAdapter(dataMutableList, it)
                         }
-                        binding.infoTechRecyclerView.addItemDecoration(AllCategoryDecoration(activity as Context))
+//                        binding.infoTechRecyclerView.addItemDecoration(AllCategoryDecoration(activity as Context))
                     }
                 }
             }

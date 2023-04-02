@@ -38,7 +38,7 @@ class InfoComFragment : Fragment() {
                         binding.infoComRecyclerView.adapter= context?.let {
                             AllCategoryAdapter(dataMutableList, it)
                         }
-                        binding.infoComRecyclerView.addItemDecoration(AllCategoryDecoration(activity as Context))
+//                        binding.infoComRecyclerView.addItemDecoration(AllCategoryDecoration(activity as Context))
                     }
                 }
             }
