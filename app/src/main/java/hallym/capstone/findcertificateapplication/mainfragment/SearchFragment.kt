@@ -55,12 +55,17 @@ class SearchFragment : Fragment() {
                     val layoutManager= LinearLayoutManager(activity)
                     layoutManager.orientation= LinearLayoutManager.VERTICAL
                     binding.searchRecycler.layoutManager=layoutManager
-                    binding.searchRecycler.adapter= AllCategoryAdapter(certificationList, context!!)
+                    binding.searchRecycler.adapter=
+                        context?.let { it1 -> AllCategoryAdapter(certificationList, it1) }
                     binding.searchRecycler.addItemDecoration(SearchDecoration(activity as Context))
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
+                    try {
+                        error.toException()
+                    }catch (e:java.lang.Exception){
+                        Log.d("kkang", e.toString())
+                    }
                 }
             })
             hideKeyboard(requireContext(), this.requireView())

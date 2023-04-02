@@ -55,9 +55,7 @@ class FreeCommunityActivity : AppCompatActivity() {
                             board.child("date").value as Long,
                             commentList
                         )
-                        if (data != null) {
-                            boardList.add(data)
-                        }
+                        boardList.add(data)
                     }
                     val layoutManager = LinearLayoutManager(this@FreeCommunityActivity)
                     layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -70,8 +68,7 @@ class FreeCommunityActivity : AppCompatActivity() {
                 override fun onCancelled(error: DatabaseError) {
                     try {
                         error.toException()
-                    } catch (_: java.lang.Exception) {
-                    }
+                    } catch (_: java.lang.Exception) { }
                 }
             })
         }else{

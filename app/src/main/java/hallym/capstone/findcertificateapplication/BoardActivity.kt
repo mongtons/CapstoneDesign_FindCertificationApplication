@@ -54,11 +54,24 @@ class BoardActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                try {
+                    error.toException()
+                } catch (_: java.lang.Exception) { }
             }
         })
+        binding.commentButton.setOnClickListener {
+            val letter=binding.commentText.text.toString()
+            val user="김김김"
+            val comment=Comment(user, letter)
+
+            val key=freeBoardRef.push().key.toString()
+            freeBoardRef
+                .child(intent.getStringExtra("id").toString())
+                .child("comment")
+                .child(key)
+                .setValue(comment)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -74,6 +87,7 @@ class CommentAdapter(val contents:MutableList<Comment>): RecyclerView.Adapter<Re
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val binding=(holder as CommentViewHolder).binding
         binding.itemComment.text=contents[position].letter
+        binding.itemUser.text=contents[position].user
     }
 
     override fun getItemCount(): Int {

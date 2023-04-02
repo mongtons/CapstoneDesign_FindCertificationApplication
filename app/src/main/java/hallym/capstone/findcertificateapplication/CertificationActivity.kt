@@ -70,8 +70,6 @@ class CertificationActivity : AppCompatActivity() {
                             binding.company.adapter=CompanyAdapter(companyList)
                             binding.company.addItemDecoration(CompanyDecoration(this@CertificationActivity))
                         }
-
-
                     }
                 }
             }
