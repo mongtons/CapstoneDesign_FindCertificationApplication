@@ -1,10 +1,14 @@
 package hallym.capstone.findcertificateapplication
 
+import android.app.Activity
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract.Data
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
@@ -71,12 +75,23 @@ class BoardActivity : AppCompatActivity() {
                 .child("comment")
                 .child(key)
                 .setValue(comment)
+
+            binding.commentText.text.clear()
+            hideKeyboard(this)
         }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
+    }
+    private fun hideKeyboard(activity: Activity){
+        val imm: InputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        var view=activity?.currentFocus
+        if(view==null){
+            view=View(activity)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
 class CommentViewHolder(val binding: CommentItemBinding): RecyclerView.ViewHolder(binding.root)
