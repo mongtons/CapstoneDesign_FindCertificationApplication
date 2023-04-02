@@ -1,10 +1,13 @@
 package hallym.capstone.findcertificateapplication
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -61,9 +64,11 @@ class CertificationActivity : AppCompatActivity() {
 
                             binding.publicCompany.layoutManager=layoutManager1
                             binding.publicCompany.adapter=CompanyAdapter(publicCompanyList)
+                            binding.publicCompany.addItemDecoration(CompanyDecoration(this@CertificationActivity))
 
                             binding.company.layoutManager=layoutManager2
                             binding.company.adapter=CompanyAdapter(companyList)
+                            binding.company.addItemDecoration(CompanyDecoration(this@CertificationActivity))
                         }
 
 
@@ -103,5 +108,16 @@ class CompanyAdapter(val contents:List<String>): RecyclerView.Adapter<RecyclerVi
 
     override fun getItemCount(): Int {
         return contents.size
+    }
+}
+class CompanyDecoration(val context: Context): RecyclerView.ItemDecoration(){
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
+        super.getItemOffsets(outRect, view, parent, state)
+        outRect.set(30, 10, 0, 10)
     }
 }

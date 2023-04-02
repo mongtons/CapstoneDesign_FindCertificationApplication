@@ -16,9 +16,14 @@ class CommunityFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding= FragmentCommunityBinding.inflate(inflater, container, false)
+        val intent= Intent(activity, FreeCommunityActivity::class.java)
 
         binding.freeCommunity.setOnClickListener {
-            val intent= Intent(activity, FreeCommunityActivity::class.java)
+            intent.putExtra("id", true)
+            startActivity(intent)
+        }
+        binding.studyCommunity.setOnClickListener {
+            intent.putExtra("id", false)
             startActivity(intent)
         }
 

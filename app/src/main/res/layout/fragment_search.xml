@@ -30,13 +30,29 @@
             app:cardCornerRadius="10dp"
             app:cardBackgroundColor="@color/white"
             app:cardElevation="3dp">
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/search_text"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginRight="10dp"
-                app:iconifiedByDefault="false"
-                app:queryHint="검색어를 입력하시오"/>
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:scaleType="center"
+                    android:src="@drawable/search"/>
+                <EditText
+                    android:id="@+id/search_text"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="9"
+                    android:layout_marginLeft="4dp"
+                    android:hint="검색어를 입력하시오"
+                    android:inputType="text"
+                    android:textColorHint="@color/grey"
+                    android:background="@color/white"/>
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
@@ -68,9 +84,10 @@
             app:cardCornerRadius="10dp"
             app:cardElevation="0dp"
             android:backgroundTint="@color/silverWhite">
-            <ListView
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:padding="5dp"
                 android:id="@+id/searchRecycler"/>
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
