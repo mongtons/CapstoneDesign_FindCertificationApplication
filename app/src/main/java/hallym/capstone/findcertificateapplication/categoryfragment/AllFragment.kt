@@ -49,7 +49,7 @@ class AllFragment : Fragment() {
                     binding.allRecyclerView.adapter= context?.let {
                         AllCategoryAdapter(dataMutableList, it)
                     }
-                    binding.allRecyclerView.addItemDecoration(AllCategoryDecoration(activity as Context))
+//                    binding.allRecyclerView.addItemDecoration(AllCategoryDecoration(activity as Context))
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -96,6 +96,6 @@ class AllCategoryDecoration(val context: Context): RecyclerView.ItemDecoration()
         state: RecyclerView.State
     ) {
         super.getItemOffsets(outRect, view, parent, state)
-        outRect.set(0, 5, 0, 5)
+        outRect.set(0, 1, 0, 1)
     }
 }
