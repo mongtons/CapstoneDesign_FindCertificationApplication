@@ -25,3 +25,4 @@
 > 2022.1.1 Patch 1
 * Firebase
 > Realtime Database
+> Authentication
