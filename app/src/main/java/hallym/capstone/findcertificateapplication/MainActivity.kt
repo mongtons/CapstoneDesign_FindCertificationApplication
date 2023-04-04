@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
@@ -30,7 +31,8 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_position, AiFragment()).commit()
                 }
                 "COMMUNITY" ->{
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_position, CommunityFragment()).commit()
+                    //supportFragmentManager.beginTransaction().replace(R.id.fragment_position, CommunityFragment()).commit()
+                    startActivity(Intent(this, Login::class.java))
                 }
                 "MY PAGE" ->{
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_position, MyPageFragment()).commit()
