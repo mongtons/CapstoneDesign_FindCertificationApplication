@@ -38,7 +38,7 @@ class InfoComFragment : Fragment() {
                         binding.infoComRecyclerView.adapter= context?.let {
                             AllCategoryAdapter(dataMutableList, it)
                         }
-                        binding.infoComRecyclerView.addItemDecoration(AllCategoryDecoration(activity as Context))
+//                        binding.infoComRecyclerView.addItemDecoration(AllCategoryDecoration(activity as Context))
                     }
                 }
             }
@@ -46,9 +46,7 @@ class InfoComFragment : Fragment() {
             override fun onCancelled(error: DatabaseError) {
                 try {
                     error.toException()
-                }catch (e:java.lang.Exception){
-
-                }
+                }catch (e:java.lang.Exception){ }
             }
         })
         return binding.root

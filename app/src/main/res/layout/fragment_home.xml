@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/cottonBall"
+    android:background="@color/iceTeal"
     android:paddingLeft="13dp"
     android:paddingRight="13dp"
     android:paddingTop="69dp"
@@ -39,7 +39,7 @@
         app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/annapolosBlue"
         app:tabTextAppearance="@style/tabTextStyle"
-        android:background="@color/cottonBall"/>
+        android:background="@color/iceTeal"/>
     <androidx.viewpager2.widget.ViewPager2
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
