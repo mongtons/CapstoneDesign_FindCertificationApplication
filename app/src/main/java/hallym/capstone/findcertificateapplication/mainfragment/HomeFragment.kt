@@ -91,7 +91,7 @@ class PopularDecoration(val context: Context): RecyclerView.ItemDecoration(){
 class CategoryFragmentAdapter(activity: FragmentActivity): FragmentStateAdapter(activity){
     val fragments:List<Fragment>
     init {
-        fragments= listOf(AllFragment(), InfoTechFragment(), InfoComFragment(), ComFragment(), ProgFragment(), DBFragment(), CloudFragment(), NetworkFragment(),
+        fragments= listOf(AllFragment(), InfoTechFragment(), InfoComFragment(), ComFragment(), ProgFragment(), DBFragment(), NetworkFragment(),
         DataFragment(), EtcFragment())
     }
     override fun getItemCount(): Int = fragments.size
