@@ -18,12 +18,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
-import hallym.capstone.findcertificateapplication.R
 import hallym.capstone.findcertificateapplication.categoryfragment.AllCategoryAdapter
-import hallym.capstone.findcertificateapplication.categoryfragment.AllCategoryDecoration
 import hallym.capstone.findcertificateapplication.databinding.FragmentSearchBinding
 import hallym.capstone.findcertificateapplication.datatype.Certification
-import java.util.Locale.filter
 
 class SearchFragment : Fragment() {
     val database: FirebaseDatabase = FirebaseDatabase.getInstance()

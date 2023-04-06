@@ -88,14 +88,3 @@ class AllCategoryAdapter(val contents: MutableList<Certification>, val context: 
         return contents.size
     }
 }
-class AllCategoryDecoration(val context: Context): RecyclerView.ItemDecoration(){
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        super.getItemOffsets(outRect, view, parent, state)
-        outRect.set(0, 1, 0, 1)
-    }
-}

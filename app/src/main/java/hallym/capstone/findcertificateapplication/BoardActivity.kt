@@ -70,7 +70,7 @@ class BoardActivity : AppCompatActivity() {
         })
         binding.commentButton.setOnClickListener {
             val letter=binding.commentText.text.toString()
-            val user=firebaseAuth.currentUser?.email.toString()
+            val user=firebaseAuth.currentUser?.displayName.toString()
             val comment=Comment(user, letter)
 
             val key=freeBoardRef.push().key.toString()

@@ -12,9 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import hallym.capstone.findcertificateapplication.*
-import hallym.capstone.findcertificateapplication.categoryfragment.AllFragment
-import hallym.capstone.findcertificateapplication.categoryfragment.InfoComFragment
-import hallym.capstone.findcertificateapplication.categoryfragment.InfoTechFragment
+import hallym.capstone.findcertificateapplication.categoryfragment.*
 import hallym.capstone.findcertificateapplication.databinding.CategoryItemBinding
 import hallym.capstone.findcertificateapplication.databinding.FragmentHomeBinding
 import hallym.capstone.findcertificateapplication.databinding.PopularItemBinding
@@ -93,7 +91,8 @@ class PopularDecoration(val context: Context): RecyclerView.ItemDecoration(){
 class CategoryFragmentAdapter(activity: FragmentActivity): FragmentStateAdapter(activity){
     val fragments:List<Fragment>
     init {
-        fragments= listOf(AllFragment(), InfoTechFragment(), InfoComFragment())
+        fragments= listOf(AllFragment(), InfoTechFragment(), InfoComFragment(), ComFragment(), ProgFragment(), DBFragment(), CloudFragment(), NetworkFragment(),
+        DataFragment(), EtcFragment())
     }
     override fun getItemCount(): Int = fragments.size
 
