@@ -7,5 +7,6 @@ data class FreeBoard(
     val title:String,
     val user:String,
     val date:Long,
-    val comment: List<Comment>?
+    val comment: List<Comment>?,
+    val body: String
 )

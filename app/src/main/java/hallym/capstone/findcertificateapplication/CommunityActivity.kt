@@ -53,7 +53,8 @@ class FreeCommunityActivity : AppCompatActivity() {
                             board.child("title").value.toString(),
                             board.child("user").value.toString(),
                             board.child("date").value as Long,
-                            commentList
+                            commentList,
+                            board.child("body").value.toString()
                         )
                         boardList.add(data)
                     }
@@ -62,7 +63,6 @@ class FreeCommunityActivity : AppCompatActivity() {
                     binding.freeCommunityText.layoutManager = layoutManager
                     binding.freeCommunityText.adapter =
                         FreeBoardAdapter(boardList, this@FreeCommunityActivity)
-                    binding.freeCommunityText.addItemDecoration(FreeBoardDecoration(this@FreeCommunityActivity))
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -120,16 +120,5 @@ class FreeBoardAdapter(val contents:MutableList<FreeBoard>, val context: Context
 
     override fun getItemCount(): Int {
         return contents.size
-    }
-}
-class FreeBoardDecoration(val context: Context): RecyclerView.ItemDecoration(){
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        super.getItemOffsets(outRect, view, parent, state)
-        outRect.set(10, 10, 10, 10)
     }
 }

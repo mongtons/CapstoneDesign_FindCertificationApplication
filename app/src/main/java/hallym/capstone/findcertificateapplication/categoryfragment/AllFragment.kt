@@ -49,7 +49,6 @@ class AllFragment : Fragment() {
                     binding.allRecyclerView.adapter= context?.let {
                         AllCategoryAdapter(dataMutableList, it)
                     }
-//                    binding.allRecyclerView.addItemDecoration(AllCategoryDecoration(activity as Context))
                 }
             }
             override fun onCancelled(error: DatabaseError) {

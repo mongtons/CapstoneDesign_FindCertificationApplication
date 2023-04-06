@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="10dp"
     android:gravity="center"
     android:background="@color/iceTeal"
     tools:context=".mainfragment.LoginFragment">
@@ -21,8 +22,6 @@
             android:orientation="horizontal"
             android:layout_gravity="center"
             android:gravity="center">
-
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,11 +47,7 @@
                     app:layout_constraintHorizontal_bias="0.497"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_email" />
-
-
             </LinearLayout>
-
-
             <Button
                 android:id="@+id/btn_login"
                 android:layout_width="wrap_content"
@@ -60,20 +55,17 @@
                 android:text="로그인" />
 
         </LinearLayout>
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="15dp">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/findID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
                 android:text="아이디 찾기"
                 android:textSize="15sp"/>
 
@@ -82,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
                 android:text="비밀번호 찾기"
                 android:textSize="15sp"/>
 

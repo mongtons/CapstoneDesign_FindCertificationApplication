@@ -11,10 +11,8 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import hallym.capstone.findcertificateapplication.FreeCommunityActivity
 import hallym.capstone.findcertificateapplication.R
 import hallym.capstone.findcertificateapplication.SignIn
-import hallym.capstone.findcertificateapplication.databinding.ActivityLoginBinding
 import hallym.capstone.findcertificateapplication.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
