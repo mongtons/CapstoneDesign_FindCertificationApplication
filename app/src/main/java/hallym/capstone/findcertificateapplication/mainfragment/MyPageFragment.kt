@@ -41,6 +41,8 @@ class MyPageFragment : Fragment() {
             Toast.makeText(context, "로그아웃되었습니다.", Toast.LENGTH_SHORT).show()
             Log.d("cclo", "로그아웃 완료")
             binding.userId.text = "로그인하세요."
+            fragmentManager?.beginTransaction()?.remove(this)?.commit()
+            fragmentManager?.beginTransaction()?.replace(R.id.fragment_position, LoginFragment())?.commit()
         }
 
         binding.signout.setOnClickListener {

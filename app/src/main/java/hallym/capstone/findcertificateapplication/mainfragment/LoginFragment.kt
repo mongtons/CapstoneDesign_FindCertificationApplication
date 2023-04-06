@@ -53,17 +53,15 @@ class LoginFragment : Fragment() {
                             Toast.makeText(context, "로그인 성공하셨습니다.", Toast.LENGTH_SHORT).show()
                             Log.d("cclo", strEmail+ "계정 로그인 완료")
 
-                            var data = arguments?.getString("type") // bundle 데이터 받아오기
+                            val data = arguments?.getString("type") // bundle 데이터 받아오기
                             Log.d("cclo", "bundle : " + data)
                             
                             // main에서 클릭한 것에 따라 community / MyPage로 이동
                             if(data == "community"){
-
                                 fragmentManager?.beginTransaction()?.remove(this)?.commit()
                                 fragmentManager?.beginTransaction()?.replace(R.id.fragment_position, CommunityFragment())?.commit()
 
                             } else if(data == "mypage"){
-
                                 fragmentManager?.beginTransaction()?.remove(this)?.commit()
                                 fragmentManager?.beginTransaction()?.replace(R.id.fragment_position, MyPageFragment())?.commit()
 
@@ -74,10 +72,8 @@ class LoginFragment : Fragment() {
                              */
 
                         }else{
-
                             Toast.makeText(context, "로그인 실패. 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
                             Log.d("cclo", strEmail+ "계정 로그인 실패")
-
                         }
                     }
             }

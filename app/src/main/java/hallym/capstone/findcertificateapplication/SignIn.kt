@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import hallym.capstone.findcertificateapplication.databinding.ActivitySignInBinding
 import hallym.capstone.findcertificateapplication.datatype.UserAccount
+import hallym.capstone.findcertificateapplication.mainfragment.LoginFragment
 
 class SignIn : AppCompatActivity() {
 
@@ -55,11 +56,7 @@ class SignIn : AppCompatActivity() {
                         Toast.makeText(this, "회원가입에 성공하셨습니다.", Toast.LENGTH_SHORT).show()
                         Log.d("cclo", "회원가입 완료")
 
-//                        intent = Intent(this, Login::class.java) //로그인으로 변경
-//                        startActivity(intent)
-//                        Log.d("cclo", "로그인 화면으로 전환")
                         finish()
-
                     } else if(task.exception?.message.isNullOrEmpty()){ // 입력이 제대로 안됐을 경우
 
                         Toast.makeText(this, "회원가입에 실패하였습니다.", Toast.LENGTH_SHORT).show()
@@ -68,8 +65,6 @@ class SignIn : AppCompatActivity() {
                     } else {
 
                         Toast.makeText(this, "이미 존재하는 계정입니다.", Toast.LENGTH_SHORT).show()
-                        intent = Intent(this, Login::class.java) // 로그인으로 변경
-                        startActivity(intent)
                         Log.d("cclo", "이미 존재하는 계정 => 로그인 화면으로 전환")
 
                     }
