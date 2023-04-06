@@ -4,10 +4,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import hallym.capstone.findcertificateapplication.databinding.ActivityMainBinding
 import hallym.capstone.findcertificateapplication.mainfragment.*
 
 class MainActivity : AppCompatActivity() {
+    val mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()// 파이어베이스 인증
+    val mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Account")// 실시간 데이터베이스
     val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
@@ -31,8 +36,11 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_position, AiFragment()).commit()
                 }
                 "COMMUNITY" ->{
-                    //supportFragmentManager.beginTransaction().replace(R.id.fragment_position, CommunityFragment()).commit()
-                    startActivity(Intent(this, Login::class.java))
+                    if(mFirebaseAuth.currentUser != null) {
+                        supportFragmentManager.beginTransaction().replace(R.id.fragment_position, CommunityFragment()).commit()
+                    }else {
+                        supportFragmentManager.beginTransaction().replace(R.id.fragment_position, LoginFragment()).commit()
+                    }
                 }
                 "MY PAGE" ->{
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_position, MyPageFragment()).commit()

@@ -5,12 +5,14 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract.Data
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.databinding.ActivityBoardBinding
 import hallym.capstone.findcertificateapplication.databinding.BenefitCompanyItemBinding
@@ -24,6 +26,8 @@ class BoardActivity : AppCompatActivity() {
     val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     val freeBoardRef: DatabaseReference =database.getReference("Free_Board")
 //    val studyBoardRef: DatabaseReference =database.getReference("Study_Board")
+    val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    val authRef: DatabaseReference = database.getReference("loginTest")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -66,7 +70,7 @@ class BoardActivity : AppCompatActivity() {
         })
         binding.commentButton.setOnClickListener {
             val letter=binding.commentText.text.toString()
-            val user="김김김"
+            val user=firebaseAuth.currentUser?.email.toString()
             val comment=Comment(user, letter)
 
             val key=freeBoardRef.push().key.toString()
