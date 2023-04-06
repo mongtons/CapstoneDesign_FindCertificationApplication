@@ -1,9 +1,10 @@
 package hallym.capstone.findcertificateapplication
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -25,6 +26,9 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.fragment_position, HomeFragment()).commit()
 
         binding.bottomBar.setOnItemSelectedListener{
+
+            var bundle = Bundle()
+
             when(it.title){
                 "HOME" ->{
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_position, HomeFragment()).commit()
@@ -39,11 +43,23 @@ class MainActivity : AppCompatActivity() {
                     if(mFirebaseAuth.currentUser != null) {
                         supportFragmentManager.beginTransaction().replace(R.id.fragment_position, CommunityFragment()).commit()
                     }else {
-                        supportFragmentManager.beginTransaction().replace(R.id.fragment_position, LoginFragment()).commit()
+                        var message = "community"
+                        var fragmentLogin = LoginFragment()
+                        bundle.putString("type", message)
+                        fragmentLogin.arguments = bundle
+                        supportFragmentManager.beginTransaction().replace(R.id.fragment_position, fragmentLogin).commit()
                     }
                 }
                 "MY PAGE" ->{
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_position, MyPageFragment()).commit()
+                    if(mFirebaseAuth.currentUser != null) {
+                        supportFragmentManager.beginTransaction().replace(R.id.fragment_position, MyPageFragment()).commit()
+                    }else {
+                        var message = "mypage"
+                        var fragmentLogin = LoginFragment()
+                        bundle.putString("type", message)
+                        fragmentLogin.arguments = bundle
+                        supportFragmentManager.beginTransaction().replace(R.id.fragment_position, fragmentLogin).commit()
+                    }
                 }
             }
             true

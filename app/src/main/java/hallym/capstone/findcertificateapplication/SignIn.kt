@@ -30,6 +30,7 @@ class SignIn : AppCompatActivity() {
 
         binding.btnSignin.setOnClickListener(View.OnClickListener {
             // 회원가입 처리 시작
+            var strname = binding.etName.text.toString()
             var strEmail = binding.etEmail.text.toString()
             var strPwd = binding.etPwd.text.toString()
 
@@ -43,7 +44,8 @@ class SignIn : AppCompatActivity() {
                         // 사용자 모델 생성
                         var firebaseUser = mFirebaseAuth.currentUser
                         var account = UserAccount()
-                        
+
+                        account.displayName = strname
                         account.idToken = firebaseUser!!.uid
                         account.emailId = firebaseUser!!.email
                         account.password = strPwd
@@ -53,9 +55,10 @@ class SignIn : AppCompatActivity() {
                         Toast.makeText(this, "회원가입에 성공하셨습니다.", Toast.LENGTH_SHORT).show()
                         Log.d("cclo", "회원가입 완료")
 
-                        intent = Intent(this, Login::class.java) //로그인으로 변경
-                        startActivity(intent)
-                        Log.d("cclo", "로그인 화면으로 전환")
+//                        intent = Intent(this, Login::class.java) //로그인으로 변경
+//                        startActivity(intent)
+//                        Log.d("cclo", "로그인 화면으로 전환")
+                        finish()
 
                     } else if(task.exception?.message.isNullOrEmpty()){ // 입력이 제대로 안됐을 경우
 

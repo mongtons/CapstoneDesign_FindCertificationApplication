@@ -19,7 +19,8 @@ import hallym.capstone.findcertificateapplication.databinding.FragmentLoginBindi
 
 class LoginFragment : Fragment() {
     val mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()// 파이어베이스 인증
-    val mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Account")// 실시간 데이터베이스
+    val mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("loginTest")// 실시간 데이터베이스
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,8 +29,8 @@ class LoginFragment : Fragment() {
         val binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         binding.btnSignin.setOnClickListener { //회원가입 화면으로 이동
-//            val intent = Intent(this, SignIn::class.java)
-//            startActivity(intent)
+           val intent = Intent(context, SignIn::class.java)
+            startActivity(intent)
         }
 
 
@@ -51,8 +52,27 @@ class LoginFragment : Fragment() {
 
                             Toast.makeText(context, "로그인 성공하셨습니다.", Toast.LENGTH_SHORT).show()
                             Log.d("cclo", strEmail+ "계정 로그인 완료")
-                            fragmentManager?.beginTransaction()?.remove(this)?.commit()
-                            fragmentManager?.beginTransaction()?.replace(R.id.fragment_position, CommunityFragment())?.commit()
+
+                            var data = arguments?.getString("type") // bundle 데이터 받아오기
+                            Log.d("cclo", "bundle : " + data)
+                            
+                            // main에서 클릭한 것에 따라 community / MyPage로 이동
+                            if(data == "community"){
+
+                                fragmentManager?.beginTransaction()?.remove(this)?.commit()
+                                fragmentManager?.beginTransaction()?.replace(R.id.fragment_position, CommunityFragment())?.commit()
+
+                            } else if(data == "mypage"){
+
+                                fragmentManager?.beginTransaction()?.remove(this)?.commit()
+                                fragmentManager?.beginTransaction()?.replace(R.id.fragment_position, MyPageFragment())?.commit()
+
+                            }
+
+                            /**
+                             * 로그인도 finish() 기능을 넣어야 함!!!
+                             */
+
                         }else{
 
                             Toast.makeText(context, "로그인 실패. 다시 입력해주세요.", Toast.LENGTH_SHORT).show()

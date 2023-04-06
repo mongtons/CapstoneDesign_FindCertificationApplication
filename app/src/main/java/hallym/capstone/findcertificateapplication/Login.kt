@@ -25,11 +25,12 @@ class Login : AppCompatActivity() {
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         mFirebaseAuth = FirebaseAuth.getInstance()
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Account")
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("loginTest")
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -38,7 +39,7 @@ class Login : AppCompatActivity() {
             val intent = Intent(this, SignIn::class.java)
             startActivity(intent)
         }
-    
+
 
         binding.btnLogin.setOnClickListener{ // 로그인 버튼 클릭 시
 

@@ -45,8 +45,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/annapolosBlue"
+                        android:text="로그인하세요"
                         android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
                     <TextView
                         android:id="@+id/user_nickname"
                         android:layout_width="wrap_content"
@@ -117,6 +118,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="닉네임 수정하기"
+                        android:textSize="16sp"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/annapolosBlue"
+                        android:background="@drawable/button_design"
+                        style="@style/Widget.AppCompat.Button.Borderless"/>
+                    <Button
+                        android:id="@+id/logout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="로그아웃"
+                        android:textSize="16sp"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/annapolosBlue"
+                        android:background="@drawable/button_design"
+                        style="@style/Widget.AppCompat.Button.Borderless"/>
+                    <Button
+                        android:id="@+id/signout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="회원탈퇴"
                         android:textSize="16sp"
                         android:textAlignment="textStart"
                         android:textColor="@color/annapolosBlue"
