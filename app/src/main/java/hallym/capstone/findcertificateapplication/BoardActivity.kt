@@ -10,6 +10,7 @@ import android.provider.ContactsContract.Data
 import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.startActivity
@@ -24,12 +25,12 @@ import hallym.capstone.findcertificateapplication.databinding.CommentItemBinding
 import hallym.capstone.findcertificateapplication.datatype.Comment
 import kotlinx.coroutines.NonCancellable.children
 
+val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+val freeBoardRef: DatabaseReference =database.getReference("Free_Board")
 class BoardActivity : AppCompatActivity() {
     val binding by lazy {
         ActivityBoardBinding.inflate(layoutInflater)
     }
-    val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    val freeBoardRef: DatabaseReference =database.getReference("Free_Board")
 //    val studyBoardRef: DatabaseReference =database.getReference("Study_Board")
     val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +53,7 @@ class BoardActivity : AppCompatActivity() {
                             val commentList= mutableListOf<Comment>()
                             for (comment in board.child("comment").children){
                                 val data = Comment(
+                                    comment.child("id").value.toString(),
                                     comment.child("user").value.toString(),
                                     comment.child("letter").value.toString()
                                 )
@@ -61,7 +63,11 @@ class BoardActivity : AppCompatActivity() {
                             layoutManager.orientation= LinearLayoutManager.VERTICAL
 
                             binding.comment.layoutManager=layoutManager
-                            binding.comment.adapter=CommentAdapter(commentList)
+                            binding.comment.adapter=CommentAdapter(
+                                commentList, this@BoardActivity,
+                                intent.getStringExtra("user").toString(),
+                                intent.getStringExtra("id").toString()
+                            )
                         }
                     }
                 }
@@ -75,8 +81,8 @@ class BoardActivity : AppCompatActivity() {
         binding.commentButton.setOnClickListener {
             val letter = binding.commentText.text.toString()
             val user = firebaseAuth.currentUser?.displayName.toString()
-            val comment = Comment(user, letter)
             val key = freeBoardRef.push().key.toString()
+            val comment = Comment(key, user, letter)
             freeBoardRef
                 .child(intent.getStringExtra("id").toString())
                 .child("comment")
@@ -127,14 +133,41 @@ class BoardActivity : AppCompatActivity() {
     }
 }
 class CommentViewHolder(val binding: CommentItemBinding): RecyclerView.ViewHolder(binding.root)
-class CommentAdapter(val contents:MutableList<Comment>): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class CommentAdapter(val contents:MutableList<Comment>,val activity: Activity, val userName:String, val id: String): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
             = CommentViewHolder(CommentItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
         val binding=(holder as CommentViewHolder).binding
         binding.itemComment.text=contents[position].letter
         binding.itemUser.text=contents[position].user
+
+        if((contents[position].user==firebaseAuth.currentUser?.displayName.toString()) ||
+                firebaseAuth.currentUser?.displayName.toString()==userName){
+            binding.itemRoot.setOnLongClickListener {
+                val popup=PopupMenu(activity, it)
+                popup.menuInflater.inflate(R.menu.comment_menu, popup.menu)
+                popup.setOnMenuItemClickListener {item ->
+                    when (item.title) {
+                        "삭제" -> {
+                            freeBoardRef.child(id).child("comment").child(contents[position].id).removeValue()
+                            Toast.makeText(activity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                            notifyDataSetChanged()
+
+                            activity.finish()
+                            activity.overridePendingTransition(0,0)
+                            val intent=activity.intent
+                            activity.startActivity(intent)
+                            activity.overridePendingTransition(0,0)
+                        }
+                    }
+                    true
+                }
+                popup.show()
+                true
+            }
+        }
     }
 
     override fun getItemCount(): Int {

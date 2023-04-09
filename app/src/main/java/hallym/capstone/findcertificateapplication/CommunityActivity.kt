@@ -43,6 +43,7 @@ class FreeCommunityActivity : AppCompatActivity() {
                         for (comment in board.child("comment").children) {
                             commentList.add(
                                 Comment(
+                                    comment.child("id").value.toString(),
                                     comment.child("user").value.toString(),
                                     comment.child("letter").value.toString()
                                 )
