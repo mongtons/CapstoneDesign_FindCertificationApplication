@@ -10,14 +10,17 @@ import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.databinding.ActivityBoardBinding
 import hallym.capstone.findcertificateapplication.databinding.BenefitCompanyItemBinding
 import hallym.capstone.findcertificateapplication.databinding.CommentItemBinding
 import hallym.capstone.findcertificateapplication.datatype.Comment
+import kotlinx.coroutines.NonCancellable.children
 
 class BoardActivity : AppCompatActivity() {
     val binding by lazy {
@@ -68,19 +71,17 @@ class BoardActivity : AppCompatActivity() {
             }
         })
         binding.commentButton.setOnClickListener {
-            val letter=binding.commentText.text.toString()
-            val user=firebaseAuth.currentUser?.displayName.toString()
-            val comment=Comment(user, letter)
-
-            val key=freeBoardRef.push().key.toString()
+            val letter = binding.commentText.text.toString()
+            val user = firebaseAuth.currentUser?.displayName.toString()
+            val comment = Comment(user, letter)
+            val key = freeBoardRef.push().key.toString()
             freeBoardRef
                 .child(intent.getStringExtra("id").toString())
                 .child("comment")
                 .child(key)
                 .setValue(comment)
-
             binding.commentText.text.clear()
-            hideKeyboard(this)
+            hideKeyboard(this@BoardActivity)
         }
     }
 

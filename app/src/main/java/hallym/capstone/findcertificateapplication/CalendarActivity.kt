@@ -14,7 +14,6 @@ class CalendarActivity : AppCompatActivity() {
 
 
     }
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()

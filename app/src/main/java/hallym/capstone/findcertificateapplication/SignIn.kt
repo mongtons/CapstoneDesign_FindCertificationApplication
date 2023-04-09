@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import hallym.capstone.findcertificateapplication.databinding.ActivitySignInBinding
@@ -34,23 +35,25 @@ class SignIn : AppCompatActivity() {
             var strname = binding.etName.text.toString()
             var strEmail = binding.etEmail.text.toString()
             var strPwd = binding.etPwd.text.toString()
-
             
             //FirebaseAuth 진행
             mFirebaseAuth.createUserWithEmailAndPassword(strEmail, strPwd)
                 .addOnCompleteListener { task ->
-                    
                     if (task.isSuccessful) {
-                        
                         // 사용자 모델 생성
                         var firebaseUser = mFirebaseAuth.currentUser
                         var account = UserAccount()
 
                         account.displayName = strname
                         account.idToken = firebaseUser!!.uid
-                        account.emailId = firebaseUser!!.email
+                        account.emailId = firebaseUser.email
                         account.password = strPwd
 
+                        firebaseUser.updateProfile(
+                            userProfileChangeRequest {
+                                displayName=strname
+                            }
+                        ).addOnCompleteListener{ }
                         //SetValue : database insert (삽입) 행위
                         mDatabaseRef.child("UserAccount").child(firebaseUser.uid).setValue(account)
                         Toast.makeText(this, "회원가입에 성공하셨습니다.", Toast.LENGTH_SHORT).show()
