@@ -54,7 +54,6 @@ class AddBoardActivity : AppCompatActivity() {
                     .setValue(FreeBoard(key, title, user, time, comment, body))
                 Toast.makeText(this, "게시글을 업로드했습니다.", Toast.LENGTH_SHORT).show()
             }
-            onBackPressed()
             finish()
         }
     }

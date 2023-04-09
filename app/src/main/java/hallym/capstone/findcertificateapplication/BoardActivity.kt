@@ -3,6 +3,7 @@ package hallym.capstone.findcertificateapplication
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract.Data
@@ -10,6 +11,7 @@ import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -107,15 +109,11 @@ class BoardActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.title){
             "수정하기" -> {
-                val intent1=Intent(this, AddBoardActivity::class.java)
+                finish()
+                val intent1=Intent(this@BoardActivity, AddBoardActivity::class.java)
                 intent1.putExtra("update", true)
                 intent1.putExtra("id", this.intent.getStringExtra("id"))
                 startActivity(intent1)
-                finish()
-                overridePendingTransition(0,0)
-                val intent2=intent
-                startActivity(intent2)
-                overridePendingTransition(0,0)
                 true
             }
             "삭제하기" -> {

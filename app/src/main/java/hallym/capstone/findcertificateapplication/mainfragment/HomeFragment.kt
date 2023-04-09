@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
 
         TabLayoutMediator(tab, viewPager){ tab, position ->
             val categoryList= mutableListOf<String>(
-                "전체", "정보기술", "정보통신", "통신", "프로그래밍", "데이터베이스", "클라우드", "네트워크", "데이터 분석", "기타"
+                "전체", "정보기술", "정보통신", "통신", "프로그래밍", "데이터베이스", "네트워크", "데이터 분석", "기타"
             )
             tab.text=categoryList[position]
         }.attach()
