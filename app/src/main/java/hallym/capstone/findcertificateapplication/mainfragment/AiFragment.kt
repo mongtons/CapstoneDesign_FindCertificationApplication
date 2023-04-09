@@ -13,6 +13,8 @@ class AiFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        val gpt = chatGPT()
+        gpt.chatRun()
         return inflater.inflate(R.layout.fragment_ai, container, false)
     }
 }

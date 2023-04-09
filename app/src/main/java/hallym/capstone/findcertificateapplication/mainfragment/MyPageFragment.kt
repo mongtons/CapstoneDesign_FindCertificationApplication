@@ -25,7 +25,7 @@ import hallym.capstone.findcertificateapplication.datatype.FreeBoard
 class MyPageFragment : Fragment() {
     val mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()// 파이어베이스 인증
     val mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("loginTest")// 실시간 데이터베이스
-    val comRef:DatabaseReference=FirebaseDatabase.getInstance().getReference("Free_board")
+    val comRef:DatabaseReference=FirebaseDatabase.getInstance().getReference("Free_Board")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,42 +34,7 @@ class MyPageFragment : Fragment() {
 
         val binding = FragmentMyPageBinding.inflate(inflater, container, false)
 
-        // 로그인 상태일 경우 마이페이지에 이메일 출력
-        if(mFirebaseAuth.currentUser != null){
-            binding.userId.text = mFirebaseAuth.currentUser!!.email.toString()
-        }
-
-//        comRef.addValueEventListener(object : ValueEventListener{
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                val dataMutableList= mutableListOf<FreeBoard>()
-//                for(data in snapshot.children){
-//
-//                    if(data.child("user").value.toString()==mFirebaseAuth.currentUser!!.email.toString()) {
-//                        dataMutableList.add(
-//                            FreeBoard(
-//                                data.child("id").value.toString(),
-//                                data.child("title").value.toString(),
-//                                data.child("user").value.toString(),
-//                                data.child("date").value as Long,
-//                                null,
-//                                data.child("body").value.toString()
-//                            )
-//                        )
-//
-//                    }
-//                }
-//                val layoutManager = LinearLayoutManager(context)
-//                layoutManager.orientation = LinearLayoutManager.VERTICAL
-//                binding.boardRecycler.layoutManager = layoutManager
-//                binding.boardRecycler.adapter = FreeBoardAdapter(dataMutableList, context!!)
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                try {
-//                    error.toException()
-//                } catch (_: java.lang.Exception) { }
-//            }
-//        })
+        binding.userId.text = mFirebaseAuth.currentUser?.displayName.toString()
 
         binding.logout.setOnClickListener {
             Log.d("cclo", mFirebaseAuth.currentUser!!.email.toString()+ "로그아웃 시도")
@@ -90,6 +55,36 @@ class MyPageFragment : Fragment() {
             binding.userId.text = "로그인하세요."
         }
 
+        comRef.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val dataMutableList= mutableListOf<FreeBoard>()
+                for(data in snapshot.children){
+                    if(data.child("user").value.toString()==mFirebaseAuth.currentUser!!.displayName.toString()) {
+                        dataMutableList.add(
+                            FreeBoard(
+                                data.child("id").value.toString(),
+                                data.child("title").value.toString(),
+                                data.child("user").value.toString(),
+                                data.child("date").value as Long,
+                                null,
+                                data.child("body").value.toString()
+                            )
+                        )
+
+                    }
+                }
+                val layoutManager = LinearLayoutManager(context)
+                layoutManager.orientation = LinearLayoutManager.VERTICAL
+                binding.boardRecycler.layoutManager = layoutManager
+                binding.boardRecycler.adapter = FreeBoardAdapter(dataMutableList, context!!)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                try {
+                    error.toException()
+                } catch (_: java.lang.Exception) { }
+            }
+        })
 
         return binding.root
     }

@@ -46,7 +46,7 @@ class AddBoardActivity : AppCompatActivity() {
                 Toast.makeText(this, "게시글을 수정했습니다.", Toast.LENGTH_SHORT).show()
             }else {
                 val key = ref.push().key.toString()
-                val user = firebaseAuth.currentUser?.email.toString()
+                val user = firebaseAuth.currentUser?.displayName.toString()
                 val time = System.currentTimeMillis()
                 val comment = null
 

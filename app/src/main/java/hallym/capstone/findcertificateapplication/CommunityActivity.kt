@@ -56,7 +56,7 @@ class FreeCommunityActivity : AppCompatActivity() {
                             commentList,
                             board.child("body").value.toString()
                         )
-                        boardList.add(data)
+                        boardList.add(0, data)
                     }
                     val layoutManager = LinearLayoutManager(this@FreeCommunityActivity)
                     layoutManager.orientation = LinearLayoutManager.VERTICAL
