@@ -98,7 +98,7 @@ class BoardActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if(binding.user.text == firebaseAuth.currentUser?.email.toString()) {
+        if(binding.user.text == firebaseAuth.currentUser?.displayName.toString()) {
             menuInflater.inflate(R.menu.board_menu, menu)
             return super.onCreateOptionsMenu(menu)
         }else
