@@ -43,22 +43,14 @@ class MainActivity : AppCompatActivity() {
                     if(mFirebaseAuth.currentUser != null) {
                         supportFragmentManager.beginTransaction().replace(R.id.fragment_position, CommunityFragment()).commit()
                     }else {
-                        var message = "community"
-                        var fragmentLogin = LoginFragment()
-                        bundle.putString("type", message)
-                        fragmentLogin.arguments = bundle
-                        supportFragmentManager.beginTransaction().replace(R.id.fragment_position, fragmentLogin).commit()
+                        setDataAtFragment(LoginFragment(), "community")
                     }
                 }
                 "MY PAGE" ->{
                     if(mFirebaseAuth.currentUser != null) {
                         supportFragmentManager.beginTransaction().replace(R.id.fragment_position, MyPageFragment()).commit()
                     }else {
-                        var message = "mypage"
-                        var fragmentLogin = LoginFragment()
-                        bundle.putString("type", message)
-                        fragmentLogin.arguments = bundle
-                        supportFragmentManager.beginTransaction().replace(R.id.fragment_position, fragmentLogin).commit()
+                        setDataAtFragment(LoginFragment(), "mypage")
                     }
                 }
             }
@@ -87,4 +79,17 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    fun setDataAtFragment(loginFragment: LoginFragment, s: String) { // login fragment에 전달할 데이터 설정 및 화면 전환
+        val bundle = Bundle()
+        bundle.putString("type", s)
+
+        loginFragment.arguments = bundle
+        setFragment(loginFragment)
+    }
+
+    fun setFragment(loginFragment: LoginFragment) { // 화면 전환
+        val transaction = supportFragmentManager.beginTransaction().replace(R.id.fragment_position, loginFragment).commit()
+    }
+
 }

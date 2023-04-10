@@ -8,11 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.FreeBoardAdapter
 import hallym.capstone.findcertificateapplication.FreeCommunityActivity
+import hallym.capstone.findcertificateapplication.MainActivity
 import hallym.capstone.findcertificateapplication.R
 import hallym.capstone.findcertificateapplication.categoryfragment.AllCategoryAdapter
 import hallym.capstone.findcertificateapplication.databinding.FragmentCommunityBinding
@@ -37,13 +39,15 @@ class MyPageFragment : Fragment() {
         binding.userId.text = mFirebaseAuth.currentUser?.displayName.toString()
 
         binding.logout.setOnClickListener {
+
             Log.d("cclo", mFirebaseAuth.currentUser!!.email.toString()+ "로그아웃 시도")
             mFirebaseAuth.signOut()
             Toast.makeText(context, "로그아웃되었습니다.", Toast.LENGTH_SHORT).show()
             Log.d("cclo", "로그아웃 완료")
             binding.userId.text = "로그인하세요."
-            fragmentManager?.beginTransaction()?.remove(this)?.commit()
-            fragmentManager?.beginTransaction()?.replace(R.id.fragment_position, LoginFragment())?.commit()
+
+            val mActivity = activity as MainActivity
+            mActivity.setDataAtFragment(LoginFragment(), "mypage") // MainActivty에서 Login으로 이동하도록 함
         }
 
         binding.signout.setOnClickListener {
@@ -89,3 +93,4 @@ class MyPageFragment : Fragment() {
         return binding.root
     }
 }
+
