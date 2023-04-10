@@ -69,4 +69,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx:21.2.0'
 
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+
 }

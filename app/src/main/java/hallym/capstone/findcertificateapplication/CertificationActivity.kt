@@ -9,16 +9,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.databinding.ActivityCertificationBinding
 import hallym.capstone.findcertificateapplication.databinding.BenefitCompanyItemBinding
+
 
 class CertificationActivity : AppCompatActivity() {
     val binding by lazy {
         ActivityCertificationBinding.inflate(layoutInflater)
     }
+    val mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()// 파이어베이스 인증
     val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     val ref: DatabaseReference =database.getReference("Certification")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,6 +84,11 @@ class CertificationActivity : AppCompatActivity() {
                 }catch (_:java.lang.Exception){ }
             }
         })
+
+        binding.favoriteCertification.setOnClickListener{
+            //mFirebaseAuth.currentUser
+            //Toast.makeText(context, intent.getStringExtra("Title") + "가 즐겨찾기에 추가되었습니다.")
+        }
 
         binding.examButton.setOnClickListener{
             val intent = Intent(this, Examday::class.java)

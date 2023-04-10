@@ -24,6 +24,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreate(savedInstanceState)
         val binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         binding.btnSignin.setOnClickListener { //회원가입 화면으로 이동
@@ -50,6 +51,7 @@ class LoginFragment : Fragment() {
 
                             Toast.makeText(context, "로그인 성공하셨습니다.", Toast.LENGTH_SHORT).show()
                             Log.d("cclo", strEmail+ "계정 로그인 완료")
+
 
                             val data = arguments?.getString("type") // bundle 데이터 받아오기
                             Log.d("cclo", "bundle : " + data)
