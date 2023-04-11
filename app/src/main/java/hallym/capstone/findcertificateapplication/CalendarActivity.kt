@@ -12,7 +12,6 @@ class CalendarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-
     }
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
