@@ -26,7 +26,7 @@ class AiFragment : Fragment() {
     lateinit var queryEdt: TextInputEditText
 
     var url = "https://api.openai.com/v1/completions"
-    val apiKey="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"
+    val apiKey=""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
