@@ -35,6 +35,9 @@ android {
     viewBinding{
         enabled=true
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
 }
 
 dependencies {
@@ -68,6 +71,9 @@ dependencies {
     //implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-auth-ktx:21.2.0'
 
-    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation "com.aallam.openai:openai-client:3.2.0"
+    // import Kotlin API client BOM
+    implementation platform('com.aallam.openai:openai-client-bom:3.2.0')
 
+    implementation "com.android.volley:volley:1.2.0"
 }
