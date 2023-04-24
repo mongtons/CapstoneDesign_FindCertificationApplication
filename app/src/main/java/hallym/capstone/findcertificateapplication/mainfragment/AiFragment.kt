@@ -35,7 +35,7 @@ class AiFragment : Fragment() {
     }
 
     var url = "https://api.openai.com/v1/completions"
-    val apiKey="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"
+    val apiKey=""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
