@@ -2,6 +2,7 @@ package hallym.capstone.findcertificateapplication.mainfragment
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.RetryPolicy
@@ -18,32 +21,36 @@ import com.android.volley.toolbox.Volley
 import com.google.android.material.textfield.TextInputEditText
 import hallym.capstone.findcertificateapplication.R
 import hallym.capstone.findcertificateapplication.databinding.FragmentAiBinding
+import hallym.capstone.findcertificateapplication.databinding.MessageItemBinding
+import hallym.capstone.findcertificateapplication.datatype.Message
 import org.json.JSONObject
 
+
 class AiFragment : Fragment() {
-    lateinit var responseTV: TextView
-    lateinit var questionTV: TextView
+//    lateinit var responseTV: TextView
     lateinit var queryEdt: TextInputEditText
+    lateinit var binding:FragmentAiBinding
+    val messageList:MutableList<Message> by lazy {
+        mutableListOf()
+    }
 
     var url = "https://api.openai.com/v1/completions"
-    val apiKey=""
+    val apiKey="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"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         super.onCreate(savedInstanceState)
-        val binding= FragmentAiBinding.inflate(inflater, container, false)
+        binding= FragmentAiBinding.inflate(inflater, container, false)
 
         // initializing variables on below line.
-        responseTV = binding.idTVResponse
-        questionTV = binding.idTVQuestion
         queryEdt = binding.idEdtQuery
         // adding editor action listener for edit text on below line.
         queryEdt.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 // setting response tv on below line.
-                responseTV.text = "Please wait.."
+//                responseTV.text = "Please wait.."
                 // validating text
                 if (queryEdt.text.toString().length > 0) {
                     // calling get response to get the response.
@@ -55,11 +62,12 @@ class AiFragment : Fragment() {
             }
             false
         })
+
         return binding.root
     }
     private fun getResponse(query: String) {
         // setting text on for question on below line.
-        questionTV.text = query
+        messageList.add(Message(true, query))
         queryEdt.setText("")
         // creating a queue for request queue.
         val queue: RequestQueue = Volley.newRequestQueue(context)
@@ -82,7 +90,10 @@ class AiFragment : Fragment() {
                     // on below line getting response message and setting it to text view.
                     val responseMsg: String =
                         response.getJSONArray("choices").getJSONObject(0).getString("text")
-                    responseTV.text = responseMsg
+                    messageList.add(Message(false, responseMsg))
+                    val layoutManager=LinearLayoutManager(context)
+                    binding.chatMessage.layoutManager=layoutManager
+                    binding.chatMessage.adapter=AiAdapter(messageList)
                 },
                 // adding on error listener
                 Response.ErrorListener { error ->
@@ -113,5 +124,24 @@ class AiFragment : Fragment() {
         })
         // on below line adding our request to queue.
         queue.add(postRequest)
+    }
+}
+class AiViewHolder(val binding: MessageItemBinding): RecyclerView.ViewHolder(binding.root)
+class AiAdapter(val contents:MutableList<Message>):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
+        =AiViewHolder(MessageItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val binding=(holder as AiViewHolder).binding
+        binding.itemMessage.text=contents[position].text
+        if(contents[position].id){
+            binding.itemRoot.gravity=Gravity.RIGHT
+        }else{
+            binding.itemRoot.gravity=Gravity.LEFT
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return contents.size
     }
 }
