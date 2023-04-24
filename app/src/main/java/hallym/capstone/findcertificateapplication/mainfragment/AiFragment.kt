@@ -30,9 +30,7 @@ class AiFragment : Fragment() {
 //    lateinit var responseTV: TextView
     lateinit var queryEdt: TextInputEditText
     lateinit var binding:FragmentAiBinding
-    val messageList:MutableList<Message> by lazy {
-        mutableListOf()
-    }
+    lateinit var messageList:MutableList<Message>
 
     var url = "https://api.openai.com/v1/completions"
     val apiKey=""
@@ -46,6 +44,7 @@ class AiFragment : Fragment() {
 
         // initializing variables on below line.
         queryEdt = binding.idEdtQuery
+        messageList = mutableListOf()
         // adding editor action listener for edit text on below line.
         queryEdt.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEND) {
@@ -62,6 +61,9 @@ class AiFragment : Fragment() {
             }
             false
         })
+        val layoutManager=LinearLayoutManager(context)
+        binding.chatMessage.layoutManager=layoutManager
+        binding.chatMessage.adapter=AiAdapter(messageList)
 
         return binding.root
     }
@@ -78,7 +80,7 @@ class AiFragment : Fragment() {
         jsonObject.put("prompt", query)
         jsonObject.put("temperature", 0)
         jsonObject.put("max_tokens", 100)
-        jsonObject.put("top_p", 1)
+        jsonObject.put("top_p", 0.9)
         jsonObject.put("frequency_penalty", 0.0)
         jsonObject.put("presence_penalty", 0.0)
 
@@ -91,9 +93,7 @@ class AiFragment : Fragment() {
                     val responseMsg: String =
                         response.getJSONArray("choices").getJSONObject(0).getString("text")
                     messageList.add(Message(false, responseMsg))
-                    val layoutManager=LinearLayoutManager(context)
-                    binding.chatMessage.layoutManager=layoutManager
-                    binding.chatMessage.adapter=AiAdapter(messageList)
+                    binding.chatMessage.adapter?.notifyDataSetChanged()
                 },
                 // adding on error listener
                 Response.ErrorListener { error ->
