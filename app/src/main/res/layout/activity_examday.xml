@@ -28,8 +28,7 @@
             android:paddingLeft="13dp"
             android:paddingRight="13dp"
             android:paddingTop="69dp"
-            android:paddingBottom="104dp"
-            android:background="@color/iceTeal">
+            android:paddingBottom="104dp">
             <TextView
                 android:id="@+id/period"
                 android:layout_width="match_parent"

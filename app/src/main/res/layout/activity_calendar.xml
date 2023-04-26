@@ -22,8 +22,7 @@
         android:layout_height="match_parent"
         android:paddingTop="68dp"
         android:paddingHorizontal="12dp"
-        android:orientation="vertical"
-        android:background="@color/iceTeal">
+        android:orientation="vertical">
         <Spinner
             android:id="@+id/month_spinner"
             android:layout_width="150dp"

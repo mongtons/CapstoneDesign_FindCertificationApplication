@@ -5,23 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/iceTeal"
     android:paddingLeft="13dp"
     android:paddingRight="13dp"
     android:paddingTop="69dp"
     tools:context=".mainfragment.SearchFragment">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="SW자격증 SEARCH"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:textColor="@color/annapolosBlue"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:layout_marginTop="15dp"
         android:orientation="horizontal">
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
@@ -50,8 +40,7 @@
                     android:layout_marginLeft="4dp"
                     android:hint="검색어를 입력하시오"
                     android:inputType="text"
-                    android:textColorHint="@color/grey"
-                    android:background="@color/white"/>
+                    android:textColorHint="@color/grey"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView

@@ -79,7 +79,7 @@ class AiFragment : Fragment() {
         jsonObject.put("model", "text-davinci-003")
         jsonObject.put("prompt", query)
         jsonObject.put("temperature", 0)
-        jsonObject.put("max_tokens", 100)
+        jsonObject.put("max_tokens", 1024)
         jsonObject.put("top_p", 0.9)
         jsonObject.put("frequency_penalty", 0.0)
         jsonObject.put("presence_penalty", 0.0)
