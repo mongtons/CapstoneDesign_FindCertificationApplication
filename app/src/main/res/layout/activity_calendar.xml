@@ -23,19 +23,8 @@
         android:paddingTop="68dp"
         android:paddingHorizontal="12dp"
         android:orientation="vertical">
-        <Spinner
-            android:id="@+id/month_spinner"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:layout_gravity="center"/>
-        <View
-            android:id="@+id/calendar_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"/>
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/favorite_recycler"
+            android:id="@+id/calendar_custom"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"/>
