@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/cottonBall"
     tools:context=".mainfragment.CommunityFragment"
     android:paddingTop="69dp"
     android:paddingHorizontal="13dp">
@@ -12,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="SW자격증 COMMUNITY"
+        android:text="SW자격증 COMMUNITY📱"
         android:textColor="@color/annapolosBlue"
         android:textStyle="bold"
         android:textSize="20sp"/>
@@ -20,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:backgroundTint="@color/mediaDarkShadeOfCyan"
+        android:backgroundTint="@color/iceTeal"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp">
         <androidx.cardview.widget.CardView
@@ -33,19 +34,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:background="@color/silverWhite">
+                android:background="@color/white">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:text="게시판 목록"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/annapolosBlue"/>
+                    android:textStyle="bold"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@color/mediaDarkShadeOfCyan"/>
+                    android:background="@color/iceTeal"/>
                 <Button
                     android:id="@+id/free_community"
                     android:layout_width="match_parent"
@@ -54,8 +54,8 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textAlignment="textStart"
-                    android:textColor="@color/annapolosBlue"
-                    android:background="@drawable/button_design"/>
+                    android:background="@drawable/button_design"
+                    android:theme="@style/Theme.FindCertificateApplication.Button"/>
                 <Button
                     android:id="@+id/study_community"
                     android:layout_width="match_parent"
@@ -64,8 +64,8 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textAlignment="textStart"
-                    android:textColor="@color/annapolosBlue"
-                    android:background="@drawable/button_design"/>
+                    android:background="@drawable/button_design"
+                    android:theme="@style/Theme.FindCertificateApplication.Button"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>

@@ -24,7 +24,7 @@ class FreeCommunityActivity : AppCompatActivity() {
         ActivityCommunityBinding.inflate(layoutInflater)
     }
     val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    val freeBoardRef: DatabaseReference =database.getReference("Free_Board")
+    val freeBoardRef: DatabaseReference =database.getReference()
     //    val studyBoardRef: DatabaseReference =database.getReference("Study_Board")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,8 @@ class FreeCommunityActivity : AppCompatActivity() {
             freeBoardRef.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val boardList = mutableListOf<FreeBoard>()
-                    for (board in snapshot.children) {
+                    val freeBoardList=snapshot.child("Free_Board")
+                    for (board in freeBoardList.children) {
                         val commentList = mutableListOf<Comment>()
                         for (comment in board.child("comment").children) {
                             commentList.add(

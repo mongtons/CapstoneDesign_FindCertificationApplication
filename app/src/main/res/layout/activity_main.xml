@@ -13,9 +13,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/silverWhite"
-            android:id="@+id/appbar"
-            android:theme="@style/Theme.FindCertificateApplication">
+            android:id="@+id/appbar">
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -33,7 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="53dp"
             android:layout_gravity="bottom"
-            android:background="@color/silverWhite"
             android:theme="@style/Theme.FindCertificateApplication.BottomBar"
             app:menu="@menu/bottom_menu"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

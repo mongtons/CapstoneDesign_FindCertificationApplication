@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/cottonBall"
     android:paddingLeft="13dp"
     android:paddingRight="13dp"
     android:paddingTop="69dp"
@@ -63,7 +64,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="104dp"
-        android:backgroundTint="@color/mediaDarkShadeOfCyan"
+        android:backgroundTint="@color/iceTeal"
         app:cardCornerRadius="10dp"
         app:cardElevation="3dp">
         <androidx.cardview.widget.CardView
@@ -72,7 +73,7 @@
             android:layout_margin="2dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="0dp"
-            android:backgroundTint="@color/silverWhite">
+            android:backgroundTint="@color/cottonBall">
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

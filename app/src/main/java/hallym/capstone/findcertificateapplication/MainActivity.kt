@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -19,11 +20,13 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val toggle=ActionBarDrawerToggle(this, binding.drawer, R.string.opened_drawer, R.string.closed_drawer)
+        toggle.syncState()
+
         supportFragmentManager.beginTransaction().replace(R.id.fragment_position, HomeFragment()).commit()
 
         binding.bottomBar.setOnItemSelectedListener{

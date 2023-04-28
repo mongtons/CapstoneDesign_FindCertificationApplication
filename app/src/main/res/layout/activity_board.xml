@@ -19,13 +19,13 @@
         android:layout_height="match_parent"
         android:paddingTop="68dp"
         android:paddingHorizontal="12dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/cottonBall">
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="32sp"
-            android:textColor="@color/annapolosBlue"
             android:textStyle="bold"/>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -34,21 +34,18 @@
                 android:id="@+id/user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/annapolosBlue"
                 android:textSize="18sp"/>
             <TextView
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/annapolosBlue"
                 android:textSize="18sp"/>
         </RelativeLayout>
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:backgroundTint="@color/silverWhite"
             app:cardCornerRadius="10dp"
             app:cardElevation="2dp">
             <LinearLayout
@@ -60,8 +57,7 @@
                     android:id="@+id/summary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:textColor="@color/annapolosBlue"/>
+                    android:textSize="18sp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.recyclerview.widget.RecyclerView
@@ -82,8 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="6"
                 app:cardCornerRadius="10dp"
-                app:cardElevation="0dp"
-                android:backgroundTint="@color/silverWhite">
+                app:cardElevation="0dp">
                 <EditText
                     android:id="@+id/comment_text"
                     android:layout_width="match_parent"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cottonBall"
     android:orientation="vertical"
     android:paddingTop="68dp"
     android:paddingHorizontal="13dp"
@@ -12,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="7"
-        android:backgroundTint="@color/mediaDarkShadeOfCyan"
+        android:backgroundTint="@color/iceTeal"
         app:cardCornerRadius="10dp"
         app:cardElevation="3dp">
         <androidx.cardview.widget.CardView
@@ -21,7 +22,7 @@
             android:layout_margin="2dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="0dp"
-            android:backgroundTint="@color/silverWhite">
+            android:backgroundTint="@color/cottonBall">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/chatMessage"
                 android:layout_width="match_parent"
@@ -41,7 +42,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:cardCornerRadius="10dp"
-            app:cardBackgroundColor="@color/white"
             app:cardElevation="0dp">
             <LinearLayout
                 android:layout_width="match_parent"
