@@ -12,7 +12,7 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="자유게시판"
+            app:title="게시판"
             app:titleTextColor="@color/annapolosBlue"
             android:id="@+id/toolbar"/>
     </com.google.android.material.appbar.AppBarLayout>
@@ -20,11 +20,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="69dp"
-        android:orientation="vertical"
-        android:background="@color/cottonBall">
+        android:orientation="vertical">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/free_community_text"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/add_board"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/lightCarret"
+            android:text="글쓰기"
+            android:textColor="@color/annapolosBlue"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            app:icon="@android:drawable/ic_input_add"
+            app:iconTint="@color/annapolosBlue"/>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

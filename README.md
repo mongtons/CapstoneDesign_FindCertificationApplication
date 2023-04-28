@@ -24,4 +24,5 @@
 * Android Studio `11.0.15+0-b2043.56-9505619 amd64`
 > 2022.1.1 Patch 1
 * Firebase
-> Realtime Database
+> Realtime Database   
+> Authentication

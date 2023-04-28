@@ -1,24 +1,35 @@
 package hallym.capstone.findcertificateapplication
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import hallym.capstone.findcertificateapplication.databinding.ActivityMainBinding
 import hallym.capstone.findcertificateapplication.mainfragment.*
 
 class MainActivity : AppCompatActivity() {
+    val mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()// 파이어베이스 인증
+    val mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Account")// 실시간 데이터베이스
     val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportFragmentManager.beginTransaction().replace(R.id.fragment_position, HomeFragment()).commit()
 
         binding.bottomBar.setOnItemSelectedListener{
+
+            var bundle = Bundle()
+
             when(it.title){
                 "HOME" ->{
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_position, HomeFragment()).commit()
@@ -30,10 +41,18 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_position, AiFragment()).commit()
                 }
                 "COMMUNITY" ->{
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_position, CommunityFragment()).commit()
+                    if(mFirebaseAuth.currentUser != null) {
+                        supportFragmentManager.beginTransaction().replace(R.id.fragment_position, CommunityFragment()).commit()
+                    }else {
+                        setDataAtFragment(LoginFragment(), "community")
+                    }
                 }
                 "MY PAGE" ->{
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_position, MyPageFragment()).commit()
+                    if(mFirebaseAuth.currentUser != null) {
+                        supportFragmentManager.beginTransaction().replace(R.id.fragment_position, MyPageFragment()).commit()
+                    }else {
+                        setDataAtFragment(LoginFragment(), "mypage")
+                    }
                 }
             }
             true
@@ -61,4 +80,17 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    fun setDataAtFragment(loginFragment: LoginFragment, s: String) { // login fragment에 전달할 데이터 설정 및 화면 전환
+        val bundle = Bundle()
+        bundle.putString("type", s)
+
+        loginFragment.arguments = bundle
+        setFragment(loginFragment)
+    }
+
+    fun setFragment(loginFragment: LoginFragment) { // 화면 전환
+        val transaction = supportFragmentManager.beginTransaction().replace(R.id.fragment_position, loginFragment).commit()
+    }
+
 }

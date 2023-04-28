@@ -9,12 +9,13 @@
     <color name="white">#FFFFFFFF</color>
     <color name="paleWhite">#FFF3F7F9</color>
     <color name="paleBlack">#FF222325</color>
-    <color name="green">#62C050</color>
-    <color name="eveningGlory">#384861</color>
     <color name="cottonBall">#F1F4FD</color>
     <color name="annapolosBlue">#364964</color>
-    <color name="anon">#BBBFC7</color>
-    <color name="veiledSplotlight">#D0D3D7</color>
-    <color name="lightSilver">#D1D7E0</color>
     <color name="grey">#83838D</color>
+    <color name="summerSky">#579BB1</color>
+    <color name="silverWhite">#EFF5F5</color>
+    <color name="iceTeal">#D6E4E5</color>
+    <color name="mediaDarkShadeOfCyan">#497174</color>
+    <color name="lightCarret">#EB6440</color>
+    <color name="whitewhite">#F8FFFF</color>
 </resources>
