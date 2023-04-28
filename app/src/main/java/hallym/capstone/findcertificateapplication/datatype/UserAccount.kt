@@ -8,4 +8,6 @@ class UserAccount {
     var emailId: String? = null
     var password: String? = null
     var idToken: String? = null // Firebase Uid(고유 토큰 정보)
+    var region: String? = null  // 지역
 }
+
