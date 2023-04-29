@@ -5,37 +5,52 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     tools:context=".MainActivity"
+    android:fitsSystemWindows="true"
     android:id="@+id/drawer">
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/appbar">
+            android:id="@+id/appbar"
+            android:fitsSystemWindows="true"
+            app:elevation="0dp">
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:title="자격증 어플리케이션"
-                app:titleTextColor="@color/annapolosBlue"
-                android:id="@+id/toolbar"/>
+                app:title=" "
+                android:id="@+id/toolbar"
+                app:layout_scrollFlags="scroll|enterAlways"/>
         </com.google.android.material.appbar.AppBarLayout>
         <LinearLayout
             android:id="@+id/fragment_position"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"/>
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_bar"
-            android:layout_width="match_parent"
-            android:layout_height="53dp"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="10dp"
             android:layout_gravity="bottom"
-            android:theme="@style/Theme.FindCertificateApplication.BottomBar"
-            app:menu="@menu/bottom_menu"/>
+            app:cardCornerRadius="8dp"
+            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior">
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_bar"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:theme="@style/Theme.FindCertificateApplication.BottomBar"
+                app:menu="@menu/bottom_menu"
+                android:background="@color/cottonBall"/>
+        </androidx.cardview.widget.CardView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         android:layout_gravity="start"/>
 </androidx.drawerlayout.widget.DrawerLayout>

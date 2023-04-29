@@ -1,11 +1,13 @@
 package hallym.capstone.findcertificateapplication
 
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.appbar.AppBarLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -24,11 +26,13 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val toggle=ActionBarDrawerToggle(this, binding.drawer, R.string.opened_drawer, R.string.closed_drawer)
         toggle.syncState()
 
         supportFragmentManager.beginTransaction().replace(R.id.fragment_position, HomeFragment()).commit()
 
+        var params : AppBarLayout.LayoutParams = binding.toolbar.layoutParams as AppBarLayout.LayoutParams
         binding.bottomBar.setOnItemSelectedListener{
 
             var bundle = Bundle()
@@ -36,16 +40,28 @@ class MainActivity : AppCompatActivity() {
             when(it.title){
                 "HOME" ->{
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_position, HomeFragment()).commit()
+                    params.setScrollFlags(0)
+                    params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS_COLLAPSED
+                    binding.toolbar.layoutParams = params
                 }
                 "SEARCH" ->{
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_position, SearchFragment()).commit()
+                    params.setScrollFlags(0)
+                    params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS_COLLAPSED
+                    binding.toolbar.layoutParams = params
                 }
                 "A.I." ->{
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_position, AiFragment()).commit()
+                    params.setScrollFlags(0)
+                    params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL
+                    binding.toolbar.layoutParams = params
                 }
                 "COMMUNITY" ->{
                     if(mFirebaseAuth.currentUser != null) {
                         supportFragmentManager.beginTransaction().replace(R.id.fragment_position, CommunityFragment()).commit()
+                        params.setScrollFlags(0)
+                        params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL
+                        binding.toolbar.layoutParams = params
                     }else {
                         setDataAtFragment(LoginFragment(), "community")
                     }
@@ -53,6 +69,9 @@ class MainActivity : AppCompatActivity() {
                 "MY PAGE" ->{
                     if(mFirebaseAuth.currentUser != null) {
                         supportFragmentManager.beginTransaction().replace(R.id.fragment_position, MyPageFragment()).commit()
+                        params.setScrollFlags(0)
+                        params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS_COLLAPSED
+                        binding.toolbar.layoutParams = params
                     }else {
                         setDataAtFragment(LoginFragment(), "mypage")
                     }

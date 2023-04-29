@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +19,6 @@ import com.android.volley.RetryPolicy
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.google.android.material.textfield.TextInputEditText
 import hallym.capstone.findcertificateapplication.R
 import hallym.capstone.findcertificateapplication.databinding.FragmentAiBinding
 import hallym.capstone.findcertificateapplication.databinding.MessageItemBinding
@@ -27,13 +27,12 @@ import org.json.JSONObject
 
 
 class AiFragment : Fragment() {
-//    lateinit var responseTV: TextView
-    lateinit var queryEdt: TextInputEditText
+    lateinit var queryEdt: EditText
     lateinit var binding:FragmentAiBinding
     lateinit var messageList:MutableList<Message>
 
     var url = "https://api.openai.com/v1/completions"
-    val apiKey=""
+    val apiKey="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"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,9 +60,25 @@ class AiFragment : Fragment() {
             }
             false
         })
+        binding.inputBtn.setOnClickListener {
+            val searchText=queryEdt.text.toString()
+
+            if(searchText.length>0){
+                getResponse(searchText)
+            }else{
+                Toast.makeText(context, "Please enter your query..", Toast.LENGTH_SHORT).show()
+            }
+
+            val hide: SearchFragment = SearchFragment()
+            hide.hideKeyboard(requireContext(), this.requireView())
+
+            queryEdt.text.clear()
+        }
         val layoutManager=LinearLayoutManager(context)
+        layoutManager.orientation=LinearLayoutManager.VERTICAL
         binding.chatMessage.layoutManager=layoutManager
         binding.chatMessage.adapter=AiAdapter(messageList)
+        binding.chatMessage.scrollToPosition(messageList.size-1)
 
         return binding.root
     }

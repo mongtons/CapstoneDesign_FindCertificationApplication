@@ -5,6 +5,7 @@
         android:id="@+id/calendar"
         android:title="일정"
         android:icon="@drawable/calendar"
+        android:iconTint="@color/mediaDarkShadeOfCyan"
         app:showAsAction="always"/>
     <item
         android:id="@+id/setting"

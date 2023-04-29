@@ -5,45 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/cottonBall"
-    android:paddingLeft="13dp"
-    android:paddingRight="13dp"
-    android:paddingTop="69dp"
     tools:context=".mainfragment.SearchFragment">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:orientation="horizontal">
-        <androidx.cardview.widget.CardView
+        android:orientation="horizontal"
+        android:paddingHorizontal="4dp">
+        <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:cardCornerRadius="10dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardElevation="3dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="10dp"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:scaleType="center"
-                    android:src="@drawable/search"/>
-                <EditText
-                    android:id="@+id/search_text"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="9"
-                    android:layout_marginLeft="4dp"
-                    android:hint="검색어를 입력하시오"
-                    android:inputType="text"
-                    android:textColorHint="@color/grey"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            android:layout_gravity="center"
+            android:scaleType="center"
+            android:src="@drawable/search"
+            app:tint="@color/mediaDarkShadeOfCyan" />
+        <EditText
+            android:id="@+id/search_text"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="9"
+            android:layout_marginLeft="4dp"
+            android:hint="검색어를 입력하시오"
+            android:inputType="text"
+            android:textColorHint="@color/grey"/>
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,16 +46,16 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="104dp"
         android:backgroundTint="@color/iceTeal"
-        app:cardCornerRadius="10dp"
+        android:layout_marginHorizontal="3dp"
+        android:layout_marginBottom="3dp"
+        app:cardCornerRadius="2dp"
         app:cardElevation="3dp">
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="2dp"
-            app:cardCornerRadius="10dp"
+            app:cardCornerRadius="2dp"
             app:cardElevation="0dp"
             android:backgroundTint="@color/cottonBall">
             <androidx.recyclerview.widget.RecyclerView
