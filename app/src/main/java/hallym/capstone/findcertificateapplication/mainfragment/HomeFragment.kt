@@ -1,5 +1,7 @@
 package hallym.capstone.findcertificateapplication.mainfragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -27,6 +29,28 @@ class HomeFragment : Fragment() {
             )
             tab.text=categoryList[position]
         }.attach()
+
+        var intent: Intent
+        binding.qnet.setOnClickListener {
+            intent=Intent(Intent.ACTION_VIEW, Uri.parse("https://www.q-net.or.kr/man001.do?imYn=Y&gSite=Q"))
+            startActivity(intent)
+        }
+        binding.kca.setOnClickListener {
+            intent= Intent(Intent.ACTION_VIEW, Uri.parse("https://www.cq.or.kr/main.do"))
+            startActivity(intent)
+        }
+        binding.kcci.setOnClickListener {
+            intent=Intent(Intent.ACTION_VIEW, Uri.parse("https://license.korcham.net/indexmain.jsp"))
+            startActivity(intent)
+        }
+        binding.kdata.setOnClickListener {
+            intent=Intent(Intent.ACTION_VIEW, Uri.parse("https://www.dataq.or.kr/www/main.do"))
+            startActivity(intent)
+        }
+        binding.tta.setOnClickListener {
+            intent=Intent(Intent.ACTION_VIEW, Uri.parse("https://edu.tta.or.kr/"))
+            startActivity(intent)
+        }
 
         return binding.root
     }

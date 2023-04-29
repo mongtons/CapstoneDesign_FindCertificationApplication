@@ -100,9 +100,9 @@
                     android:id="@+id/comment_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_input_add"
+                    android:src="@android:drawable/sym_action_chat"
                     android:backgroundTint="@color/lightCarret"
-                    app:tint="@color/annapolosBlue" />
+                    app:tint="@color/white" />
             </androidx.cardview.widget.CardView>
         </LinearLayout>
     </LinearLayout>
