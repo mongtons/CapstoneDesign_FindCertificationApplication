@@ -29,9 +29,9 @@
             android:layout_gravity="right"
             android:padding="5dp" />
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/study_boardList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
     </LinearLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

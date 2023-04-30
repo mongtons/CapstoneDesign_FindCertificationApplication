@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddBoardActivity">
+    tools:context=".AddStudyActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,6 +62,29 @@
                         android:maxLength="50"
                         android:maxLines="1"
                         android:background="@color/white"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/iceTeal"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="참가 인원 수"
+                            android:textSize="20sp"
+                            android:textStyle="bold"/>
+                        <Spinner
+                            android:id="@+id/study_spinner"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="50dp"
+                            android:padding="3dp" />
+                    </LinearLayout>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2dp"

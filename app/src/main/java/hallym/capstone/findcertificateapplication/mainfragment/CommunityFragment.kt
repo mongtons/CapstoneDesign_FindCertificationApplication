@@ -21,12 +21,10 @@ class CommunityFragment : Fragment() {
 
         binding.freeCommunity.setOnClickListener {
             intent= Intent(activity, FreeCommunityActivity::class.java)
-            intent.putExtra("id", true)
             startActivity(intent)
         }
         binding.studyCommunity.setOnClickListener {
             intent= Intent(activity, StudyActivity::class.java)
-            intent.putExtra("id", false)
             startActivity(intent)
         }
 

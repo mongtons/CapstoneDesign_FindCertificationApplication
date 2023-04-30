@@ -25,57 +25,49 @@ class FreeCommunityActivity : AppCompatActivity() {
     }
     val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     val freeBoardRef: DatabaseReference =database.getReference()
-    //    val studyBoardRef: DatabaseReference =database.getReference("Study_Board")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        if(intent.getBooleanExtra("id", true)) {
-            binding.toolbar.title="자유게시판"
-            freeBoardRef.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val boardList = mutableListOf<FreeBoard>()
-                    val freeBoardList=snapshot.child("Free_Board")
-                    for (board in freeBoardList.children) {
-                        val commentList = mutableListOf<Comment>()
-                        for (comment in board.child("comment").children) {
-                            commentList.add(
-                                Comment(
-                                    comment.child("id").value.toString(),
-                                    comment.child("user").value.toString(),
-                                    comment.child("letter").value.toString()
-                                )
+        freeBoardRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val boardList = mutableListOf<FreeBoard>()
+                val freeBoardList=snapshot.child("Free_Board")
+                for (board in freeBoardList.children) {
+                    val commentList = mutableListOf<Comment>()
+                    for (comment in board.child("comment").children) {
+                        commentList.add(
+                            Comment(
+                                comment.child("id").value.toString(),
+                                comment.child("user").value.toString(),
+                                comment.child("letter").value.toString()
                             )
-                        }
-                        val data = FreeBoard(
-                            board.key!!,
-                            board.child("title").value.toString(),
-                            board.child("user").value.toString(),
-                            board.child("date").value as Long,
-                            commentList,
-                            board.child("body").value.toString()
                         )
-                        boardList.add(0, data)
                     }
-                    val layoutManager = LinearLayoutManager(this@FreeCommunityActivity)
-                    layoutManager.orientation = LinearLayoutManager.VERTICAL
-                    binding.freeCommunityText.layoutManager = layoutManager
-                    binding.freeCommunityText.adapter =
-                        FreeBoardAdapter(boardList, this@FreeCommunityActivity)
+                    val data = FreeBoard(
+                        board.key!!,
+                        board.child("title").value.toString(),
+                        board.child("user").value.toString(),
+                        board.child("date").value as Long,
+                        commentList,
+                        board.child("body").value.toString()
+                    )
+                    boardList.add(0, data)
                 }
-
-                override fun onCancelled(error: DatabaseError) {
-                    try {
-                        error.toException()
-                    } catch (_: java.lang.Exception) { }
-                }
-            })
-        }else{
-            binding.toolbar.title="스터디게시판"
-        }
+                val layoutManager = LinearLayoutManager(this@FreeCommunityActivity)
+                layoutManager.orientation = LinearLayoutManager.VERTICAL
+                binding.freeCommunityText.layoutManager = layoutManager
+                binding.freeCommunityText.adapter =
+                    FreeBoardAdapter(boardList, this@FreeCommunityActivity)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                try {
+                    error.toException()
+                } catch (_: java.lang.Exception) { }
+            }
+        })
         binding.addBoard.shrink()
         binding.addBoard.setOnClickListener {
             when(binding.addBoard.isExtended){
