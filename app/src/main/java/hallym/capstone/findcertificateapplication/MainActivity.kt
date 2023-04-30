@@ -20,14 +20,16 @@ class MainActivity : AppCompatActivity() {
     val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+    lateinit var toggle: ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val toggle=ActionBarDrawerToggle(this, binding.drawer, R.string.opened_drawer, R.string.closed_drawer)
+        toggle=ActionBarDrawerToggle(this@MainActivity, binding.drawer, R.string.opened_drawer, R.string.closed_drawer)
         toggle.syncState()
 
         supportFragmentManager.beginTransaction().replace(R.id.fragment_position, HomeFragment()).commit()
@@ -86,6 +88,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(toggle.onOptionsItemSelected(item)){
+            true
+            return super.onOptionsItemSelected(item)
+        }
         val intent: Intent
         return when(item.title){
             "일정" -> {
