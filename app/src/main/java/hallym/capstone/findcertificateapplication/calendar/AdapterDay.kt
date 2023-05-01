@@ -1,19 +1,14 @@
 package hallym.capstone.findcertificateapplication.calendar
 
 import android.graphics.Color
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import hallym.capstone.findcertificateapplication.R
-import hallym.capstone.findcertificateapplication.databinding.ActivityCalendarBinding
-import hallym.capstone.findcertificateapplication.databinding.ActivityCommunityBinding
 import hallym.capstone.findcertificateapplication.databinding.ListItemDayBinding
-import kotlinx.coroutines.NonDisposableHandle.parent
 import java.util.*
+
 
 class ViewHolder(val binding : ListItemDayBinding):RecyclerView.ViewHolder(binding.root)
 
@@ -25,7 +20,7 @@ class AdapterDay(val tempMonth:Int, val dayList: MutableList<Date>): RecyclerVie
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder  =
         ViewHolder(ListItemDayBinding.inflate(LayoutInflater.from(parent.context),
-        parent, false))
+            parent, false))
 //        var view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_day, parent, false)
 //        return DayView(view)
 

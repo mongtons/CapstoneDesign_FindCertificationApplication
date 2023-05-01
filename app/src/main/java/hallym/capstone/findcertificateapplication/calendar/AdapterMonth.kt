@@ -16,17 +16,18 @@ class MonthViewHolder(val binding : ListItemMonthBinding):RecyclerView.ViewHolde
 
 
 class AdapterMonth() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    val center = Int.MAX_VALUE / 2
+    val currentMonth = Calendar.getInstance().get(Calendar.MONTH)
+    val center = Int.MAX_VALUE / 2 + currentMonth
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         MonthViewHolder(ListItemMonthBinding.inflate(LayoutInflater.from(parent.context),
             parent, false))
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.YEAR, 2023)
-        calendar.set(Calendar.MONTH, position)
+        calendar.set(Calendar.MONTH, (position + currentMonth) % 20)
         calendar.set(Calendar.DAY_OF_MONTH, 1)
 
         val binding = (holder as MonthViewHolder).binding
