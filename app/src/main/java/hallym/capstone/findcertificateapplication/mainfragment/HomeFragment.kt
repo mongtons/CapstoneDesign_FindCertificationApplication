@@ -1,23 +1,16 @@
 package hallym.capstone.findcertificateapplication.mainfragment
 
-import android.app.ActionBar
-import android.content.Context
 import android.content.Intent
-import android.graphics.Rect
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import hallym.capstone.findcertificateapplication.*
 import hallym.capstone.findcertificateapplication.categoryfragment.*
-import hallym.capstone.findcertificateapplication.databinding.CategoryItemBinding
 import hallym.capstone.findcertificateapplication.databinding.FragmentHomeBinding
-import hallym.capstone.findcertificateapplication.databinding.PopularItemBinding
-import hallym.capstone.findcertificateapplication.datatype.Popular
 
 class HomeFragment : Fragment() {
     override fun onCreateView(
@@ -25,7 +18,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding=FragmentHomeBinding.inflate(inflater, container, false)
-
 
         val tab=binding.tab
         val viewPager=binding.categoryView
@@ -37,6 +29,28 @@ class HomeFragment : Fragment() {
             )
             tab.text=categoryList[position]
         }.attach()
+
+        var intent: Intent
+        binding.qnet.setOnClickListener {
+            intent=Intent(Intent.ACTION_VIEW, Uri.parse("https://www.q-net.or.kr/man001.do?imYn=Y&gSite=Q"))
+            startActivity(intent)
+        }
+        binding.kca.setOnClickListener {
+            intent= Intent(Intent.ACTION_VIEW, Uri.parse("https://www.cq.or.kr/main.do"))
+            startActivity(intent)
+        }
+        binding.kcci.setOnClickListener {
+            intent=Intent(Intent.ACTION_VIEW, Uri.parse("https://license.korcham.net/indexmain.jsp"))
+            startActivity(intent)
+        }
+        binding.kdata.setOnClickListener {
+            intent=Intent(Intent.ACTION_VIEW, Uri.parse("https://www.dataq.or.kr/www/main.do"))
+            startActivity(intent)
+        }
+        binding.tta.setOnClickListener {
+            intent=Intent(Intent.ACTION_VIEW, Uri.parse("https://edu.tta.or.kr/"))
+            startActivity(intent)
+        }
 
         return binding.root
     }

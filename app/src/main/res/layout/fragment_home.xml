@@ -1,54 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="?attr/actionBarSize"
+    android:orientation="vertical"
     tools:context=".mainfragment.HomeFragment">
-    <com.google.android.material.appbar.AppBarLayout
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:paddingHorizontal="6dp"
+        android:rowCount="2">
+        <ImageButton
+            android:id="@+id/qnet"
+            android:src="@drawable/qnet"
+            android:layout_width="67dp"
+            android:layout_height="67dp"
+            android:scaleType="centerCrop"
+            android:background="@color/white"
+            android:layout_marginRight="6dp"/>
+        <ImageButton
+            android:id="@+id/kca"
+            android:src="@drawable/kca"
+            android:layout_width="67dp"
+            android:layout_height="67dp"
+            android:scaleType="centerCrop"
+            android:background="@color/white"
+            android:layout_marginRight="6dp"/>
+        <ImageButton
+            android:id="@+id/kcci"
+            android:src="@drawable/kcci"
+            android:layout_width="67dp"
+            android:layout_height="67dp"
+            android:scaleType="centerCrop"
+            android:background="@color/white"
+            android:layout_marginRight="6dp"/>
+        <ImageButton
+            android:id="@+id/tta"
+            android:src="@drawable/tta"
+            android:layout_width="67dp"
+            android:layout_height="67dp"
+            android:scaleType="centerCrop"
+            android:background="@color/white"
+            android:layout_marginRight="6dp"/>
+        <ImageButton
+            android:id="@+id/kdata"
+            android:src="@drawable/kdata"
+            android:layout_width="67dp"
+            android:layout_height="67dp"
+            android:scaleType="centerCrop"
+            android:background="@color/white"/>
+    </GridLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab"
         android:layout_width="match_parent"
-        android:layout_height="250dp">
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-            <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"/>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_collapseMode="parallax"
-                android:scaleType="centerCrop"
-                android:src="@drawable/main_img"/>
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="bottom"
-                app:tabIndicatorColor="@color/iceTeal"
-                app:tabMode="scrollable"
-                app:tabSelectedTextColor="@color/annapolosBlue"
-                app:tabTextAppearance="@style/tabTextStyle" />
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-    <LinearLayout
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        app:tabIndicatorColor="@color/mediaDarkShadeOfCyan"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@color/annapolosBlue"
+        app:tabTextAppearance="@style/tabTextStyle" />
+    <androidx.viewpager2.widget.ViewPager2
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="13dp"
-        android:paddingRight="13dp"
-        android:layout_marginBottom="55dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <androidx.viewpager2.widget.ViewPager2
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="5dp"
-            android:id="@+id/category_view"/>
-    </LinearLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:paddingBottom="5dp"
+        android:paddingHorizontal="6dp"
+        android:background="@color/cottonBall"
+        android:id="@+id/category_view"/>
+</LinearLayout>

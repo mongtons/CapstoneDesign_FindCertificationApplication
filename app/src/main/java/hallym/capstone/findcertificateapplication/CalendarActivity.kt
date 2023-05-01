@@ -17,6 +17,9 @@ class CalendarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val monthListManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         val monthListAdapter = AdapterMonth()
 
@@ -29,5 +32,10 @@ class CalendarActivity : AppCompatActivity() {
 
         val snap = PagerSnapHelper()
         snap.attachToRecyclerView(binding.calendarCustom)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onNavigateUp()
     }
 }

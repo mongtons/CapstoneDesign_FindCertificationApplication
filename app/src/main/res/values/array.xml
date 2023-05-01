@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="study_people_count">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+    <string-array name="study_board_list">
+        <item>전체</item>
+        <item>스터딩</item>
+        <item>질문</item>
+    </string-array>
+</resources>

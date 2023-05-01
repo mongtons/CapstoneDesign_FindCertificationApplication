@@ -5,27 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="68dp"
-    android:paddingHorizontal="13dp"
+    android:paddingHorizontal="4dp"
+    android:weightSum="10"
     tools:context=".mainfragment.AiFragment">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="7"
-        android:backgroundTint="@color/mediaDarkShadeOfCyan"
-        app:cardCornerRadius="10dp"
+        android:backgroundTint="@color/iceTeal"
+        app:cardCornerRadius="2dp"
         app:cardElevation="3dp">
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="2dp"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="0dp"
-            android:backgroundTint="@color/silverWhite">
+            android:backgroundTint="@color/cottonBall"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="0dp">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/chatMessage"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:paddingHorizontal="2dp"/>
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
     <!-- text field for asking question-->
@@ -34,49 +37,23 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginTop="12dp"
-        android:orientation="horizontal"
-        android:layout_marginBottom="60dp">
-        <androidx.cardview.widget.CardView
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="6dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ai"
+            app:tint="@color/mediaDarkShadeOfCyan" />
+        <EditText
+            android:id="@+id/idEdtQuery"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:cardCornerRadius="10dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardElevation="0dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="10dp"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:padding="6dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ai"/>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/idTILQuery"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6"
-                    android:hint="AI에게 물어보세요!"
-                    android:textColorHint="@color/grey">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/idEdtQuery"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:drawableTint="@color/annapolosBlue"
-                        android:ems="10"
-                        android:imeOptions="actionSend"
-                        android:importantForAutofill="no"
-                        android:inputType="text"
-                        android:textColor="@color/annapolosBlue"
-                        android:background="@color/white"
-                        android:textSize="14sp" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            android:layout_weight="6"
+            android:hint="AI에게 물어보세요!"
+            android:inputType="text"
+            android:textColorHint="@color/grey"/>
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,7 +66,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:backgroundTint="@color/lightCarret"
-                android:src="@android:drawable/sym_action_chat"/>
+                android:src="@android:drawable/sym_action_chat"
+                app:tint="@color/white" />
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 </LinearLayout>

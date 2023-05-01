@@ -66,7 +66,7 @@ class SearchFragment : Fragment() {
 
         return binding.root
     }
-    private fun hideKeyboard(context: Context, view: View){
+   fun hideKeyboard(context: Context, view: View){
         val imm:InputMethodManager = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
+    android:background="@color/cottonBall"
     android:gravity="center"
     tools:context=".SignIn">
 
@@ -48,6 +49,8 @@
         android:layout_width="wrap_content"
         android:layout_height="131dp"
         android:text="회원가입"
+        android:textColor="@color/silverWhite"
+        android:backgroundTint="@color/lightCarret"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

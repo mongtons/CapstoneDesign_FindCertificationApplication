@@ -3,19 +3,24 @@ package hallym.capstone.findcertificateapplication
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ScrollView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.AppBarLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.databinding.ActivityCertificationBinding
 import hallym.capstone.findcertificateapplication.databinding.BenefitCompanyItemBinding
+import java.lang.Exception
 
 
 class CertificationActivity : AppCompatActivity() {
@@ -25,9 +30,12 @@ class CertificationActivity : AppCompatActivity() {
     val mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()// 파이어베이스 인증
     val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     val ref: DatabaseReference =database.getReference("Certification")
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        binding.scrollView.scrollTo(0, binding.certificationTitle.top)
 
         setSupportActionBar(binding.certificationToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -81,7 +89,7 @@ class CertificationActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
                 try {
                     error.toException()
-                }catch (_:java.lang.Exception){ }
+                }catch (_: Exception){ }
             }
         })
 

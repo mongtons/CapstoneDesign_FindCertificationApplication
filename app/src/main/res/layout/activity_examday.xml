@@ -5,53 +5,54 @@
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".MainActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/appbar"
-        android:theme="@style/Theme.FindCertificateApplication">
+        android:theme="@style/Theme.FindCertificateApplication"
+        android:fitsSystemWindows="true"
+        app:elevation="0dp">
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="시험 상세 정보"
-            app:titleTextColor="@color/annapolosBlue"
-            android:id="@+id/toolbar"/>
+            app:title=" "
+            android:id="@+id/toolbar"
+            app:layout_scrollFlags="scroll|enterAlways"/>
     </com.google.android.material.appbar.AppBarLayout>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:nestedScrollingEnabled="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="13dp"
             android:paddingRight="13dp"
-            android:paddingTop="69dp"
-            android:paddingBottom="104dp">
+            android:paddingBottom="10dp">
             <TextView
                 android:id="@+id/period"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
                 android:paddingHorizontal="5dp"
                 android:text="자격기한: "
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/annapolosBlue"/>
+                android:textStyle="bold"/>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@color/mediaDarkShadeOfCyan"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="0dp">
+                android:backgroundTint="@color/iceTeal"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="2dp">
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
-                    android:backgroundTint="@color/silverWhite"
-                    app:cardCornerRadius="10dp"
+                    app:cardCornerRadius="3dp"
                     app:cardElevation="0dp">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -63,12 +64,11 @@
                             android:padding="10dp"
                             android:text="응시"
                             android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/annapolosBlue"/>
+                            android:textStyle="bold"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
-                            android:background="@color/mediaDarkShadeOfCyan"/>
+                            android:background="@color/iceTeal"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -76,12 +76,11 @@
                             android:textSize="16dp"
                             android:textStyle="bold"
                             android:padding="10dp"
-                            android:layout_marginLeft="7dp"
-                            android:textColor="@color/annapolosBlue"/>
+                            android:layout_marginLeft="7dp"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
-                            android:background="@color/mediaDarkShadeOfCyan"/>
+                            android:background="@color/iceTeal"/>
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/examdayRecycler"
                             android:layout_width="match_parent"
@@ -89,7 +88,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
-                            android:background="@color/mediaDarkShadeOfCyan"/>
+                            android:background="@color/iceTeal"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -97,16 +96,14 @@
                             android:layout_marginLeft="7dp"
                             android:text="응시 자격"
                             android:textSize="16sp"
-                            android:textColor="@color/annapolosBlue"
                             android:textStyle="bold"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
-                            android:background="@color/mediaDarkShadeOfCyan"/>
+                            android:background="@color/iceTeal"/>
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/annapolosBlue"/>
+                            android:layout_height="wrap_content"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </androidx.cardview.widget.CardView>
@@ -114,32 +111,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@color/mediaDarkShadeOfCyan"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="0dp">
+                android:backgroundTint="@color/iceTeal"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="2dp">
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
-                    app:cardCornerRadius="10dp"
+                    app:cardCornerRadius="3dp"
                     app:cardElevation="0dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:background="@color/silverWhite">
+                        android:orientation="vertical">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
                             android:text="시험"
                             android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/annapolosBlue"/>
+                            android:textStyle="bold"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
-                            android:background="@color/mediaDarkShadeOfCyan"/>
+                            android:background="@color/iceTeal"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -147,24 +142,22 @@
                             android:layout_marginLeft="7dp"
                             android:text="검정 방법"
                             android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/annapolosBlue"/>
+                            android:textStyle="bold"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
-                            android:background="@color/mediaDarkShadeOfCyan"/>
+                            android:background="@color/iceTeal"/>
                         <TextView
                             android:id="@+id/test_method"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingHorizontal="17dp"
                             android:paddingVertical="6dp"
-                            android:textSize="14sp"
-                            android:textColor="@color/annapolosBlue"/>
+                            android:textSize="14sp"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
-                            android:background="@color/mediaDarkShadeOfCyan"/>
+                            android:background="@color/iceTeal"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -172,20 +165,18 @@
                             android:layout_marginLeft="7dp"
                             android:text="응시 과목"
                             android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/annapolosBlue"/>
+                            android:textStyle="bold"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
-                            android:background="@color/mediaDarkShadeOfCyan"/>
+                            android:background="@color/iceTeal"/>
                         <TextView
                             android:id="@+id/subject"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingHorizontal="17dp"
                             android:paddingVertical="6dp"
-                            android:textSize="14sp"
-                            android:textColor="@color/annapolosBlue"/>
+                            android:textSize="14sp"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </androidx.cardview.widget.CardView>

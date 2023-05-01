@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import hallym.capstone.findcertificateapplication.FreeCommunityActivity
 import hallym.capstone.findcertificateapplication.R
+import hallym.capstone.findcertificateapplication.StudyActivity
 import hallym.capstone.findcertificateapplication.databinding.FragmentCommunityBinding
 
 class CommunityFragment : Fragment() {
@@ -16,14 +17,14 @@ class CommunityFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding= FragmentCommunityBinding.inflate(inflater, container, false)
-        val intent= Intent(activity, FreeCommunityActivity::class.java)
+        var intent:Intent
 
         binding.freeCommunity.setOnClickListener {
-            intent.putExtra("id", true)
+            intent= Intent(activity, FreeCommunityActivity::class.java)
             startActivity(intent)
         }
         binding.studyCommunity.setOnClickListener {
-            intent.putExtra("id", false)
+            intent= Intent(activity, StudyActivity::class.java)
             startActivity(intent)
         }
 
