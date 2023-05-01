@@ -52,6 +52,7 @@ class SignIn : AppCompatActivity() {
                         firebaseUser.updateProfile(
                             userProfileChangeRequest {
                                 displayName=strname
+
                             }
                         ).addOnCompleteListener{ }
                         //SetValue : database insert (삽입) 행위

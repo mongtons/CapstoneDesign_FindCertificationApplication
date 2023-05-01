@@ -74,7 +74,7 @@
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/heart"
                     android:scaleType="fitCenter"
-                    android:backgroundTint="@color/lightCarret"
+                    android:backgroundTint="@color/grey"
                     app:tint="@color/white" />
             </LinearLayout>
             <androidx.cardview.widget.CardView

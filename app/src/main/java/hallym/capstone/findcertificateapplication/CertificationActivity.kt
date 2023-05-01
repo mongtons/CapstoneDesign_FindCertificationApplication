@@ -2,6 +2,7 @@ package hallym.capstone.findcertificateapplication
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Rect
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +28,7 @@ class CertificationActivity : AppCompatActivity() {
     val binding by lazy {
         ActivityCertificationBinding.inflate(layoutInflater)
     }
+    var clicked : Boolean = false
     val mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()// 파이어베이스 인증
     val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     val ref: DatabaseReference =database.getReference("Certification")
@@ -96,6 +98,20 @@ class CertificationActivity : AppCompatActivity() {
         binding.favoriteCertification.setOnClickListener{
             //mFirebaseAuth.currentUser
             //Toast.makeText(context, intent.getStringExtra("Title") + "가 즐겨찾기에 추가되었습니다.")
+            if(mFirebaseAuth.currentUser == null){
+                Toast.makeText(this, "로그인 시 사용 가능합니다.", Toast.LENGTH_SHORT).show()
+            }else{
+                if(clicked == false){
+                    clicked = true
+                    binding.favoriteCertification.setBackgroundColor(Color.parseColor("#EB6440"))
+                }
+                else{
+                    clicked = false
+                    binding.favoriteCertification.setBackgroundColor(Color.parseColor("#83838D"))
+                }
+            }
+
+
         }
 
         binding.examButton.setOnClickListener{
