@@ -7,14 +7,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.database.*
-import hallym.capstone.findcertificateapplication.FreeBoardAdapter
-import hallym.capstone.findcertificateapplication.FreeCommunityActivity
-import hallym.capstone.findcertificateapplication.MainActivity
+import hallym.capstone.findcertificateapplication.*
 import hallym.capstone.findcertificateapplication.R
 import hallym.capstone.findcertificateapplication.categoryfragment.AllCategoryAdapter
 import hallym.capstone.findcertificateapplication.databinding.FragmentCommunityBinding
@@ -23,11 +24,15 @@ import hallym.capstone.findcertificateapplication.databinding.FragmentMyPageBind
 import hallym.capstone.findcertificateapplication.datatype.Certification
 import hallym.capstone.findcertificateapplication.datatype.Comment
 import hallym.capstone.findcertificateapplication.datatype.FreeBoard
+import java.lang.Exception
+import java.util.Objects
 
 class MyPageFragment : Fragment() {
     val mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()// 파이어베이스 인증
     val mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("loginTest")// 실시간 데이터베이스
     val comRef:DatabaseReference=FirebaseDatabase.getInstance().getReference("Free_Board")
+    lateinit var refpw:DataSnapshot
+    lateinit var refem:DataSnapshot
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +42,18 @@ class MyPageFragment : Fragment() {
         val binding = FragmentMyPageBinding.inflate(inflater, container, false)
 
         binding.userId.text = mFirebaseAuth.currentUser?.displayName.toString()
+
+        binding.changeId.setOnClickListener {
+            changeDiaglog("이메일")
+        }
+
+        binding.changePassword.setOnClickListener {
+            changeDiaglog("비밀번호")
+        }
+
+        binding.changeNickname.setOnClickListener {
+            //changeDiaglog("닉네임")
+        }
 
         binding.logout.setOnClickListener {
 
@@ -91,6 +108,90 @@ class MyPageFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    fun changeDiaglog(diaType:String) {
+        val editText = EditText(context)
+        var user = mFirebaseAuth.currentUser
+
+        mDatabaseRef.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                refpw = snapshot.child("UserAccount").child(mFirebaseAuth.currentUser!!.uid).child("password")
+                refem = snapshot.child("UserAccount").child(mFirebaseAuth.currentUser!!.uid).child("emailId")
+                Log.d("cclo", refem.getValue().toString() + ", " + refpw.getValue().toString())
+
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                try {
+                    error.toException()
+                }catch (_: Exception){ }
+            }
+        })
+
+        context?.let {
+            AlertDialog.Builder(it)
+                .setTitle("변경할 " + diaType + "을 입력해주세요")
+                .setView(editText)
+                .setPositiveButton("변경") { _ , _ ->
+                    if(editText.text.isEmpty()) {
+                        changeDiaglog(diaType)
+                        Toast.makeText(context, diaType + "을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        //로그인 가능 여부 확인
+                        mFirebaseAuth.signInWithEmailAndPassword(refem.getValue().toString(), refpw.getValue().toString())
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    //로그인 성공 시
+                                    if(diaType == "이메일"){
+                                        user?.updateEmail(editText.text.toString())
+                                            ?.addOnCompleteListener { task ->
+                                                if (task.isSuccessful) {
+                                                    // 이메일 변경 성공 시
+                                                    mDatabaseRef.child("UserAccount").child(mFirebaseAuth.currentUser!!.uid).child("emailId").setValue(editText.text.toString())
+                                                    Toast.makeText(context, "이메일 변경 성공", Toast.LENGTH_LONG).show()
+
+                                                } else{
+                                                    // 이메일 변경 실패 시
+                                                    Toast.makeText(context, "이메일 변경 실패", Toast.LENGTH_LONG).show()
+                                                }
+                                            }
+                                    }
+                                    else if(diaType == "비밀번호"){
+                                        user?.updatePassword(editText.text.toString())
+                                            ?.addOnCompleteListener { task ->
+                                                if (task.isSuccessful) {
+                                                    // 비밀번호 변경 성공 시
+                                                    mDatabaseRef.child("UserAccount").child(mFirebaseAuth.currentUser!!.uid).child("password").setValue(editText.text.toString())
+                                                    Toast.makeText(context, "비밀번호 변경 성공", Toast.LENGTH_LONG).show()
+
+                                                } else{
+                                                    // 비밀번호 변경 실패 시
+                                                    Toast.makeText(context, "비밀번호 변경 실패", Toast.LENGTH_LONG).show()
+                                                }
+                                            }
+                                    }
+                                    else if(diaType == "닉네임"){
+                                        user?.updateProfile(userProfileChangeRequest {
+
+                                        })
+
+                                    }
+
+                                } else {
+                                    // 로그인 실패 시
+                                    Toast.makeText(context, "로그인 실패", Toast.LENGTH_LONG).show()
+                                }
+                            }
+
+                    }
+                }
+                .setCancelable(false)
+                .show()
+        }
+
+
     }
 }
 
