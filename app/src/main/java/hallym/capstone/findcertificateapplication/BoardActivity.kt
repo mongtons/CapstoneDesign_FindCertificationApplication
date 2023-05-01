@@ -31,7 +31,6 @@ class BoardActivity : AppCompatActivity() {
     val binding by lazy {
         ActivityBoardBinding.inflate(layoutInflater)
     }
-//    val studyBoardRef: DatabaseReference =database.getReference("Study_Board")
     val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -8,5 +8,6 @@ data class StudyBoard(
     val comment: List<Comment>?,
     val body: String,
     val userCount: Int,
-    val type: Boolean
+    val type: Boolean,
+    val otherUser: List<String>?
 )

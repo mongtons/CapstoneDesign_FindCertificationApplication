@@ -1,5 +1,6 @@
 package hallym.capstone.findcertificateapplication.mainfragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.database.*
@@ -21,6 +23,7 @@ import hallym.capstone.findcertificateapplication.categoryfragment.AllCategoryAd
 import hallym.capstone.findcertificateapplication.databinding.FragmentCommunityBinding
 import hallym.capstone.findcertificateapplication.databinding.FragmentLoginBinding
 import hallym.capstone.findcertificateapplication.databinding.FragmentMyPageBinding
+import hallym.capstone.findcertificateapplication.databinding.StudyBoardItemBinding
 import hallym.capstone.findcertificateapplication.datatype.Certification
 import hallym.capstone.findcertificateapplication.datatype.Comment
 import hallym.capstone.findcertificateapplication.datatype.FreeBoard
@@ -30,7 +33,7 @@ import java.util.Objects
 class MyPageFragment : Fragment() {
     val mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()// 파이어베이스 인증
     val mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("loginTest")// 실시간 데이터베이스
-    val comRef:DatabaseReference=FirebaseDatabase.getInstance().getReference("Free_Board")
+    val comRef:DatabaseReference=FirebaseDatabase.getInstance().getReference()
     lateinit var refpw:DataSnapshot
     lateinit var refem:DataSnapshot
 
@@ -79,7 +82,9 @@ class MyPageFragment : Fragment() {
         comRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val dataMutableList= mutableListOf<FreeBoard>()
-                for(data in snapshot.children){
+                val freeBoard=snapshot.child("Free_Board")
+                val studyBoard=snapshot.child("Study_Board")
+                for(data in freeBoard.children){
                     if(data.child("user").value.toString()==mFirebaseAuth.currentUser!!.displayName.toString()) {
                         dataMutableList.add(
                             FreeBoard(
@@ -91,13 +96,19 @@ class MyPageFragment : Fragment() {
                                 data.child("body").value.toString()
                             )
                         )
-
+                    }
+                }
+                for(data in studyBoard.children){
+                    if(data.child("user").value.toString()==mFirebaseAuth.currentUser!!.displayName.toString()){
+//                        dataMutableList.add()
                     }
                 }
                 val layoutManager = LinearLayoutManager(context)
                 layoutManager.orientation = LinearLayoutManager.VERTICAL
                 binding.boardRecycler.layoutManager = layoutManager
-                binding.boardRecycler.adapter = FreeBoardAdapter(dataMutableList, context!!)
+                binding.boardRecycler.adapter = context?.let {
+                    FreeBoardAdapter(dataMutableList, it)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -194,4 +205,19 @@ class MyPageFragment : Fragment() {
 
     }
 }
+class BoardItemAdapter(val content: MutableList<*>, val context: Context):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
+    =StudyBoardViewHolder(StudyBoardItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val binding=(holder as StudyBoardViewHolder).binding
+        if(content[position] is FreeBoard){
+//            binding.boardTitle.text=content[position].user.toString()
+            binding.boardUser.text=content[position].toString()
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return content.size
+    }
+}
