@@ -32,7 +32,7 @@ class AiFragment : Fragment() {
     lateinit var messageList:MutableList<Message>
 
     var url = "https://api.openai.com/v1/completions"
-    val apiKey=""
+    val apiKey="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"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

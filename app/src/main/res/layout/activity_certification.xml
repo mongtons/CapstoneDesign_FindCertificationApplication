@@ -157,18 +157,10 @@
                             android:layout_height="2dp"
                             android:background="@color/iceTeal"/>
                         <Button
-                            android:id="@+id/challenge"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="기출문제집"
-                            android:textSize="16sp"
-                            android:textAlignment="textStart"
-                            style="@style/Widget.AppCompat.Button.Borderless"/>
-                        <Button
                             android:id="@+id/exam"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="모의고사"
+                            android:text="간단 모의고사"
                             android:textSize="16sp"
                             android:textAlignment="textStart"
                             style="@style/Widget.AppCompat.Button.Borderless"/>

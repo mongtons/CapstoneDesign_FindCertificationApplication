@@ -10,7 +10,7 @@ import hallym.capstone.findcertificateapplication.databinding.ActivityCalendarBi
 
 
 class CalendarActivity : AppCompatActivity() {
-    val binding by lazy{
+    val binding by lazy {
         ActivityCalendarBinding.inflate(layoutInflater)
     }
     override fun onCreate(savedInstanceState: Bundle?) {

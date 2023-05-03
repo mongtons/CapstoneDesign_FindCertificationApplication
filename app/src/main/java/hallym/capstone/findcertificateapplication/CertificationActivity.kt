@@ -98,6 +98,11 @@ class CertificationActivity : AppCompatActivity() {
             //Toast.makeText(context, intent.getStringExtra("Title") + "가 즐겨찾기에 추가되었습니다.")
         }
 
+        binding.exam.setOnClickListener{
+            val intent = Intent(this@CertificationActivity, QuestionActivity::class.java)
+            intent.putExtra("title", this.intent.getStringExtra("Title"))
+            startActivity(intent)
+        }
         binding.examButton.setOnClickListener{
             val intent = Intent(this, Examday::class.java)
             intent.putExtra("title", this.intent.getStringExtra("Title"))
