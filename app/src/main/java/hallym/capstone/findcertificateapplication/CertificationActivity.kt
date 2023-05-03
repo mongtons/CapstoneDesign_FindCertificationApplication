@@ -2,6 +2,7 @@ package hallym.capstone.findcertificateapplication
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Rect
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -20,16 +21,22 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.databinding.ActivityCertificationBinding
 import hallym.capstone.findcertificateapplication.databinding.BenefitCompanyItemBinding
+import hallym.capstone.findcertificateapplication.datatype.Comment
+import hallym.capstone.findcertificateapplication.datatype.Favorite
 import java.lang.Exception
+import kotlin.properties.Delegates
 
 
 class CertificationActivity : AppCompatActivity() {
     val binding by lazy {
         ActivityCertificationBinding.inflate(layoutInflater)
     }
+    var clicked = false
     val mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()// 파이어베이스 인증
     val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     val ref: DatabaseReference =database.getReference("Certification")
+    var favoriteRef = database.getReference("Favorite")
+
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,9 +100,89 @@ class CertificationActivity : AppCompatActivity() {
             }
         })
 
+        //db 검사
+        favoriteRef.child(mFirebaseAuth.currentUser!!.uid).addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (d in snapshot.children){
+                    // DB에 이미 해당 자격증 이름 존재한다면 click = true로 함수 실행
+                    if(d.child("cerTitle").value.toString() == binding.certificationTitle.text.toString()){
+                        clicked = true
+                        Log.d("cclo", "in for loop : " + clicked.toString())
+                        break
+                    }else{
+                        //DB에 해당 자격증 없는 경우 click = false로 함수 실행
+                        Log.d("cclo", d.child("cerTitle").value.toString())
+                        Log.d("cclo", "in for loop no cer : " + clicked.toString())
+                    }
+                }
+
+            }
+            override fun onCancelled(error: DatabaseError) {
+                try {
+                    error.toException()
+                }catch (_: Exception){ }
+            }
+        })
+
         binding.favoriteCertification.setOnClickListener{
-            //mFirebaseAuth.currentUser
-            //Toast.makeText(context, intent.getStringExtra("Title") + "가 즐겨찾기에 추가되었습니다.")
+
+            Log.d("cclo", "clicked : " + clicked)
+            // 로그인 확인
+            if(mFirebaseAuth.currentUser == null){
+                // 로그인되지 않았을 경우 이용 불가
+                Toast.makeText(this, "로그인 시 사용 가능합니다.", Toast.LENGTH_SHORT).show()
+            }else{
+                // DB에 해당 자격증 이름이 없는 경우 ==> 찜하기 실행
+                if(clicked == false){
+                    clicked = true
+
+                    // 찜하기 버튼 색상 변경
+                    binding.favoriteCertification.setBackgroundColor(Color.parseColor("#EB6440"))
+
+                    // DB에 저장할 Favorite 객체 생성
+                    var favorite = Favorite()
+
+                    // key == 자격증 구분 위한 랜덤 key값
+                    var key = favoriteRef.push().key.toString()
+                    favorite.uid = mFirebaseAuth.currentUser!!.uid
+                    favorite.cerTitle = binding.certificationTitle.text.toString()
+
+                    // DB에 데이터 추가
+                    favoriteRef
+                        .child(mFirebaseAuth.currentUser!!.uid)
+                        .child(key)
+                        .setValue(favorite)
+
+                    // 즐겨찾기 추가 완료 시 Toast message 생성
+                    Toast.makeText(this, binding.certificationTitle.text.toString() + "가 즐겨찾기에 추가되었습니다.", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    clicked = false
+                    favoriteRef.child(mFirebaseAuth.currentUser!!.uid).addValueEventListener(object: ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            lateinit var gKey : String
+                            for (d in snapshot.children){
+                                if(d.child("cerTitle").value.toString() == binding.certificationTitle.text.toString()){
+                                    d.ref.removeValue()
+                                }
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            try {
+                                error.toException()
+                            }catch (_: Exception){ }
+                        }
+                    })
+
+                    //favoriteRef.child(mFirebaseAuth.currentUser!!.uid).child(gKey).removeValue()
+                    binding.favoriteCertification.setBackgroundColor(Color.parseColor("#83838D"))
+                    Toast.makeText(this, binding.certificationTitle.text.toString() + "가 즐겨찾기에서 해제되었습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            //Log.d("cclo", "snapshot 밖 clicked : " + clicked.toString())
+
         }
 
         binding.exam.setOnClickListener{
@@ -108,6 +195,10 @@ class CertificationActivity : AppCompatActivity() {
             intent.putExtra("title", this.intent.getStringExtra("Title"))
             startActivity(intent)
         }
+    }
+
+    fun favoriteCer(click: Boolean) {
+
     }
 
 

@@ -31,7 +31,6 @@ class BoardActivity : AppCompatActivity() {
     val binding by lazy {
         ActivityBoardBinding.inflate(layoutInflater)
     }
-//    val studyBoardRef: DatabaseReference =database.getReference("Study_Board")
     val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +38,7 @@ class BoardActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         binding.title.text=intent.getStringExtra("title")
         binding.user.text=intent.getStringExtra("user")

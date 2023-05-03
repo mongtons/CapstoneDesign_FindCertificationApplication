@@ -54,7 +54,7 @@
                 android:layout_height="97dp"
                 android:text="로그인"
                 android:textColor="@color/silverWhite"
-                android:backgroundTint="@color/lightCarret"/>
+                android:backgroundTint="@color/mediaDarkShadeOfCyan"/>
 
         </LinearLayout>
         <LinearLayout
@@ -70,7 +70,8 @@
                 android:layout_marginRight="5dp"
                 android:text="아이디 찾기"
                 android:textSize="15sp"
-                android:backgroundTint="@color/white"/>
+                android:textColor="@color/white"
+                android:backgroundTint="@color/mediaDarkShadeOfCyan"/>
 
             <Button
                 android:id="@+id/findPW"
@@ -80,7 +81,8 @@
                 android:layout_marginRight="5dp"
                 android:text="비밀번호 찾기"
                 android:textSize="15sp"
-                android:backgroundTint="@color/white"/>
+                android:textColor="@color/white"
+                android:backgroundTint="@color/mediaDarkShadeOfCyan"/>
 
 
             <Button
@@ -91,7 +93,7 @@
                 android:text="회원가입"
                 android:textSize="15sp"
                 android:textColor="@color/silverWhite"
-                android:backgroundTint="@color/lightCarret"/>
+                android:backgroundTint="@color/mediaDarkShadeOfCyan"/>
 
         </LinearLayout>
 

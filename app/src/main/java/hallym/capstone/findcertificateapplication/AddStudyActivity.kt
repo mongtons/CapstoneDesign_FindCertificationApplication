@@ -54,7 +54,8 @@ class AddStudyActivity : AppCompatActivity() {
                 val count=binding.studySpinner.selectedItem.toString()
 
                 ref.child(key)
-                    .setValue(StudyBoard(key, title, user, time, comment, body, Integer.parseInt(count), intent.getBooleanExtra("type", true)))
+                    .setValue(StudyBoard(key, title, user, time, comment, body, Integer.parseInt(count),
+                        intent.getBooleanExtra("type", true), null))
                 Toast.makeText(this, "게시글을 업로드했습니다.", Toast.LENGTH_SHORT).show()
             }
             finish()

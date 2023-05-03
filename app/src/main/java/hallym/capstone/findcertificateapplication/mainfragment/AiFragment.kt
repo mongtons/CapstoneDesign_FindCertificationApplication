@@ -85,6 +85,8 @@ class AiFragment : Fragment() {
     private fun getResponse(query: String) {
         // setting text on for question on below line.
         messageList.add(Message(true, query))
+        binding.chatMessage.adapter?.notifyDataSetChanged()
+        binding.chatMessage.smoothScrollToPosition(messageList.size-1)
         queryEdt.setText("")
         // creating a queue for request queue.
         val queue: RequestQueue = Volley.newRequestQueue(context)
@@ -109,6 +111,7 @@ class AiFragment : Fragment() {
                         response.getJSONArray("choices").getJSONObject(0).getString("text")
                     messageList.add(Message(false, responseMsg))
                     binding.chatMessage.adapter?.notifyDataSetChanged()
+                    binding.chatMessage.smoothScrollToPosition(messageList.size-1)
                 },
                 // adding on error listener
                 Response.ErrorListener { error ->

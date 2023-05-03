@@ -36,7 +36,7 @@
         android:layout_gravity="bottom|right"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/lightCarret"
+        android:backgroundTint="@color/mediaDarkShadeOfCyan"
         android:text="글쓰기"
         android:textColor="@color/silverWhite"
         android:textStyle="bold"

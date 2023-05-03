@@ -51,6 +51,10 @@ class StudyActivity : AppCompatActivity() {
                             )
                         )
                     }
+                    val userList= mutableListOf<String>()
+                    for(user in data.child("otherUser").children){
+                        userList.add(user.value.toString())
+                    }
                     val board = StudyBoard(
                         data.key!!,
                         data.child("title").value.toString(),
@@ -59,7 +63,8 @@ class StudyActivity : AppCompatActivity() {
                         commentList,
                         data.child("body").value.toString(),
                         Integer.parseInt(data.child("userCount").value.toString()),
-                        data.child("type").value as Boolean
+                        data.child("type").value as Boolean,
+                        userList
                     )
                     list.add(0, board)
                     binding.studyBoardList?.adapter?.notifyDataSetChanged()
@@ -84,6 +89,10 @@ class StudyActivity : AppCompatActivity() {
                                                 )
                                             )
                                         }
+                                        val userList= mutableListOf<String>()
+                                        for(user in data.child("otherUser").children){
+                                            userList.add(user.value.toString())
+                                        }
                                         val board = StudyBoard(
                                             data.key!!,
                                             data.child("title").value.toString(),
@@ -92,7 +101,8 @@ class StudyActivity : AppCompatActivity() {
                                             commentList,
                                             data.child("body").value.toString(),
                                             Integer.parseInt(data.child("userCount").value.toString()),
-                                            data.child("type").value as Boolean
+                                            data.child("type").value as Boolean,
+                                            userList
                                         )
                                         list.add(0, board)
                                     }
@@ -100,17 +110,71 @@ class StudyActivity : AppCompatActivity() {
                                 }
                                 1->{
                                     list.clear()
+                                    for(data in snapshot.children) {
+                                        if (data.child("type").value as Boolean) {
+                                            val commentList = mutableListOf<Comment>()
+                                            for (comment in data.child("comment").children) {
+                                                commentList.add(
+                                                    Comment(
+                                                        comment.child("id").value.toString(),
+                                                        comment.child("user").value.toString(),
+                                                        comment.child("letter").value.toString()
+                                                    )
+                                                )
+                                            }
+                                            val userList = mutableListOf<String>()
+                                            for (user in data.child("otherUser").children) {
+                                                userList.add(user.value.toString())
+                                            }
+                                            val board = StudyBoard(
+                                                data.key!!,
+                                                data.child("title").value.toString(),
+                                                data.child("user").value.toString(),
+                                                data.child("time").value as Long,
+                                                commentList,
+                                                data.child("body").value.toString(),
+                                                Integer.parseInt(data.child("userCount").value.toString()),
+                                                data.child("type").value as Boolean,
+                                                userList
+                                            )
+                                            list.add(0, board)
+                                        }
+                                    }
                                     binding.studyBoardList?.adapter?.notifyDataSetChanged()
                                 }
                                 2->{
                                     list.clear()
+                                    for(data in snapshot.children) {
+                                        if (!(data.child("type").value as Boolean)){
+                                            val commentList = mutableListOf<Comment>()
+                                            for (comment in data.child("comment").children) {
+                                                commentList.add(
+                                                    Comment(
+                                                        comment.child("id").value.toString(),
+                                                        comment.child("user").value.toString(),
+                                                        comment.child("letter").value.toString()
+                                                    )
+                                                )
+                                            }
+                                            val board = StudyBoard(
+                                                data.key!!,
+                                                data.child("title").value.toString(),
+                                                data.child("user").value.toString(),
+                                                data.child("time").value as Long,
+                                                commentList,
+                                                data.child("body").value.toString(),
+                                                Integer.parseInt(data.child("userCount").value.toString()),
+                                                data.child("type").value as Boolean,
+                                                null
+                                            )
+                                            list.add(0, board)
+                                        }
+                                    }
                                     binding.studyBoardList?.adapter?.notifyDataSetChanged()
                                 }
                             }
                         }
-                        override fun onNothingSelected(parent: AdapterView<*>?) {
-
-                        }
+                        override fun onNothingSelected(parent: AdapterView<*>?) {}
                     }
                 }
                 val layoutManager=LinearLayoutManager(this@StudyActivity)
@@ -174,6 +238,9 @@ class StudyBoardAdapter(val contents:MutableList<StudyBoard>, val context:Contex
             "스터딩"
         }else{
             "질문"
+        }
+        if (contents[position].type){
+            binding.boardUserCount.text="${(contents[position].otherUser?.size)?.plus(1)} / ${contents[position].userCount}"
         }
         binding.itemRoot.setOnClickListener {
 
