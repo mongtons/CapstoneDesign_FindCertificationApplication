@@ -105,7 +105,7 @@
                 android:layout_weight="1"
                 android:layout_marginHorizontal="3dp"
                 android:text="취소"
-                android:backgroundTint="@color/lightCarret"
+                android:backgroundTint="@color/mediaDarkShadeOfCyan"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/silverWhite"/>
@@ -116,7 +116,7 @@
                 android:layout_weight="1"
                 android:layout_marginHorizontal="3dp"
                 android:text="저장"
-                android:backgroundTint="@color/lightCarret"
+                android:backgroundTint="@color/mediaDarkShadeOfCyan"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/silverWhite"/>

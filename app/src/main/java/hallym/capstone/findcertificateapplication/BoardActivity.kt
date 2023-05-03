@@ -38,6 +38,7 @@ class BoardActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         binding.title.text=intent.getStringExtra("title")
         binding.user.text=intent.getStringExtra("user")

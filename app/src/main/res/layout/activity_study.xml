@@ -67,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:backgroundTint="@color/lightCarret"
+            android:backgroundTint="@color/mediaDarkShadeOfCyan"
             android:src="@android:drawable/ic_input_add"
             app:tint="@color/mediaDarkShadeOfCyan"
             app:layout_constraintBottom_toBottomOf="parent"
