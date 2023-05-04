@@ -27,6 +27,7 @@ import kotlinx.coroutines.NonCancellable.children
 
 val database: FirebaseDatabase = FirebaseDatabase.getInstance()
 val freeBoardRef: DatabaseReference =database.getReference("Free_Board")
+val studyBoardRef: DatabaseReference= database.getReference("Study_Board")
 class BoardActivity : AppCompatActivity() {
     val binding by lazy {
         ActivityBoardBinding.inflate(layoutInflater)
@@ -66,7 +67,8 @@ class BoardActivity : AppCompatActivity() {
                             binding.comment.adapter=CommentAdapter(
                                 commentList, this@BoardActivity,
                                 intent.getStringExtra("user").toString(),
-                                intent.getStringExtra("id").toString()
+                                intent.getStringExtra("id").toString(),
+                                true
                             )
                         }
                     }
@@ -97,7 +99,7 @@ class BoardActivity : AppCompatActivity() {
         onBackPressed()
         return super.onSupportNavigateUp()
     }
-    private fun hideKeyboard(activity: Activity){
+    fun hideKeyboard(activity: Activity){
         val imm: InputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         var view= activity.currentFocus
         if(view==null){
@@ -133,7 +135,7 @@ class BoardActivity : AppCompatActivity() {
     }
 }
 class CommentViewHolder(val binding: CommentItemBinding): RecyclerView.ViewHolder(binding.root)
-class CommentAdapter(val contents:MutableList<Comment>,val activity: Activity, val userName:String, val id: String): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class CommentAdapter(val contents:MutableList<Comment>,val activity: Activity, val userName:String, val id: String, val flag:Boolean): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
             = CommentViewHolder(CommentItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
@@ -151,7 +153,12 @@ class CommentAdapter(val contents:MutableList<Comment>,val activity: Activity, v
                 popup.setOnMenuItemClickListener {item ->
                     when (item.title) {
                         "삭제" -> {
-                            freeBoardRef.child(id).child("comment").child(contents[position].id).removeValue()
+                            if(flag) {
+                                freeBoardRef.child(id).child("comment").child(contents[position].id)
+                                    .removeValue()
+                            }else{
+                                studyBoardRef.child(id).child("comment").child(contents[position].id)
+                            }
                             Toast.makeText(activity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
                             notifyDataSetChanged()
 

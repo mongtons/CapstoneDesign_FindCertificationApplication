@@ -14,7 +14,8 @@
             android:layout_height="?attr/actionBarSize"
             app:title="간단 모의고사"
             app:titleTextColor="@color/annapolosBlue"
-            android:id="@+id/toolbar"/>
+            android:id="@+id/toolbar"
+            app:layout_scrollFlags="scroll|enterAlways"/>
     </com.google.android.material.appbar.AppBarLayout>
     <ScrollView
         android:layout_width="match_parent"
@@ -25,8 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="13dp"
-            android:paddingRight="13dp"
+            android:paddingHorizontal="6dp"
             android:paddingBottom="10dp">
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -46,74 +46,72 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/no1"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="140dp"
-                            android:padding="10dp"
-                            android:text="1번문제"
                             android:textSize="20sp"
+                            android:padding="4dp"
                             android:textStyle="bold"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:background="@color/iceTeal"/>
-                        <ScrollView
-                            android:layout_width="match_parent"
-                            android:layout_height="300dp"
-                            android:nestedScrollingEnabled="true"
-                            app:layout_behavior="@string/appbar_scrolling_view_behavior">
                         <TextView
                             android:id="@+id/One"
                             android:layout_width="wrap_content"
-                            android:layout_height="300dp"
-                            android:padding="10dp"
-                            android:textSize="20sp"
-                            android:textStyle="bold"/>
-                        </ScrollView>
+                            android:layout_height="wrap_content"
+                            android:padding="7dp"
+                            android:textSize="16sp"/>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:weightSum="4">
                             <Button
                                 android:id="@+id/answer11"
-                                android:layout_width="60dp"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:layout_marginLeft="10dp"
                                 android:text="1번"
-                                android:backgroundTint="@color/lightCarret"
-                                android:textSize="16sp"
+                                android:backgroundTint="@color/mediaDarkShadeOfCyan"
+                                android:textSize="13sp"
                                 android:textStyle="bold"
-                                android:textColor="@color/silverWhite"/>
+                                android:textColor="@color/white" />
                             <Button
                                 android:id="@+id/answer12"
-                                android:layout_width="60dp"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="40dp"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="25dp"
                                 android:text="2번"
-                                android:backgroundTint="@color/lightCarret"
-                                android:textSize="16sp"
+                                android:backgroundTint="@color/mediaDarkShadeOfCyan"
+                                android:textSize="13sp"
                                 android:textStyle="bold"
-                                android:textColor="@color/silverWhite"/>
+                                android:textColor="@color/white"/>
                             <Button
                                 android:id="@+id/answer13"
-                                android:layout_width="60dp"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="40dp"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="25dp"
                                 android:text="3번"
-                                android:backgroundTint="@color/lightCarret"
-                                android:textSize="16sp"
+                                android:backgroundTint="@color/mediaDarkShadeOfCyan"
+                                android:textSize="13sp"
                                 android:textStyle="bold"
-                                android:textColor="@color/silverWhite"/>
+                                android:textColor="@color/white"/>
                             <Button
                                 android:id="@+id/answer14"
-                                android:layout_width="60dp"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="40dp"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="25dp"
+                                android:layout_marginRight="10dp"
                                 android:text="4번"
-                                android:backgroundTint="@color/lightCarret"
-                                android:textSize="16sp"
+                                android:backgroundTint="@color/mediaDarkShadeOfCyan"
+                                android:textSize="13sp"
                                 android:textStyle="bold"
-                                android:textColor="@color/silverWhite"/>
+                                android:textColor="@color/white"/>
                         </LinearLayout>
 
                         <View
@@ -121,148 +119,144 @@
                             android:layout_height="2dp"
                             android:background="@color/iceTeal"/>
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/no2"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="140dp"
-                            android:padding="10dp"
-                            android:text="2번문제"
                             android:textSize="20sp"
+                            android:padding="4dp"
                             android:textStyle="bold"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:background="@color/iceTeal"/>
-                        <ScrollView
-                            android:layout_width="match_parent"
-                            android:layout_height="300dp"
-                            android:nestedScrollingEnabled="true"
-                            app:layout_behavior="@string/appbar_scrolling_view_behavior">
                         <TextView
                             android:id="@+id/Two"
                             android:layout_width="wrap_content"
-                            android:layout_height="300dp"
-                            android:padding="10dp"
-                            android:textSize="20sp"
-                            android:textStyle="bold"/>
-                        </ScrollView>
+                            android:layout_height="wrap_content"
+                            android:padding="7dp"
+                            android:textSize="16sp"/>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:weightSum="4">
                             <Button
                                 android:id="@+id/answer21"
-                                android:layout_width="60dp"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:layout_marginLeft="10dp"
                                 android:text="1번"
-                                android:backgroundTint="@color/lightCarret"
-                                android:textSize="16sp"
+                                android:backgroundTint="@color/mediaDarkShadeOfCyan"
+                                android:textSize="13sp"
                                 android:textStyle="bold"
-                                android:textColor="@color/silverWhite"/>
+                                android:textColor="@color/white"/>
                             <Button
                                 android:id="@+id/answer22"
-                                android:layout_width="60dp"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="40dp"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="25dp"
                                 android:text="2번"
-                                android:backgroundTint="@color/lightCarret"
-                                android:textSize="16sp"
+                                android:backgroundTint="@color/mediaDarkShadeOfCyan"
+                                android:textSize="13sp"
                                 android:textStyle="bold"
-                                android:textColor="@color/silverWhite"/>
+                                android:textColor="@color/white"/>
                             <Button
                                 android:id="@+id/answer23"
-                                android:layout_width="60dp"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="40dp"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="25dp"
                                 android:text="3번"
-                                android:backgroundTint="@color/lightCarret"
-                                android:textSize="16sp"
+                                android:backgroundTint="@color/mediaDarkShadeOfCyan"
+                                android:textSize="13sp"
                                 android:textStyle="bold"
-                                android:textColor="@color/silverWhite"/>
+                                android:textColor="@color/white"/>
                             <Button
                                 android:id="@+id/answer24"
-                                android:layout_width="60dp"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="40dp"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="25dp"
+                                android:layout_marginRight="10dp"
                                 android:text="4번"
-                                android:backgroundTint="@color/lightCarret"
-                                android:textSize="16sp"
+                                android:backgroundTint="@color/mediaDarkShadeOfCyan"
+                                android:textSize="13sp"
                                 android:textStyle="bold"
-                                android:textColor="@color/silverWhite"/>
+                                android:textColor="@color/white"/>
                         </LinearLayout>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:background="@color/iceTeal"/>
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/no3"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="140dp"
-                            android:padding="10dp"
-                            android:text="3번문제"
                             android:textSize="20sp"
+                            android:padding="4dp"
                             android:textStyle="bold"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:background="@color/iceTeal"/>
-                        <ScrollView
-                            android:layout_width="match_parent"
-                            android:layout_height="300dp"
-                            android:nestedScrollingEnabled="true"
-                            app:layout_behavior="@string/appbar_scrolling_view_behavior">
                         <TextView
                             android:id="@+id/Three"
                             android:layout_width="wrap_content"
-                            android:layout_height="300dp"
-                            android:padding="10dp"
-                            android:textSize="20sp"
-                            android:textStyle="bold"/>
-                        </ScrollView>
+                            android:layout_height="wrap_content"
+                            android:padding="7dp"
+                            android:textSize="16sp"/>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:weightSum="4">
                             <Button
                                 android:id="@+id/answer31"
-                                android:layout_width="60dp"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:layout_marginLeft="10dp"
                                 android:text="1번"
-                                android:backgroundTint="@color/lightCarret"
-                                android:textSize="16sp"
+                                android:backgroundTint="@color/mediaDarkShadeOfCyan"
+                                android:textSize="13sp"
                                 android:textStyle="bold"
-                                android:textColor="@color/silverWhite"/>
+                                android:textColor="@color/white"/>
                             <Button
                                 android:id="@+id/answer32"
-                                android:layout_width="60dp"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="40dp"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="25dp"
                                 android:text="2번"
-                                android:backgroundTint="@color/lightCarret"
-                                android:textSize="16sp"
+                                android:backgroundTint="@color/mediaDarkShadeOfCyan"
+                                android:textSize="13sp"
                                 android:textStyle="bold"
-                                android:textColor="@color/silverWhite"/>
+                                android:textColor="@color/white"/>
                             <Button
                                 android:id="@+id/answer33"
-                                android:layout_width="60dp"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="40dp"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="25dp"
                                 android:text="3번"
-                                android:backgroundTint="@color/lightCarret"
-                                android:textSize="16sp"
+                                android:backgroundTint="@color/mediaDarkShadeOfCyan"
+                                android:textSize="13sp"
                                 android:textStyle="bold"
-                                android:textColor="@color/silverWhite"/>
+                                android:textColor="@color/white"/>
                             <Button
                                 android:id="@+id/answer34"
-                                android:layout_width="60dp"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="40dp"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="25dp"
+                                android:layout_marginRight="10dp"
                                 android:text="4번"
-                                android:backgroundTint="@color/lightCarret"
+                                android:backgroundTint="@color/mediaDarkShadeOfCyan"
                                 android:textSize="16sp"
                                 android:textStyle="bold"
-                                android:textColor="@color/silverWhite"/>
+                                android:textColor="@color/white"/>
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

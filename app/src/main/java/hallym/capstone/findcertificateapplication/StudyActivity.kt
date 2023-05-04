@@ -243,7 +243,14 @@ class StudyBoardAdapter(val contents:MutableList<StudyBoard>, val context:Contex
             binding.boardUserCount.text="${(contents[position].otherUser?.size)?.plus(1)} / ${contents[position].userCount}"
         }
         binding.itemRoot.setOnClickListener {
-
+            val intent=Intent(context, StudyBoardActivity::class.java)
+            intent.putExtra("title", contents[position].title)
+            intent.putExtra("user", contents[position].user)
+            intent.putExtra("userCount", contents[position].userCount)
+            intent.putExtra("type", binding.boardType.text)
+            intent.putExtra("time", binding.boardTime.text)
+            intent.putExtra("id", contents[position].key)
+            context.startActivity(intent)
         }
     }
 

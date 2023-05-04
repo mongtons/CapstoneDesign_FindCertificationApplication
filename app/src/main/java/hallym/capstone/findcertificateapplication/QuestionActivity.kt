@@ -39,7 +39,7 @@ class QuestionActivity : AppCompatActivity() {
                     if(ds.key.toString() == intent.getStringExtra("title")) {
                         for (aaa in ds.children) {
                             if (aaa.key == "One") {
-                                OneText += aaa.child("0").value.toString() + "\n"
+                                binding.no1.text=aaa.child("0").value.toString()
                                 OneText += aaa.child("1").value.toString() + "\n"
                                 OneText += aaa.child("2").value.toString() + "\n"
                                 OneText += aaa.child("3").value.toString() + "\n"
@@ -84,7 +84,7 @@ class QuestionActivity : AppCompatActivity() {
                                 }
 
                             } else if (aaa.key == "Two") {
-                                TwoText += aaa.child("0").value.toString() + "\n"
+                                binding.no2.text= aaa.child("0").value.toString()
                                 TwoText += aaa.child("1").value.toString() + "\n"
                                 TwoText += aaa.child("2").value.toString() + "\n"
                                 TwoText += aaa.child("3").value.toString() + "\n"
@@ -128,7 +128,7 @@ class QuestionActivity : AppCompatActivity() {
                                     }
                                 }
                             } else {
-                                ThreeText += aaa.child("0").value.toString() + "\n"
+                                binding.no3.text=aaa.child("0").value.toString()
                                 ThreeText += aaa.child("1").value.toString() + "\n"
                                 ThreeText += aaa.child("2").value.toString() + "\n"
                                 ThreeText += aaa.child("3").value.toString() + "\n"
