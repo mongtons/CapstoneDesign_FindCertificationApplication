@@ -70,23 +70,38 @@ class CertificationActivity : AppCompatActivity() {
                             binding.examCost.text=costVar
                         }
                         if(ds.child("book").hasChildren()){//교재
-                            val bookchild=ds.child("book")
-                            var booktext = "필기 교재 링크 : "
-                            booktext+= bookchild.child("note").value.toString()+"\n"
-                            var bookpractice = "실기 교재 링크 : "
+                            val nbook = ds.child("book").child("note")
+                            val pbook = ds.child("book").child("practice")
+//
+                            var notebook = "책 이름 : "
+                            notebook+= nbook.child("name").value.toString()+"\n"
+                            notebook+= "책 가격 : "
+                            notebook+= nbook.child("bookprice").value.toString()+"\n"
+                            notebook += "책 저자 : "
+                            notebook+= nbook.child("person").value.toString()+"\n"
+                            notebook += "책 출판사 : "
+                            notebook+= nbook.child("publish").value.toString()+"\n"
+
+                            var practicebook = "책 이름 : "
+                            practicebook+= pbook.child("name").value.toString()+"\n"
+                            practicebook += "책 가격 : "
+                            practicebook+= pbook.child("bookprice").value.toString()+"\n"
+                            practicebook += "책 저자 : "
+                            practicebook+= pbook.child("person").value.toString()+"\n"
+                            practicebook += "책 출판사 : "
+                            practicebook+= pbook.child("publish").value.toString()+"\n"
 
 
-                            binding.bookNote.setOnClickListener{
-                                val intent = Intent(Intent.ACTION_VIEW,Uri.parse(bookchild.child("note").value.toString()))
+                            binding.bookNoteButton.setOnClickListener{
+                                val intent = Intent(Intent.ACTION_VIEW,Uri.parse(nbook.child("Link").value.toString()))
                                 startActivity(intent)
                             }
                             binding.bookPractice.setOnClickListener {
-                                val intent = Intent(Intent.ACTION_VIEW,Uri.parse(bookchild.child("practice").value.toString()))
+                                val intent = Intent(Intent.ACTION_VIEW,Uri.parse(pbook.child("Link").value.toString()))
                                 startActivity(intent)
                             }
-                            bookpractice+= bookchild.child("practice").value.toString()
-                            binding.bookNote.text = booktext
-                            binding.bookPractice.text = bookpractice
+                            binding.bookNote.text = notebook
+                            binding.bookPractice.text = practicebook
 
                         }
 
