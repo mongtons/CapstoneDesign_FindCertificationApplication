@@ -57,13 +57,19 @@
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:background="@color/iceTeal"/>
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:nestedScrollingEnabled="true"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior">
                         <TextView
                             android:id="@+id/One"
                             android:layout_width="wrap_content"
-                            android:layout_height="200dp"
+                            android:layout_height="300dp"
                             android:padding="10dp"
                             android:textSize="20sp"
                             android:textStyle="bold"/>
+                        </ScrollView>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -126,13 +132,19 @@
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:background="@color/iceTeal"/>
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:nestedScrollingEnabled="true"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior">
                         <TextView
                             android:id="@+id/Two"
                             android:layout_width="wrap_content"
-                            android:layout_height="200dp"
+                            android:layout_height="300dp"
                             android:padding="10dp"
                             android:textSize="20sp"
                             android:textStyle="bold"/>
+                        </ScrollView>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -194,13 +206,19 @@
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:background="@color/iceTeal"/>
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:nestedScrollingEnabled="true"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior">
                         <TextView
                             android:id="@+id/Three"
                             android:layout_width="wrap_content"
-                            android:layout_height="200dp"
+                            android:layout_height="300dp"
                             android:padding="10dp"
                             android:textSize="20sp"
                             android:textStyle="bold"/>
+                        </ScrollView>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

@@ -11,16 +11,17 @@
         <item name="android:statusBarColor">@color/mediaDarkShadeOfCyan</item>
         <!-- Customize your theme here. -->
     </style>
-<!--    <style name="Theme.FindCertificateApplication.NoActionBar">-->
-<!--        <item name="windowActionBar">false</item>-->
-<!--        <item name="windowNoTitle">true</item>-->
-<!--        <item name="android:statusBarColor" tools:targetApi="l">@color/cottonBall</item>-->
-<!--    </style>-->
+    <!--    <style name="Theme.FindCertificateApplication.NoActionBar">-->
+    <!--        <item name="windowActionBar">false</item>-->
+    <!--        <item name="windowNoTitle">true</item>-->
+    <!--        <item name="android:statusBarColor" tools:targetApi="l">@color/cottonBall</item>-->
+    <!--    </style>-->
     <style name="Theme.FindCertificateApplication.BottomBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/mediaDarkShadeOfCyan</item>
         <item name="colorPrimaryVariant">@color/silverWhite</item>
         <item name="colorOnPrimary">@color/silverWhite</item>
     </style>
+
     <style name="Theme.FindCertificateApplication.Button" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/paleWhite</item>
@@ -31,4 +32,13 @@
         <item name="android:statusBarColor">@color/mediaDarkShadeOfCyan</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.FindCertificateApplication.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.FindCertificateApplication.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.FindCertificateApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -180,10 +180,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:background="@color/iceTeal"/>
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/book_recycler"
+                        <TextView
+                            android:id="@+id/book_note"
                             android:layout_width="match_parent"
-                            android:layout_height="170dp"/>
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/book_practice"
+                            android:layout_width = "match_parent"
+                            android:layout_height="wrap_content"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </androidx.cardview.widget.CardView>

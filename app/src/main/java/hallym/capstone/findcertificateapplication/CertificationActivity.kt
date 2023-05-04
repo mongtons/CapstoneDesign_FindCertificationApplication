@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Rect
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -67,6 +68,26 @@ class CertificationActivity : AppCompatActivity() {
                             var costVar="응시료: "
                             costVar+=ds.child("cost").value
                             binding.examCost.text=costVar
+                        }
+                        if(ds.child("book").hasChildren()){//교재
+                            val bookchild=ds.child("book")
+                            var booktext = "필기 교재 링크 : "
+                            booktext+= bookchild.child("note").value.toString()+"\n"
+                            var bookpractice = "실기 교재 링크 : "
+
+
+                            binding.bookNote.setOnClickListener{
+                                val intent = Intent(Intent.ACTION_VIEW,Uri.parse(bookchild.child("note").value.toString()))
+                                startActivity(intent)
+                            }
+                            binding.bookPractice.setOnClickListener {
+                                val intent = Intent(Intent.ACTION_VIEW,Uri.parse(bookchild.child("practice").value.toString()))
+                                startActivity(intent)
+                            }
+                            bookpractice+= bookchild.child("practice").value.toString()
+                            binding.bookNote.text = booktext
+                            binding.bookPractice.text = bookpractice
+
                         }
 
                         if(ds.child("benefit").hasChildren()){
