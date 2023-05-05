@@ -9,5 +9,6 @@ data class StudyBoard(
     val body: String,
     val userCount: Int,
     val type: Boolean,
-    val otherUser: List<String>?
+    val otherUser: List<String>?,
+    val userId:String
 )

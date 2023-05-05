@@ -10,18 +10,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.databinding.ActivityStudyBinding
 import hallym.capstone.findcertificateapplication.databinding.StudyBoardItemBinding
 import hallym.capstone.findcertificateapplication.datatype.Comment
-import hallym.capstone.findcertificateapplication.datatype.FreeBoard
 import hallym.capstone.findcertificateapplication.datatype.StudyBoard
 import java.text.SimpleDateFormat
 import java.util.*
 
+val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 class StudyActivity : AppCompatActivity() {
     val binding by lazy {
         ActivityStudyBinding.inflate(layoutInflater)
@@ -64,7 +65,8 @@ class StudyActivity : AppCompatActivity() {
                         data.child("body").value.toString(),
                         Integer.parseInt(data.child("userCount").value.toString()),
                         data.child("type").value as Boolean,
-                        userList
+                        userList,
+                        data.child("userId").value.toString()
                     )
                     list.add(0, board)
                     binding.studyBoardList?.adapter?.notifyDataSetChanged()
@@ -102,7 +104,8 @@ class StudyActivity : AppCompatActivity() {
                                             data.child("body").value.toString(),
                                             Integer.parseInt(data.child("userCount").value.toString()),
                                             data.child("type").value as Boolean,
-                                            userList
+                                            userList,
+                                            data.child("userId").value.toString()
                                         )
                                         list.add(0, board)
                                     }
@@ -135,7 +138,8 @@ class StudyActivity : AppCompatActivity() {
                                                 data.child("body").value.toString(),
                                                 Integer.parseInt(data.child("userCount").value.toString()),
                                                 data.child("type").value as Boolean,
-                                                userList
+                                                userList,
+                                                data.child("userId").value.toString()
                                             )
                                             list.add(0, board)
                                         }
@@ -165,7 +169,8 @@ class StudyActivity : AppCompatActivity() {
                                                 data.child("body").value.toString(),
                                                 Integer.parseInt(data.child("userCount").value.toString()),
                                                 data.child("type").value as Boolean,
-                                                null
+                                                null,
+                                                data.child("userId").value.toString()
                                             )
                                             list.add(0, board)
                                         }
@@ -243,14 +248,47 @@ class StudyBoardAdapter(val contents:MutableList<StudyBoard>, val context:Contex
             binding.boardUserCount.text="${(contents[position].otherUser?.size)?.plus(1)} / ${contents[position].userCount}"
         }
         binding.itemRoot.setOnClickListener {
-            val intent=Intent(context, StudyBoardActivity::class.java)
-            intent.putExtra("title", contents[position].title)
-            intent.putExtra("user", contents[position].user)
-            intent.putExtra("userCount", contents[position].userCount)
-            intent.putExtra("type", binding.boardType.text)
-            intent.putExtra("time", binding.boardTime.text)
-            intent.putExtra("id", contents[position].key)
-            context.startActivity(intent)
+            studyBoardRef.addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for(board in snapshot.children){
+                        if(board.child("key").value.toString()==contents[position].key){
+                            var flag1=false
+                            var flag2=false
+                            if(board.child("userId").value.toString()== firebaseAuth.currentUser?.uid)
+                                flag1=true
+                            val userList = mutableListOf<String>()
+                            for (user in board.child("otherUser").children) {
+                                userList.add(user.value.toString())
+                            }
+                            if(userList.contains(firebaseAuth.currentUser?.uid))
+                                flag2=true
+                            if(contents[position].userCount != (contents[position].otherUser?.size?.plus(1)) ||
+                                    flag1 || flag2) {
+                                val intent = Intent(context, StudyBoardActivity::class.java)
+                                intent.putExtra("title", contents[position].title)
+                                intent.putExtra("user", contents[position].user)
+                                intent.putExtra("type", binding.boardType.text)
+                                intent.putExtra("time", binding.boardTime.text)
+                                intent.putExtra("id", contents[position].key)
+                                intent.putExtra("userId", contents[position].userId)
+                                if (contents[position].type) {
+                                    intent.putExtra("userCount", contents[position].userCount)
+                                    intent.putExtra("userSize", contents[position].otherUser?.size)
+                                }
+                                context.startActivity(intent)
+                            }else{
+                                Toast.makeText(context, "해당 게시글의 인원이 다 찼습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    try {
+                        error.toException()
+                    } catch (_: java.lang.Exception) { }
+                }
+            })
         }
     }
 

@@ -2,8 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/update"
-        android:title="수정하기"/>
+        android:title="수정하기"
+        android:visible="true"/>
     <item
         android:id="@+id/delete"
-        android:title="삭제하기"/>
+        android:title="삭제하기"
+        android:visible="true"/>
+    <item
+        android:id="@+id/out"
+        android:title="나가기"
+        android:visible="false"/>
 </menu>

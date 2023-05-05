@@ -55,7 +55,7 @@ class AddStudyActivity : AppCompatActivity() {
 
                 ref.child(key)
                     .setValue(StudyBoard(key, title, user, time, comment, body, Integer.parseInt(count),
-                        intent.getBooleanExtra("type", true), null))
+                        intent.getBooleanExtra("type", true), null, firebaseAuth.currentUser?.uid.toString()))
                 Toast.makeText(this, "게시글을 업로드했습니다.", Toast.LENGTH_SHORT).show()
             }
             finish()
