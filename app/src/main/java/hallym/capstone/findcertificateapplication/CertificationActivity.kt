@@ -12,19 +12,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ScrollView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.AppBarLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.databinding.ActivityCertificationBinding
 import hallym.capstone.findcertificateapplication.databinding.BenefitCompanyItemBinding
-import hallym.capstone.findcertificateapplication.datatype.Comment
+import hallym.capstone.findcertificateapplication.databinding.FavoriteItemBinding
 import hallym.capstone.findcertificateapplication.datatype.Favorite
 import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.properties.Delegates
 
 
@@ -175,13 +176,17 @@ class CertificationActivity : AppCompatActivity() {
                     // 찜하기 버튼 색상 변경
                     binding.favoriteCertification.setBackgroundColor(Color.parseColor("#EB6440"))
 
-                    // DB에 저장할 Favorite 객체 생성
-                    var favorite = Favorite()
 
                     // key == 자격증 구분 위한 랜덤 key값
                     var key = favoriteRef.push().key.toString()
-                    favorite.uid = mFirebaseAuth.currentUser!!.uid
-                    favorite.cerTitle = binding.certificationTitle.text.toString()
+                    var fUid = mFirebaseAuth.currentUser!!.uid
+                    var fTitle = binding.certificationTitle.text.toString()
+                    var fType = binding.certificationType.text.toString()
+                    var fCat = binding.certificationCategory.text.toString()
+                    var fSubT = binding.certificationSubtitle.text.toString()
+
+                    // DB에 저장할 Favorite 객체 생성
+                    var favorite = Favorite(fUid, fTitle, fType, fCat, fSubT)
 
                     // DB에 데이터 추가
                     favoriteRef
@@ -216,9 +221,6 @@ class CertificationActivity : AppCompatActivity() {
                     Toast.makeText(this, binding.certificationTitle.text.toString() + "가 즐겨찾기에서 해제되었습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
-
-            //Log.d("cclo", "snapshot 밖 clicked : " + clicked.toString())
-
         }
 
         binding.exam.setOnClickListener{
@@ -232,11 +234,6 @@ class CertificationActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
-    fun favoriteCer(click: Boolean) {
-
-    }
-
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
@@ -268,3 +265,5 @@ class CompanyDecoration(val context: Context): RecyclerView.ItemDecoration(){
         outRect.set(30, 10, 0, 10)
     }
 }
+
+
