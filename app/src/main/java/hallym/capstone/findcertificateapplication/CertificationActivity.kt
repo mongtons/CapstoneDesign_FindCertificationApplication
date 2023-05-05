@@ -21,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.databinding.ActivityCertificationBinding
 import hallym.capstone.findcertificateapplication.databinding.BenefitCompanyItemBinding
-import hallym.capstone.findcertificateapplication.databinding.FavoriteItemBinding
 import hallym.capstone.findcertificateapplication.datatype.Favorite
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -144,6 +143,7 @@ class CertificationActivity : AppCompatActivity() {
                     // DB에 이미 해당 자격증 이름 존재한다면 click = true로 함수 실행
                     if(d.child("cerTitle").value.toString() == binding.certificationTitle.text.toString()){
                         clicked = true
+                        binding.favoriteCertification.setColorFilter(Color.parseColor("#EB6440"))
                         Log.d("cclo", "in for loop : " + clicked.toString())
                         break
                     }else{
@@ -174,8 +174,7 @@ class CertificationActivity : AppCompatActivity() {
                     clicked = true
 
                     // 찜하기 버튼 색상 변경
-                    binding.favoriteCertification.setBackgroundColor(Color.parseColor("#EB6440"))
-
+                    binding.favoriteCertification.setColorFilter(Color.parseColor("#EB6440"))
 
                     // key == 자격증 구분 위한 랜덤 key값
                     var key = favoriteRef.push().key.toString()
@@ -216,8 +215,7 @@ class CertificationActivity : AppCompatActivity() {
                         }
                     })
 
-                    //favoriteRef.child(mFirebaseAuth.currentUser!!.uid).child(gKey).removeValue()
-                    binding.favoriteCertification.setBackgroundColor(Color.parseColor("#83838D"))
+                    binding.favoriteCertification.setColorFilter(Color.WHITE)
                     Toast.makeText(this, binding.certificationTitle.text.toString() + "가 즐겨찾기에서 해제되었습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
