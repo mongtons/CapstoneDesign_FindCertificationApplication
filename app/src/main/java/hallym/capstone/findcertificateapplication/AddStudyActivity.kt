@@ -1,11 +1,14 @@
 package hallym.capstone.findcertificateapplication
 
+import android.os.Build.VERSION_CODES.P
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import hallym.capstone.findcertificateapplication.databinding.ActivityAddStudyBinding
@@ -24,8 +27,16 @@ class AddStudyActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding.studySpinner.adapter=ArrayAdapter.createFromResource(this, R.array.study_people_count, android.R.layout.simple_spinner_item)
-
+        if(intent.getBooleanExtra("type", false)){
+            binding.studySpinner.adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.study_people_count,
+                android.R.layout.simple_spinner_item
+            )
+        }else {
+            binding.counting.visibility=View.GONE
+            binding.lineView.visibility=View.GONE
+        }
         if (intent.getBooleanExtra("update", false)) {
             binding.toolbar.title = "수정하기"
         }
@@ -51,11 +62,16 @@ class AddStudyActivity : AppCompatActivity() {
                 val user = firebaseAuth.currentUser?.displayName.toString()
                 val time = System.currentTimeMillis()
                 val comment = null
-                val count=binding.studySpinner.selectedItem.toString()
-
-                ref.child(key)
-                    .setValue(StudyBoard(key, title, user, time, comment, body, Integer.parseInt(count),
-                        intent.getBooleanExtra("type", true), null, firebaseAuth.currentUser?.uid.toString()))
+                if(intent.getBooleanExtra("type", true)) {
+                    val count = binding.studySpinner.selectedItem.toString()
+                    ref.child(key)
+                        .setValue(StudyBoard(key, title, user, time, comment, body, Integer.parseInt(count),
+                            intent.getBooleanExtra("type", true), null, firebaseAuth.currentUser?.uid.toString()))
+                }else{
+                    ref.child(key)
+                        .setValue(StudyBoard(key, title, user, time, comment, body, 0,
+                            intent.getBooleanExtra("type", true), null, firebaseAuth.currentUser?.uid.toString()))
+                }
                 Toast.makeText(this, "게시글을 업로드했습니다.", Toast.LENGTH_SHORT).show()
             }
             finish()

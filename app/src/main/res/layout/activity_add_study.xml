@@ -67,6 +67,8 @@
                         android:layout_height="2dp"
                         android:background="@color/iceTeal"/>
                     <LinearLayout
+                        android:id="@+id/counting"
+                        android:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -83,9 +85,11 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginLeft="50dp"
-                            android:padding="3dp" />
+                            android:padding="3dp"/>
                     </LinearLayout>
                     <View
+                        android:id="@+id/line_view"
+                        android:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:background="@color/iceTeal"/>

@@ -220,7 +220,10 @@ class StudyActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.fabQuestion.setOnClickListener {
-
+            val intent=Intent(this, AddStudyActivity::class.java)
+            intent.putExtra("update", false)
+            intent.putExtra("type", false)
+            startActivity(intent)
         }
     }
 
@@ -251,34 +254,51 @@ class StudyBoardAdapter(val contents:MutableList<StudyBoard>, val context:Contex
             studyBoardRef.addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for(board in snapshot.children){
-                        if(board.child("key").value.toString()==contents[position].key){
-                            var flag1=false
-                            var flag2=false
-                            if(board.child("userId").value.toString()== firebaseAuth.currentUser?.uid)
-                                flag1=true
-                            val userList = mutableListOf<String>()
-                            for (user in board.child("otherUser").children) {
-                                userList.add(user.value.toString())
-                            }
-                            if(userList.contains(firebaseAuth.currentUser?.uid))
-                                flag2=true
-                            if(contents[position].userCount != (contents[position].otherUser?.size?.plus(1)) ||
-                                    flag1 || flag2) {
-                                val intent = Intent(context, StudyBoardActivity::class.java)
-                                intent.putExtra("title", contents[position].title)
-                                intent.putExtra("user", contents[position].user)
-                                intent.putExtra("type", binding.boardType.text)
-                                intent.putExtra("time", binding.boardTime.text)
-                                intent.putExtra("id", contents[position].key)
-                                intent.putExtra("userId", contents[position].userId)
-                                if (contents[position].type) {
-                                    intent.putExtra("userCount", contents[position].userCount)
-                                    intent.putExtra("userSize", contents[position].otherUser?.size)
+                        if(contents[position].type) {
+                            if (board.child("key").value.toString() == contents[position].key) {
+                                var flag1 = false
+                                var flag2 = false
+                                if (board.child("userId").value.toString() == firebaseAuth.currentUser?.uid)
+                                    flag1 = true
+                                val userList = mutableListOf<String>()
+                                for (user in board.child("otherUser").children) {
+                                    userList.add(user.value.toString())
                                 }
-                                context.startActivity(intent)
-                            }else{
-                                Toast.makeText(context, "해당 게시글의 인원이 다 찼습니다.", Toast.LENGTH_SHORT).show()
+                                if (userList.contains(firebaseAuth.currentUser?.uid))
+                                    flag2 = true
+                                if (contents[position].userCount != contents[position].otherUser?.size?.plus(1) || flag1 || flag2) {
+                                    val intent = Intent(context, StudyBoardActivity::class.java)
+                                    intent.putExtra("title", contents[position].title)
+                                    intent.putExtra("user", contents[position].user)
+                                    intent.putExtra("type", binding.boardType.text)
+                                    intent.putExtra("time", binding.boardTime.text)
+                                    intent.putExtra("id", contents[position].key)
+                                    intent.putExtra("userId", contents[position].userId)
+                                    if (contents[position].type) {
+                                        intent.putExtra("userCount", contents[position].userCount)
+                                        intent.putExtra(
+                                            "userSize",
+                                            contents[position].otherUser?.size
+                                        )
+                                    }
+                                    context.startActivity(intent)
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "해당 게시글의 인원이 다 찼습니다.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                             }
+                        }else{
+                            val intent=Intent(context, QuestionBoardActivity::class.java)
+                            intent.putExtra("title", contents[position].title)
+                            intent.putExtra("user", contents[position].user)
+                            intent.putExtra("type", binding.boardType.text)
+                            intent.putExtra("time", binding.boardTime.text)
+                            intent.putExtra("id", contents[position].key)
+                            intent.putExtra("userId", contents[position].userId)
+                            context.startActivity(intent)
                         }
                     }
                 }
