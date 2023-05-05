@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.*
+import hallym.capstone.findcertificateapplication.R
 import hallym.capstone.findcertificateapplication.databinding.*
 import hallym.capstone.findcertificateapplication.datatype.Favorite
 import hallym.capstone.findcertificateapplication.datatype.FreeBoard
@@ -176,10 +178,11 @@ class MyPageFragment : Fragment() {
         })
 
         context?.let {
-            AlertDialog.Builder(it)
-                .setTitle("변경할 " + diaType + "을 입력해주세요")
+            val builder = AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogTheme))
+            builder.setTitle("변경할 " + diaType + "을 입력해주세요")
                 .setView(editText)
-                .setPositiveButton("변경") { _ , _ ->
+                .setCancelable(true)
+                .setPositiveButton("변경") { dialog, which ->
                     if(editText.text.isEmpty()) {
                         changeDiaglog(diaType)
                         Toast.makeText(context, diaType + "을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
@@ -232,7 +235,6 @@ class MyPageFragment : Fragment() {
 
                     }
                 }
-                .setCancelable(false)
                 .show()
         }
 
