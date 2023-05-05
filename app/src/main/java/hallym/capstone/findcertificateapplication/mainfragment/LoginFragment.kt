@@ -79,6 +79,11 @@ class LoginFragment : Fragment() {
             }
 
         }
+
+        binding.findID.setOnClickListener {
+
+        }
+
         return binding.root
     }
 }
