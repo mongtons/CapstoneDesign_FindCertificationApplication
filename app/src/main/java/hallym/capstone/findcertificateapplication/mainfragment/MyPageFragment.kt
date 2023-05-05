@@ -11,29 +11,23 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.*
-import hallym.capstone.findcertificateapplication.R
-import hallym.capstone.findcertificateapplication.categoryfragment.AllCategoryAdapter
-import hallym.capstone.findcertificateapplication.databinding.FragmentCommunityBinding
-import hallym.capstone.findcertificateapplication.databinding.FragmentLoginBinding
-import hallym.capstone.findcertificateapplication.databinding.FragmentMyPageBinding
-import hallym.capstone.findcertificateapplication.databinding.StudyBoardItemBinding
-import hallym.capstone.findcertificateapplication.datatype.Certification
-import hallym.capstone.findcertificateapplication.datatype.Comment
+import hallym.capstone.findcertificateapplication.databinding.*
+import hallym.capstone.findcertificateapplication.datatype.Favorite
 import hallym.capstone.findcertificateapplication.datatype.FreeBoard
 import java.lang.Exception
-import java.util.Objects
 
 class MyPageFragment : Fragment() {
     val mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()// 파이어베이스 인증
     val mDatabaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("loginTest")// 실시간 데이터베이스
     val comRef:DatabaseReference=FirebaseDatabase.getInstance().getReference()
+    var favoriteRef = FirebaseDatabase.getInstance().getReference("Favorite")
     lateinit var refpw:DataSnapshot
     lateinit var refem:DataSnapshot
 
@@ -58,6 +52,7 @@ class MyPageFragment : Fragment() {
             //changeDiaglog("닉네임")
         }
 
+        // 로그아웃
         binding.logout.setOnClickListener {
 
             Log.d("cclo", mFirebaseAuth.currentUser!!.email.toString()+ "로그아웃 시도")
@@ -70,6 +65,7 @@ class MyPageFragment : Fragment() {
             mActivity.setDataAtFragment(LoginFragment(), "mypage") // MainActivty에서 Login으로 이동하도록 함
         }
 
+        // 회원탈퇴
         binding.signout.setOnClickListener {
             Log.d("cclo", mFirebaseAuth.currentUser!!.email.toString() + " 회원탈퇴 진행")
             mDatabaseRef.child("UserAccount").child(mFirebaseAuth.currentUser!!.uid).removeValue() //Realtime database에서 해당 항목 제거
@@ -78,6 +74,44 @@ class MyPageFragment : Fragment() {
             Log.d("cclo", "회원탈퇴 완료")
             binding.userId.text = "로그인하세요."
         }
+
+        //자격증 즐겨찾기 데이터 출력
+        favoriteRef.child(mFirebaseAuth.currentUser!!.uid).addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var favDataMutableList= mutableListOf<Favorite>()
+
+                for (d in snapshot.children){
+                    // 로그인한 사용자와 동일한 uid인지 확인
+                    if(d.child("uid").value.toString() == mFirebaseAuth.currentUser!!.uid){
+                        Log.d("cclo", "자격증 이름 : " + d.child("cerTitle").value.toString())
+                        favDataMutableList.add(
+                            Favorite(
+                                d.child("uid").value.toString(),
+                                d.child("cerTitle").value.toString(),
+                                d.child("cerType").value.toString(),
+                                d.child("cerCat").value.toString(),
+                                d.child("cerSubT").value.toString()
+                            )
+                        )
+                    }
+                }
+
+                val layoutManager = LinearLayoutManager(context)
+                layoutManager.orientation = LinearLayoutManager.VERTICAL
+                binding.favoriteRecycler.layoutManager = layoutManager
+                binding.favoriteRecycler.adapter = context?.let {
+                    FavoriteAdapter(favDataMutableList, context!!)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                try {
+                    error.toException()
+                }catch (_: Exception){ }
+            }
+        })
+
+
 
         comRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -219,5 +253,33 @@ class BoardItemAdapter(val content: MutableList<*>, val context: Context):Recycl
 
     override fun getItemCount(): Int {
         return content.size
+    }
+}
+
+
+class FavoriteViewHolder(val binding: FragmentAllItemBinding):RecyclerView.ViewHolder(binding.root)
+class FavoriteAdapter(val contents: MutableList<Favorite>, val context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
+    = FavoriteViewHolder(FragmentAllItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val binding=(holder as FavoriteViewHolder).binding
+        //자격증 이름 데이터 출력
+        binding.itmeType.text = contents[position].cerType
+        binding.itemTitle.text = contents[position].cerTitle
+        binding.itemFrom.text = contents[position].cerSubT
+        // 뷰에 대한 이벤트 ==> 클릭 시 자격증 화면으로 이동
+        binding.itemRoot.setOnClickListener {
+            val intent= Intent(context, CertificationActivity::class.java)
+            intent.putExtra("Title", binding.itemTitle.text)
+            intent.putExtra("Type", binding.itmeType.text)
+            intent.putExtra("Subtitle", binding.itemFrom.text)
+            intent.putExtra("Category", contents[position].cerCat)
+            context.startActivity(intent)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return contents.size
     }
 }

@@ -1,6 +1,9 @@
 package hallym.capstone.findcertificateapplication.datatype
 
-class Favorite {
-    var uid: String? = null
-    var cerTitle: String? = null
-}
+data class Favorite(
+    var uid: String,
+    var cerTitle: String,
+    var cerType : String,
+    var cerCat : String,
+    var cerSubT : String
+)
