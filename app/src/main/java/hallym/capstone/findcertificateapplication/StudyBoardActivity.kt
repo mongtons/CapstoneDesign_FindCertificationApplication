@@ -167,6 +167,7 @@ class StudyBoardActivity : AppCompatActivity() {
                 val intent = Intent(this@StudyBoardActivity, AddStudyActivity::class.java)
                 intent.putExtra("update", true)
                 intent.putExtra("id", this.intent.getStringExtra("id"))
+                intent.putExtra("type", true)
                 startActivity(intent)
                 true
             }

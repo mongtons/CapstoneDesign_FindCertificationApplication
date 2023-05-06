@@ -154,10 +154,9 @@ class CommentAdapter(val contents:MutableList<Comment>,val activity: Activity, v
                     when (item.title) {
                         "삭제" -> {
                             if(flag) {
-                                freeBoardRef.child(id).child("comment").child(contents[position].id)
-                                    .removeValue()
+                                freeBoardRef.child(id).child("comment").child(contents[position].id).removeValue()
                             }else{
-                                studyBoardRef.child(id).child("comment").child(contents[position].id)
+                                studyBoardRef.child(id).child("comment").child(contents[position].id).removeValue()
                             }
                             Toast.makeText(activity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
                             notifyDataSetChanged()

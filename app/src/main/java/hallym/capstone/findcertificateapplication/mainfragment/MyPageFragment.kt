@@ -240,11 +240,11 @@ class MyPageFragment : Fragment() {
                                         }
 
                                         // 프로필 업데이트
-                                        user!!.updateProfile(profileUpdates).addOnCompleteListener { task ->
+                                        user?.updateProfile(profileUpdates)?.addOnCompleteListener { task ->
                                             if(task.isSuccessful){
                                                 // 닉네임 변경 성공 시
                                                 mDatabaseRef.child("UserAccount").child(mFirebaseAuth.currentUser!!.uid).child("displayName").setValue(editText.text.toString())
-                                                Log.d("cclo", user!!.displayName.toString()+ "로 닉네임 변경")
+                                                Log.d("cclo", user.displayName.toString()+ "로 닉네임 변경")
                                                 Toast.makeText(context, "닉네임 변경 성공", Toast.LENGTH_SHORT).show()
                                             }else{
                                                 // 닉네임 변경 실패 시

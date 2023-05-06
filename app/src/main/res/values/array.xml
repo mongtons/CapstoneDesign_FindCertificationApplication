@@ -11,4 +11,59 @@
         <item>스터딩</item>
         <item>질문</item>
     </string-array>
+    <string-array name="certification_title">
+        <item>정보통신산업기사</item>
+        <item>정보통신기사</item>
+        <item>CSTS FL</item>
+        <item>전자캐드기능사</item>
+        <item>전자기사</item>
+        <item>3D프린터개발산업기사</item>
+        <item>리눅스마스터 1급</item>
+        <item>리눅스마스터 2급</item>
+        <item>네트워크관리사 1급</item>
+        <item>네트워크관리사 2급</item>
+        <item>빅데이터분석기사</item>
+        <item>SQLP(국가공인 SQL 전문가)</item>
+        <item>SQLD(국가공인 SQL 개발자)</item>
+        <item>데이터아키텍쳐 전문가</item>
+        <item>데이터아키텍처 준전문가(DAsP)</item>
+        <item>코딩능력마스터 2급</item>
+        <item>파이썬마스터 3급</item>
+        <item>파이썬마스터 2급</item>
+        <item>파이썬마스터 1급</item>
+        <item>게임그래픽전문가</item>
+        <item>SW코딩자격 1급</item>
+        <item>정보처리기사</item>
+        <item>컴퓨터활용능력 1급</item>
+        <item>정보처리산업기사</item>
+        <item>전자계산기기사</item>
+        <item>ATC자격증</item>
+        <item>기계기사</item>
+        <item>정보보안기사</item>
+        <item>정보보안산업기사</item>
+        <item>컴퓨터시스템응용기술사</item>
+        <item>통신기기기능사</item>
+        <item>무선설비기사</item>
+        <item>통신선로산업기사</item>
+        <item>육상무선통신사</item>
+        <item>로봇소프트웨어개발기사</item>
+        <item>임베디드기사</item>
+        <item>정보시스템감리사</item>
+        <item>웹디자인기능사</item>
+        <item>컴퓨터그래픽스운용기능사</item>
+        <item>ADsP(데이터 분석 준전문가)</item>
+        <item>ADP(데이터 분석 전문가)</item>
+        <item>SW 테스트 전문가(CSTS) 일반등급</item>
+        <item>게임기획전문가</item>
+        <item>게임프로그래밍전문가</item>
+        <item>전자계산기조직응용기사</item>
+        <item>멀티미디어콘텐츠제작전문가</item>
+        <item>사무자동화산업기사</item>
+        <item>전파전자통신기사</item>
+    </string-array>
+    <string-array name="question_number">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>

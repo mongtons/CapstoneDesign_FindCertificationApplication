@@ -1,18 +1,13 @@
 package hallym.capstone.findcertificateapplication
 
-import android.os.Build.VERSION_CODES.P
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import hallym.capstone.findcertificateapplication.databinding.ActivityAddStudyBinding
-import hallym.capstone.findcertificateapplication.datatype.FreeBoard
 import hallym.capstone.findcertificateapplication.datatype.StudyBoard
 
 class AddStudyActivity : AppCompatActivity() {
@@ -28,14 +23,25 @@ class AddStudyActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if(intent.getBooleanExtra("type", false)){
+            binding.counting2.visibility=View.GONE
             binding.studySpinner.adapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.study_people_count,
                 android.R.layout.simple_spinner_item
             )
         }else {
-            binding.counting.visibility=View.GONE
-            binding.lineView.visibility=View.GONE
+            binding.textView.text="자격증 명"
+            binding.counting2.visibility=View.VISIBLE
+            binding.studySpinner.adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.certification_title,
+                android.R.layout.simple_spinner_item
+            )
+            binding.numberSpinner.adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.question_number,
+                android.R.layout.simple_spinner_item
+            )
         }
         if (intent.getBooleanExtra("update", false)) {
             binding.toolbar.title = "수정하기"
@@ -52,6 +58,22 @@ class AddStudyActivity : AppCompatActivity() {
             val body = binding.boardBody.text.toString()
 
             if(intent.getBooleanExtra("update", false)){
+                if(intent.getBooleanExtra("type", true)){
+                    binding.counting2.visibility=View.GONE
+
+                    ref.child(intent.getStringExtra("id").toString())
+                        .child("userCount").setValue(Integer.parseInt(binding.studySpinner.selectedItem.toString()))
+                }else{
+                    binding.textView.text="자격증 명"
+                    binding.counting2.visibility=View.VISIBLE
+
+                    val cert=binding.studySpinner.selectedItem.toString()
+                    val qnumber=binding.numberSpinner.selectedItem.toString()
+                    ref.child(intent.getStringExtra("id").toString())
+                        .child("certification").setValue(cert)
+                    ref.child(intent.getStringExtra("id").toString())
+                        .child("qnumber").setValue(Integer.parseInt(qnumber))
+                }
                 ref.child(intent.getStringExtra("id").toString())
                     .child("title").setValue(title)
                 ref.child(intent.getStringExtra("id").toString())
@@ -62,15 +84,22 @@ class AddStudyActivity : AppCompatActivity() {
                 val user = firebaseAuth.currentUser?.displayName.toString()
                 val time = System.currentTimeMillis()
                 val comment = null
+
                 if(intent.getBooleanExtra("type", true)) {
                     val count = binding.studySpinner.selectedItem.toString()
                     ref.child(key)
                         .setValue(StudyBoard(key, title, user, time, comment, body, Integer.parseInt(count),
-                            intent.getBooleanExtra("type", true), null, firebaseAuth.currentUser?.uid.toString()))
+                            intent.getBooleanExtra("type", true), null, firebaseAuth.currentUser?.uid.toString(),
+                            null, null
+                        ))
                 }else{
+                    val certTitle=binding.studySpinner.selectedItem.toString()
+                    val certNumber=binding.numberSpinner.selectedItem.toString()
                     ref.child(key)
                         .setValue(StudyBoard(key, title, user, time, comment, body, 0,
-                            intent.getBooleanExtra("type", true), null, firebaseAuth.currentUser?.uid.toString()))
+                            intent.getBooleanExtra("type", true), null, firebaseAuth.currentUser?.uid.toString(),
+                            certTitle, certNumber.toLong()
+                        ))
                 }
                 Toast.makeText(this, "게시글을 업로드했습니다.", Toast.LENGTH_SHORT).show()
             }

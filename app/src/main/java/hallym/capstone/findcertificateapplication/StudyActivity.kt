@@ -66,7 +66,9 @@ class StudyActivity : AppCompatActivity() {
                         Integer.parseInt(data.child("userCount").value.toString()),
                         data.child("type").value as Boolean,
                         userList,
-                        data.child("userId").value.toString()
+                        data.child("userId").value.toString(),
+                        data.child("certification").value.toString(),
+                        (data.child("qnumber").value?:0L) as Long
                     )
                     list.add(0, board)
                     binding.studyBoardList?.adapter?.notifyDataSetChanged()
@@ -105,7 +107,9 @@ class StudyActivity : AppCompatActivity() {
                                             Integer.parseInt(data.child("userCount").value.toString()),
                                             data.child("type").value as Boolean,
                                             userList,
-                                            data.child("userId").value.toString()
+                                            data.child("userId").value.toString(),
+                                            data.child("certification").value.toString(),
+                                            (data.child("qnumber").value?:0L) as Long
                                         )
                                         list.add(0, board)
                                     }
@@ -139,7 +143,9 @@ class StudyActivity : AppCompatActivity() {
                                                 Integer.parseInt(data.child("userCount").value.toString()),
                                                 data.child("type").value as Boolean,
                                                 userList,
-                                                data.child("userId").value.toString()
+                                                data.child("userId").value.toString(),
+                                                data.child("certification").value.toString(),
+                                                (data.child("qnumber").value?:0L) as Long
                                             )
                                             list.add(0, board)
                                         }
@@ -170,7 +176,9 @@ class StudyActivity : AppCompatActivity() {
                                                 Integer.parseInt(data.child("userCount").value.toString()),
                                                 data.child("type").value as Boolean,
                                                 null,
-                                                data.child("userId").value.toString()
+                                                data.child("userId").value.toString(),
+                                                data.child("certification").value.toString(),
+                                                (data.child("qnumber").value?:0L) as Long
                                             )
                                             list.add(0, board)
                                         }
@@ -248,13 +256,16 @@ class StudyBoardAdapter(val contents:MutableList<StudyBoard>, val context:Contex
             "질문"
         }
         if (contents[position].type){
+            binding.boardUserCount.visibility=View.VISIBLE
             binding.boardUserCount.text="${(contents[position].otherUser?.size)?.plus(1)} / ${contents[position].userCount}"
+        }else{
+            binding.boardUserCount.visibility=View.INVISIBLE
         }
         binding.itemRoot.setOnClickListener {
-            studyBoardRef.addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for(board in snapshot.children){
-                        if(contents[position].type) {
+            if(contents[position].type) {
+                studyBoardRef.addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for(board in snapshot.children){
                             if (board.child("key").value.toString() == contents[position].key) {
                                 var flag1 = false
                                 var flag2 = false
@@ -290,25 +301,26 @@ class StudyBoardAdapter(val contents:MutableList<StudyBoard>, val context:Contex
                                     ).show()
                                 }
                             }
-                        }else{
-                            val intent=Intent(context, QuestionBoardActivity::class.java)
-                            intent.putExtra("title", contents[position].title)
-                            intent.putExtra("user", contents[position].user)
-                            intent.putExtra("type", binding.boardType.text)
-                            intent.putExtra("time", binding.boardTime.text)
-                            intent.putExtra("id", contents[position].key)
-                            intent.putExtra("userId", contents[position].userId)
-                            context.startActivity(intent)
                         }
                     }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    try {
-                        error.toException()
-                    } catch (_: java.lang.Exception) { }
-                }
-            })
+                    override fun onCancelled(error: DatabaseError) {
+                        try {
+                            error.toException()
+                        } catch (_: java.lang.Exception) { }
+                    }
+                })
+            }else{
+                val intent=Intent(context, QuestionBoardActivity::class.java)
+                intent.putExtra("title", contents[position].title)
+                intent.putExtra("user", contents[position].user)
+                intent.putExtra("type", binding.boardType.text)
+                intent.putExtra("time", binding.boardTime.text)
+                intent.putExtra("id", contents[position].key)
+                intent.putExtra("userId", contents[position].userId)
+                intent.putExtra("cert_title", contents[position].certification)
+                intent.putExtra("qNum", contents[position].qNumber)
+                context.startActivity(intent)
+            }
         }
     }
 

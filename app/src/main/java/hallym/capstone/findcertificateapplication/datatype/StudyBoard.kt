@@ -10,5 +10,7 @@ data class StudyBoard(
     val userCount: Int,
     val type: Boolean,
     val otherUser: List<String>?,
-    val userId:String
+    val userId:String,
+    val certification:String?,
+    val qNumber: Long?
 )

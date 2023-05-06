@@ -48,8 +48,7 @@
                     android:id="@+id/user_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:gravity="center"/>
+                    android:textSize="15sp"/>
             </LinearLayout>
         </LinearLayout>
         <RelativeLayout
