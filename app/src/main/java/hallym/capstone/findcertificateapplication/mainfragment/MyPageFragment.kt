@@ -40,7 +40,19 @@ class MyPageFragment : Fragment() {
 
         val binding = FragmentMyPageBinding.inflate(inflater, container, false)
 
-        binding.userId.text = mFirebaseAuth.currentUser?.displayName.toString()
+
+        mDatabaseRef.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                binding.userId.text = mFirebaseAuth.currentUser?.displayName.toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                try {
+                    error.toException()
+                }catch (_: Exception){ }
+            }
+        })
+
 
         binding.changeId.setOnClickListener {
             changeDiaglog("이메일")
@@ -51,7 +63,7 @@ class MyPageFragment : Fragment() {
         }
 
         binding.changeNickname.setOnClickListener {
-            //changeDiaglog("닉네임")
+            changeDiaglog("닉네임")
         }
 
         // 로그아웃
@@ -221,9 +233,24 @@ class MyPageFragment : Fragment() {
                                             }
                                     }
                                     else if(diaType == "닉네임"){
-                                        user?.updateProfile(userProfileChangeRequest {
+                                        // 닉네임 변경
+                                        //업데이트할 프로필
+                                        val profileUpdates = userProfileChangeRequest {
+                                            displayName = editText.text.toString()
+                                        }
 
-                                        })
+                                        // 프로필 업데이트
+                                        user!!.updateProfile(profileUpdates).addOnCompleteListener { task ->
+                                            if(task.isSuccessful){
+                                                // 닉네임 변경 성공 시
+                                                mDatabaseRef.child("UserAccount").child(mFirebaseAuth.currentUser!!.uid).child("displayName").setValue(editText.text.toString())
+                                                Log.d("cclo", user!!.displayName.toString()+ "로 닉네임 변경")
+                                                Toast.makeText(context, "닉네임 변경 성공", Toast.LENGTH_SHORT).show()
+                                            }else{
+                                                // 닉네임 변경 실패 시
+                                                Toast.makeText(context, "닉네임 변경 실패", Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
 
                                     }
 
