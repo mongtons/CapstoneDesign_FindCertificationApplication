@@ -3,17 +3,21 @@ package hallym.capstone.findcertificateapplication.mainfragment
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.R
 import hallym.capstone.findcertificateapplication.SignIn
 import hallym.capstone.findcertificateapplication.databinding.FragmentLoginBinding
+import java.lang.Exception
 
 class LoginFragment : Fragment() {
     val mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()// 파이어베이스 인증
@@ -80,10 +84,93 @@ class LoginFragment : Fragment() {
 
         }
 
+        // 닉네임으로 아이디 찾기
         binding.findID.setOnClickListener {
+            val editText = EditText(context)
 
+            context?.let {
+                val builder = AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogTheme))
+                builder.setTitle("현재 닉네임을 입력해주세요")
+                    .setView(editText)
+                    .setCancelable(true)
+                    .setPositiveButton("찾기") { dialog, which ->
+                        // 빈칸으로 버튼 클릭 시
+                        if(editText.text.isEmpty()) {
+                            builder.show()
+                            Toast.makeText(context, "닉네임을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
+                        } else {
+                            // 닉네임으로 아이디 찾기
+                            var inputString = editText.text.toString()
+                            mDatabaseRef.child("UserAccount").addValueEventListener(object: ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    var findEmail = "null"
+                                    for(d in snapshot.children){
+                                        if(d.child("displayName").value.toString() == inputString){
+                                            findEmail = d.child("emailId").value.toString()
+                                            Toast.makeText(context, "아이디는 \"" + findEmail + "\"입니다.", Toast.LENGTH_LONG).show()
+                                            break
+                                        }
+                                    }
+                                    if(findEmail == "null"){
+                                        Toast.makeText(context, "해당 닉네임을 가진 아이디는 없습니다.", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+                                    Log.d("cclo", "아이디 찾기 데이터스냅샷 오류")
+                                }
+                            })
+
+                        }
+                    }
+                    .show()
+            }
+        }
+
+        // 이메일로 아이디 찾기
+        binding.findPW.setOnClickListener {
+            val editText = EditText(context)
+
+            context?.let {
+                val builder = AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogTheme))
+                builder.setTitle("현재 이메일을 입력해주세요")
+                    .setView(editText)
+                    .setCancelable(true)
+                    .setPositiveButton("찾기") { dialog, which ->
+                        // 빈칸으로 버튼 클릭 시
+                        if(editText.text.isEmpty()) {
+                            builder.show()
+                            Toast.makeText(context, "이메일을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
+                        } else {
+                            // 이메일로 비밀번호 찾기
+                            var inputString = editText.text.toString()
+                            mDatabaseRef.child("UserAccount").addValueEventListener(object: ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    var findPass = "null"
+                                    for(d in snapshot.children){
+                                        if(d.child("emailId").value.toString() == inputString){
+                                            findPass = d.child("password").value.toString()
+                                            Toast.makeText(context, "비밀번호는 \"" + findPass + "\"입니다.", Toast.LENGTH_LONG).show()
+                                            break
+                                        }
+                                    }
+                                    if(findPass == "null"){
+                                        Toast.makeText(context, "해당 이메일을 가진 아이디는 없습니다.", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+                                    Log.d("cclo", "비밀번호 찾기 데이터스냅샷 오류")
+                                }
+                            })
+
+                        }
+                    }
+                    .show()
+            }
         }
 
         return binding.root
     }
+
 }
