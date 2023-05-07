@@ -44,6 +44,7 @@ class MyPageFragment : Fragment() {
         mDatabaseRef.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 binding.userId.text = mFirebaseAuth.currentUser?.displayName.toString()
+                binding.userNickname.text = mFirebaseAuth.currentUser!!.email.toString()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -62,9 +63,9 @@ class MyPageFragment : Fragment() {
             changeDiaglog("비밀번호")
         }
 
-        binding.changeNickname.setOnClickListener {
-            changeDiaglog("닉네임")
-        }
+//        binding.changeNickname.setOnClickListener {
+//            changeDiaglog("닉네임")
+//        }
 
         // 로그아웃
         binding.logout.setOnClickListener {
@@ -233,27 +234,56 @@ class MyPageFragment : Fragment() {
                                                 }
                                             }
                                     }
-                                    else if(diaType == "닉네임"){
-                                        // 닉네임 변경
-                                        //업데이트할 프로필
-                                        val profileUpdates = userProfileChangeRequest {
-                                            displayName = editText.text.toString()
-                                        }
-
-                                        // 프로필 업데이트
-                                        user?.updateProfile(profileUpdates)?.addOnCompleteListener { task ->
-                                            if(task.isSuccessful){
-                                                // 닉네임 변경 성공 시
-                                                mDatabaseRef.child("UserAccount").child(mFirebaseAuth.currentUser!!.uid).child("displayName").setValue(editText.text.toString())
-                                                Log.d("cclo", user.displayName.toString()+ "로 닉네임 변경")
-                                                Toast.makeText(context, "닉네임 변경 성공", Toast.LENGTH_SHORT).show()
-                                            }else{
-                                                // 닉네임 변경 실패 시
-                                                Toast.makeText(context, "닉네임 변경 실패", Toast.LENGTH_SHORT).show()
-                                            }
-                                        }
-
-                                    }
+//                                    else if(diaType == "닉네임"){
+//                                        // 닉네임 변경
+//                                        //업데이트할 프로필
+//                                        val profileUpdates = userProfileChangeRequest {
+//                                            displayName = editText.text.toString()
+//                                        }
+//
+//                                        // 변경 전 닉네임 받아오기 ==> 닉네임 변경 후 게시판 user 바꾸기 용
+//                                        var currentName = mFirebaseAuth.currentUser!!.displayName.toString()
+//
+//                                        // 프로필 업데이트
+//                                        user?.updateProfile(profileUpdates)?.addOnCompleteListener { task ->
+//                                            if(task.isSuccessful){
+//                                                // 닉네임 변경 성공 시
+//                                                mDatabaseRef.child("UserAccount").child(mFirebaseAuth.currentUser!!.uid).child("displayName").setValue(editText.text.toString())
+//                                                Log.d("cclo", user.displayName.toString()+ "로 닉네임 변경")
+//                                                Toast.makeText(context, "닉네임 변경 성공", Toast.LENGTH_SHORT).show()
+//
+//                                                // 게시판에서 작성한 글이 있으면 user 새로운 닉네임으로 변경
+//                                                comRef.addValueEventListener(object: ValueEventListener{
+//                                                    override fun onDataChange(snapshot: DataSnapshot) {
+//                                                        val freeBoard=snapshot.child("Free_Board")
+//                                                        val studyBoard=snapshot.child("Study_Board")
+//
+//                                                        //Free_Board에서 이전에 작성한 글이 있는 경우 user명 현재 닉네임으로 변경
+//                                                        for (d in freeBoard.children){
+//                                                            if (d.child("user").value.toString() == currentName){
+//                                                                Log.d("cclo", "변경 전 닉네임 : " + d.value.toString())
+//                                                                //d.child("user")
+//
+//                                                            }
+//                                                        }
+//
+//
+//                                                    }
+//
+//                                                    override fun onCancelled(error: DatabaseError) {
+//                                                        try {
+//                                                            error.toException()
+//                                                        }catch (_: Exception){ }
+//                                                    }
+//                                                })
+//
+//                                            }else{
+//                                                // 닉네임 변경 실패 시
+//                                                Toast.makeText(context, "닉네임 변경 실패", Toast.LENGTH_SHORT).show()
+//                                            }
+//                                        }
+//
+//                                    }
 
                                 } else {
                                     // 로그인 실패 시
@@ -268,6 +298,8 @@ class MyPageFragment : Fragment() {
 
 
     }
+
+
 }
 class BoardItemAdapter(val content: MutableList<*>, val context: Context):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
