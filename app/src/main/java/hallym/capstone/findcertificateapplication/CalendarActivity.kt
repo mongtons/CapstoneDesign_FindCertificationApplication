@@ -1,5 +1,6 @@
 package hallym.capstone.findcertificateapplication
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,11 @@ class CalendarActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+//        binding.exam.setOnClickListener{
+//            intent.putExtra("title", this.intent.getStringExtra("Title"))
+//            startActivity(intent)
+//        }
 
         val monthListManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         val monthListAdapter = AdapterMonth()
