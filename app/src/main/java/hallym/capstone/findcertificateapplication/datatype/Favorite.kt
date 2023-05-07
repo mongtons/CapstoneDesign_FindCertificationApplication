@@ -5,5 +5,6 @@ data class Favorite(
     var cerTitle: String,
     var cerType : String,
     var cerCat : String,
-    var cerSubT : String
+    var cerSubT : String,
+    var key : String
 )

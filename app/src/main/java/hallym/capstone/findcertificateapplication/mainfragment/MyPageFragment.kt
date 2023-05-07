@@ -104,7 +104,8 @@ class MyPageFragment : Fragment() {
                                 d.child("cerTitle").value.toString(),
                                 d.child("cerType").value.toString(),
                                 d.child("cerCat").value.toString(),
-                                d.child("cerSubT").value.toString()
+                                d.child("cerSubT").value.toString(),
+                                d.child("key").value.toString()
                             )
                         )
                     }
