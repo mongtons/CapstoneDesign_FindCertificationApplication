@@ -49,11 +49,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp" />
-                    <TextView
+                    <!--TextView
                         android:id="@+id/user_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"/-->
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </androidx.cardview.widget.CardView>
@@ -102,14 +102,14 @@
                         android:textSize="16sp"
                         android:textAlignment="textStart"
                         style="@style/Widget.AppCompat.Button.Borderless"/>
-                    <Button
+                    <!--Button
                         android:id="@+id/change_nickname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="닉네임 수정하기"
                         android:textSize="16sp"
                         android:textAlignment="textStart"
-                        style="@style/Widget.AppCompat.Button.Borderless"/>
+                        style="@style/Widget.AppCompat.Button.Borderless"/-->
                     <Button
                         android:id="@+id/logout"
                         android:layout_width="match_parent"
