@@ -34,6 +34,7 @@ class CertificationActivity : AppCompatActivity() {
         ActivityCertificationBinding.inflate(layoutInflater)
     }
     var clicked = false
+    var cnt = 0
     val mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()// 파이어베이스 인증
     val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     val ref: DatabaseReference =database.getReference("Certification")
@@ -164,6 +165,22 @@ class CertificationActivity : AppCompatActivity() {
             }
         })
 
+        favoriteRef.child(mFirebaseAuth.currentUser!!.uid).addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (d in snapshot.children){
+                    cnt++
+                    Log.d("cclo", cnt.toString())
+
+                }
+
+            }
+            override fun onCancelled(error: DatabaseError) {
+                try {
+                    error.toException()
+                }catch (_: Exception){ }
+            }
+        })
+
         binding.favoriteCertification.setOnClickListener{
 
             Log.d("cclo", "clicked : " + clicked)
@@ -174,32 +191,47 @@ class CertificationActivity : AppCompatActivity() {
             }else{
                 // DB에 해당 자격증 이름이 없는 경우 ==> 찜하기 실행
                 if(clicked == false){
-                    clicked = true
+                    // 찜한 자격증 개수 최대 2개로 제한
 
-                    // 찜하기 버튼 색상 변경
-                    binding.favoriteCertification.setColorFilter(Color.parseColor("#EB6440"))
 
-                    // key == 자격증 구분 위한 랜덤 key값
-                    var key = favoriteRef.push().key.toString()
-                    var fUid = mFirebaseAuth.currentUser!!.uid
-                    var fTitle = binding.certificationTitle.text.toString()
-                    var fType = binding.certificationType.text.toString()
-                    var fCat = binding.certificationCategory.text.toString()
-                    var fSubT = binding.certificationSubtitle.text.toString()
 
-                    // DB에 저장할 Favorite 객체 생성
-                    var favorite = Favorite(fUid, fTitle, fType, fCat, fSubT, key)
+                    Log.d("cclo", "데이터 스냅샷 이후 cnt : " + cnt.toString())
+                    // 즐겨찾기 2개인 경우 ==> 더 추가 불가
+                    if(cnt == 2){
+                        Toast.makeText(this@CertificationActivity, "최대 즐겨찾기 개수(2)를 초과하였습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                    // 즐겨찾기 2개 미만인 경우 ==> 더 추가 가능
+                    else if(cnt < 2){
+                        clicked = true
 
-                    // DB에 데이터 추가
-                    favoriteRef
-                        .child(mFirebaseAuth.currentUser!!.uid)
-                        .child(key)
-                        .setValue(favorite)
+                        // 찜하기 버튼 색상 변경
+                        binding.favoriteCertification.setColorFilter(Color.parseColor("#EB6440"))
 
-                    // 즐겨찾기 추가 완료 시 Toast message 생성
-                    Toast.makeText(this, binding.certificationTitle.text.toString() + "가 즐겨찾기에 추가되었습니다.", Toast.LENGTH_SHORT).show()
+                        // key == 자격증 구분 위한 랜덤 key값
+                        var key = favoriteRef.push().key.toString()
+                        var fUid = mFirebaseAuth.currentUser!!.uid
+                        var fTitle = binding.certificationTitle.text.toString()
+                        var fType = binding.certificationType.text.toString()
+                        var fCat = binding.certificationCategory.text.toString()
+                        var fSubT = binding.certificationSubtitle.text.toString()
+
+                        // DB에 저장할 Favorite 객체 생성
+                        var favorite = Favorite(fUid, fTitle, fType, fCat, fSubT, key)
+
+                        // DB에 데이터 추가
+                        favoriteRef
+                            .child(mFirebaseAuth.currentUser!!.uid)
+                            .child(key)
+                            .setValue(favorite)
+
+                        // 즐겨찾기 추가 완료 시 Toast message 생성
+                        Toast.makeText(this@CertificationActivity, binding.certificationTitle.text.toString() + "가 즐겨찾기에 추가되었습니다.", Toast.LENGTH_SHORT).show()
+
+                    }
+
                 }
                 else{
+                    // 즐겨찾기 해제
                     clicked = false
                     favoriteRef.child(mFirebaseAuth.currentUser!!.uid).addValueEventListener(object: ValueEventListener{
                         override fun onDataChange(snapshot: DataSnapshot) {
