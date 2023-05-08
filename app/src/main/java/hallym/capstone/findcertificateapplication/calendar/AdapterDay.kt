@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.databinding.ListItemDayBinding
-import hallym.capstone.findcertificateapplication.datatype.CalendarDay
+//import hallym.capstone.findcertificateapplication.datatype.CalendarDay
 import java.lang.Exception
 import java.util.*
 
