@@ -93,6 +93,7 @@ class Examday : AppCompatActivity() {
                             }
                             binding.subject.text=subjectText
                         }
+                        binding.condition.text=ds.child("condition").value.toString()
                     }
                 }
             }

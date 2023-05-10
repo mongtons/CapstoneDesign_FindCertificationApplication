@@ -17,17 +17,21 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
 //import com.google.firebase.storage.FirebaseStorage
 import hallym.capstone.findcertificateapplication.databinding.ActivityCertificationBinding
 import hallym.capstone.findcertificateapplication.databinding.BenefitCompanyItemBinding
+import hallym.capstone.findcertificateapplication.databinding.BookItemBinding
+import hallym.capstone.findcertificateapplication.datatype.Book
 import hallym.capstone.findcertificateapplication.datatype.Favorite
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
-
 
 class CertificationActivity : AppCompatActivity() {
     val binding by lazy {
@@ -39,8 +43,6 @@ class CertificationActivity : AppCompatActivity() {
     val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     val ref: DatabaseReference =database.getReference("Certification")
     var favoriteRef = database.getReference("Favorite")
-    //val storage=FirebaseStorage.getInstance()
-    //val storageRef=storage.reference
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,37 +78,36 @@ class CertificationActivity : AppCompatActivity() {
                         if(ds.child("book").hasChildren()){//교재
                             val nbook = ds.child("book").child("note")
                             val pbook = ds.child("book").child("practice")
-//
-                            var notebook = "책 이름 : "
-                            notebook+= nbook.child("name").value.toString()+"\n"
-                            notebook+= "책 가격 : "
-                            notebook+= nbook.child("bookprice").value.toString()+"\n"
-                            notebook += "책 저자 : "
-                            notebook+= nbook.child("person").value.toString()+"\n"
-                            notebook += "책 출판사 : "
-                            notebook+= nbook.child("publish").value.toString()+"\n"
 
-                            var practicebook = "책 이름 : "
-                            practicebook+= pbook.child("name").value.toString()+"\n"
-                            practicebook += "책 가격 : "
-                            practicebook+= pbook.child("bookprice").value.toString()+"\n"
-                            practicebook += "책 저자 : "
-                            practicebook+= pbook.child("person").value.toString()+"\n"
-                            practicebook += "책 출판사 : "
-                            practicebook+= pbook.child("publish").value.toString()+"\n"
-
-
-                            binding.bookNoteButton.setOnClickListener{
-                                val intent = Intent(Intent.ACTION_VIEW,Uri.parse(nbook.child("Link").value.toString()))
-                                startActivity(intent)
+                            val bookList= mutableListOf<Book>()
+                            bookList.add(
+                                Book(
+                                    intent.getStringExtra("Title").toString(),
+                                    nbook.child("name").value.toString(),
+                                    nbook.child("bookprice").value.toString(),
+                                    nbook.child("person").value.toString(),
+                                    nbook.child("publish").value.toString(),
+                                    nbook.child("Link").value.toString(),
+                                    true
+                                )
+                            )
+                            if(pbook.exists()){
+                                bookList.add(
+                                    Book(
+                                        intent.getStringExtra("Title").toString(),
+                                        pbook.child("name").value.toString(),
+                                        pbook.child("bookprice").value.toString(),
+                                        pbook.child("person").value.toString(),
+                                        pbook.child("publish").value.toString(),
+                                        pbook.child("Link").value.toString(),
+                                        false
+                                    )
+                                )
                             }
-                            binding.bookPractice.setOnClickListener {
-                                val intent = Intent(Intent.ACTION_VIEW,Uri.parse(pbook.child("Link").value.toString()))
-                                startActivity(intent)
-                            }
-                            binding.bookNote.text = notebook
-                            binding.bookPractice.text = practicebook
-
+                            val layoutManager=LinearLayoutManager(this@CertificationActivity)
+                            layoutManager.orientation=LinearLayoutManager.HORIZONTAL
+                            binding.bookList.layoutManager=layoutManager
+                            binding.bookList.adapter=BookAdapter(bookList, this@CertificationActivity)
                         }
 
                         if(ds.child("benefit").hasChildren()){
@@ -296,6 +297,47 @@ class CompanyDecoration(val context: Context): RecyclerView.ItemDecoration(){
     ) {
         super.getItemOffsets(outRect, view, parent, state)
         outRect.set(30, 10, 0, 10)
+    }
+}
+class BookViewHolder(val binding: BookItemBinding): RecyclerView.ViewHolder(binding.root)
+class BookAdapter(val contents: MutableList<Book>, val context: Context):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+    val storage=FirebaseStorage.getInstance("gs://findcertificationapplication.appspot.com/")
+    val storageRef=storage.reference
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
+    =BookViewHolder(BookItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val binding=(holder as BookViewHolder).binding
+        var path:String="/images/"
+        if(contents[position].cert_title=="정보통신산업기사" && contents[position].flag){
+            path+="Industrial_Engineer_Information_Communication_note.jpg"
+        }else if(contents[position].cert_title=="정보통신산업기사" && !contents[position].flag){
+            path+="Industrial_Engineer_Information_Communication_practice.jpg"
+        }else if(contents[position].cert_title=="정보통신기사" && contents[position].flag){
+            path+="Engineer_Information_Communication_note.jpg"
+        }else if(contents[position].cert_title=="정보통신기사" && !contents[position].flag){
+            path+="Engineer_Information_Communication_practice.jpg"
+        }
+        val pathRef=storageRef.child(path)
+        pathRef.downloadUrl.addOnSuccessListener {
+            Glide.with(binding.certImg)
+                .load(it)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .centerCrop()
+                .into(binding.certImg)
+        }
+        binding.bookTitle.text="제목: ${contents[position].title}"
+        binding.bookAuthor.text="저자: ${contents[position].author}"
+        binding.bookPublish.text="출판사: ${contents[position].publish}"
+        binding.bookCost.text="자격: ${contents[position].cost}"
+        binding.itemRoot.setOnClickListener {
+            val intent=Intent(Intent.ACTION_VIEW, Uri.parse(contents[position].uri))
+            context.startActivity(intent)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return contents.size
     }
 }
 

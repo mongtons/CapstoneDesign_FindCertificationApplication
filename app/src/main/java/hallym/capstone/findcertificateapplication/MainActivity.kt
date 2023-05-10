@@ -1,19 +1,23 @@
 package hallym.capstone.findcertificateapplication
 
+import android.bluetooth.BluetoothClass.Device
 import android.content.Intent
-import android.graphics.PorterDuff
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.graphics.drawable.DrawerArrowDrawable
 import com.google.android.material.appbar.AppBarLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import hallym.capstone.findcertificateapplication.databinding.ActivityMainBinding
 import hallym.capstone.findcertificateapplication.mainfragment.*
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class MainActivity : AppCompatActivity() {
     val mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()// 파이어베이스 인증
@@ -21,17 +25,12 @@ class MainActivity : AppCompatActivity() {
     val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
-    lateinit var toggle: ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
-        toggle=ActionBarDrawerToggle(this@MainActivity, binding.drawer, R.string.opened_drawer, R.string.closed_drawer)
-        toggle.syncState()
 
         supportFragmentManager.beginTransaction().replace(R.id.fragment_position, HomeFragment()).commit()
 
@@ -89,10 +88,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(toggle.onOptionsItemSelected(item)){
-            true
-            return super.onOptionsItemSelected(item)
-        }
         val intent: Intent
         return when(item.title){
             "일정" -> {
@@ -100,10 +95,33 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 true
             }
-            "설정" -> {
+            "버그 건의" -> {
+                intent= Intent(Intent.ACTION_SEND)
+                intent.data= Uri.parse("mailto:")
+                intent.type="text/plain"
+                val format=SimpleDateFormat("yyyy-MM-dd, HH:mm:ss")
+
+                intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("mongtons990213@gmail.com"))
+                intent.putExtra(Intent.EXTRA_SUBJECT, "[자격증 메이트 어플리케이션 버그] ${format.format(Date().time)}")
+                intent.putExtra(Intent.EXTRA_TEXT, "어플리케이션 Version: ${BuildConfig.VERSION_NAME}\n" +
+                        "안드로이드 SDK: ${Build.VERSION.SDK_INT}(${Build.VERSION.RELEASE})\n" +
+                        "------")
+                startActivity(intent)
                 true
             }
-            "도움말" -> {
+            "신고하기" -> {
+                intent= Intent(Intent.ACTION_SEND)
+                intent.data= Uri.parse("mailto:")
+                intent.type="text/plain"
+
+                val format=SimpleDateFormat("yyyy-MM-dd, HH:mm:ss")
+
+                intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("mongtons990213@gmail.com"))
+                intent.putExtra(Intent.EXTRA_SUBJECT, "[자격증 메이트 어플리케이션 유저 신고] ${format.format(Date().time)}")
+                intent.putExtra(Intent.EXTRA_TEXT, "게시판 종류: \n" +
+                        "유저 닉네임: \n" +
+                        "유저 신고 내용(스크린샷 첨부): \n")
+                startActivity(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)

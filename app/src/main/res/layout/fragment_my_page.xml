@@ -199,6 +199,14 @@
                         android:id="@+id/boardRecycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/iceTeal"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/studyRecycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </androidx.cardview.widget.CardView>

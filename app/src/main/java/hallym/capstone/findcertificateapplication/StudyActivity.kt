@@ -19,6 +19,7 @@ import hallym.capstone.findcertificateapplication.databinding.ActivityStudyBindi
 import hallym.capstone.findcertificateapplication.databinding.StudyBoardItemBinding
 import hallym.capstone.findcertificateapplication.datatype.Comment
 import hallym.capstone.findcertificateapplication.datatype.StudyBoard
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -199,7 +200,7 @@ class StudyActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
                 try {
                     error.toException()
-                } catch (_: java.lang.Exception) { }
+                } catch (_: Exception) { }
             }
         })
 
@@ -306,7 +307,7 @@ class StudyBoardAdapter(val contents:MutableList<StudyBoard>, val context:Contex
                     override fun onCancelled(error: DatabaseError) {
                         try {
                             error.toException()
-                        } catch (_: java.lang.Exception) { }
+                        } catch (_: Exception) { }
                     }
                 })
             }else{

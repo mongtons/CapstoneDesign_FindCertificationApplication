@@ -23,6 +23,7 @@ import hallym.capstone.findcertificateapplication.R
 import hallym.capstone.findcertificateapplication.databinding.*
 import hallym.capstone.findcertificateapplication.datatype.Favorite
 import hallym.capstone.findcertificateapplication.datatype.FreeBoard
+import hallym.capstone.findcertificateapplication.datatype.StudyBoard
 import java.lang.Exception
 
 class MyPageFragment : Fragment() {
@@ -131,12 +132,13 @@ class MyPageFragment : Fragment() {
 
         comRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                val dataMutableList= mutableListOf<FreeBoard>()
+                val boardMutableList= mutableListOf<FreeBoard>()
+                val studyMutableList= mutableListOf<StudyBoard>()
                 val freeBoard=snapshot.child("Free_Board")
                 val studyBoard=snapshot.child("Study_Board")
                 for(data in freeBoard.children){
                     if(data.child("user").value.toString()==mFirebaseAuth.currentUser!!.displayName.toString()) {
-                        dataMutableList.add(
+                        boardMutableList.add(
                             FreeBoard(
                                 data.child("id").value.toString(),
                                 data.child("title").value.toString(),
@@ -150,14 +152,42 @@ class MyPageFragment : Fragment() {
                 }
                 for(data in studyBoard.children){
                     if(data.child("user").value.toString()==mFirebaseAuth.currentUser!!.displayName.toString()){
-//                        dataMutableList.add()
+                        val userList = mutableListOf<String>()
+                        if (data.child("type").value as Boolean) {
+                            for (user in data.child("otherUser").children) {
+                                userList.add(user.value.toString())
+                            }
+                        }
+                        studyMutableList.add(
+                            StudyBoard(
+                                data.child("key").value.toString(),
+                                data.child("title").value.toString(),
+                                data.child("user").value.toString(),
+                                data.child("time").value as Long,
+                                null,
+                                data.child("body").value.toString(),
+                                Integer.parseInt(data.child("userCount").value.toString()),
+                                data.child("type").value as Boolean,
+                                if(data.child("type").value as Boolean){ userList }else{ null },
+                                data.child("userId").value.toString(),
+                                data.child("certification").value.toString(),
+                                (data.child("qnumber").value?:0L) as Long
+                            )
+                        )
                     }
                 }
-                val layoutManager = LinearLayoutManager(context)
-                layoutManager.orientation = LinearLayoutManager.VERTICAL
-                binding.boardRecycler.layoutManager = layoutManager
+                val layoutManager1 = LinearLayoutManager(context)
+                layoutManager1.orientation = LinearLayoutManager.VERTICAL
+                val layoutManager2 = LinearLayoutManager(context)
+                layoutManager2.orientation = LinearLayoutManager.VERTICAL
+
+                binding.boardRecycler.layoutManager = layoutManager1
                 binding.boardRecycler.adapter = context?.let {
-                    FreeBoardAdapter(dataMutableList, it)
+                    FreeBoardAdapter(boardMutableList, it)
+                }
+                binding.studyRecycler.layoutManager=layoutManager2
+                binding.studyRecycler.adapter= context?.let {
+                    StudyBoardAdapter(studyMutableList, it)
                 }
             }
 
@@ -301,24 +331,6 @@ class MyPageFragment : Fragment() {
 
 
 }
-class BoardItemAdapter(val content: MutableList<*>, val context: Context):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
-    =StudyBoardViewHolder(StudyBoardItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val binding=(holder as StudyBoardViewHolder).binding
-        if(content[position] is FreeBoard){
-//            binding.boardTitle.text=content[position].user.toString()
-            binding.boardUser.text=content[position].toString()
-        }
-    }
-
-    override fun getItemCount(): Int {
-        return content.size
-    }
-}
-
-
 class FavoriteViewHolder(val binding: FragmentAllItemBinding):RecyclerView.ViewHolder(binding.root)
 class FavoriteAdapter(val contents: MutableList<Favorite>, val context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
