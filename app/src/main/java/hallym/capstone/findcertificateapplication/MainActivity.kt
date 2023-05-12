@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         supportFragmentManager.beginTransaction().replace(R.id.fragment_position, HomeFragment()).commit()
@@ -81,6 +82,11 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        moveTaskToBack(true)
+        return super.onSupportNavigateUp()
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)

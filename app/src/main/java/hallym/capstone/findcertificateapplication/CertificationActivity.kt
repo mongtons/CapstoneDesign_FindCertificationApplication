@@ -65,10 +65,18 @@ class CertificationActivity : AppCompatActivity() {
                     if(ds.child("title").value == intent.getStringExtra("Title")){
                         if(ds.child("cost").hasChildren()){
                             val dsCost=ds.child("cost")
-                            var costVar="필기: "
-                            costVar+=dsCost.child("note").value.toString()+", "
-                            costVar+="실기: "
-                            costVar+=dsCost.child("practice").value
+                            var costVar: String
+                            if(dsCost.hasChild("1st")){
+                                costVar="1차: "
+                                costVar+=dsCost.child("1st").value.toString()+", "
+                                costVar+="2차: "
+                                costVar+=dsCost.child("2st").value.toString()
+                            }else{
+                                costVar="필기: "
+                                costVar+=dsCost.child("note").value.toString()+", "
+                                costVar+="실기: "
+                                costVar+=dsCost.child("practice").value
+                            }
                             binding.examCost.text=costVar
                         }else{
                             var costVar="응시료: "
