@@ -150,45 +150,51 @@ class CertificationActivity : AppCompatActivity() {
         })
 
         //db 검사
-        favoriteRef.child(mFirebaseAuth.currentUser!!.uid).addValueEventListener(object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (d in snapshot.children){
-                    // DB에 이미 해당 자격증 이름 존재한다면 click = true로 함수 실행
-                    if(d.child("cerTitle").value.toString() == binding.certificationTitle.text.toString()){
-                        clicked = true
-                        binding.favoriteCertification.setColorFilter(Color.parseColor("#EB6440"))
-                        Log.d("cclo", "in for loop : " + clicked.toString())
-                        break
-                    }else{
-                        //DB에 해당 자격증 없는 경우 click = false로 함수 실행
-                        Log.d("cclo", d.child("cerTitle").value.toString())
-                        Log.d("cclo", "in for loop no cer : " + clicked.toString())
+        mFirebaseAuth.currentUser?.uid?.let {
+            favoriteRef.child(it).addValueEventListener(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (d in snapshot.children){
+                        // DB에 이미 해당 자격증 이름 존재한다면 click = true로 함수 실행
+                        if(d.child("cerTitle").value.toString() == binding.certificationTitle.text.toString()){
+                            clicked = true
+                            binding.favoriteCertification.setColorFilter(Color.parseColor("#EB6440"))
+                            Log.d("cclo", "in for loop : " + clicked.toString())
+                            break
+                        }else{
+                            //DB에 해당 자격증 없는 경우 click = false로 함수 실행
+                            Log.d("cclo", d.child("cerTitle").value.toString())
+                            Log.d("cclo", "in for loop no cer : " + clicked.toString())
+                        }
                     }
-                }
-
-            }
-            override fun onCancelled(error: DatabaseError) {
-                try {
-                    error.toException()
-                }catch (_: Exception){ }
-            }
-        })
-
-        favoriteRef.child(mFirebaseAuth.currentUser!!.uid).addValueEventListener(object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (d in snapshot.children){
-                    cnt++
-                    Log.d("cclo", cnt.toString())
 
                 }
 
-            }
-            override fun onCancelled(error: DatabaseError) {
-                try {
-                    error.toException()
-                }catch (_: Exception){ }
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    try {
+                        error.toException()
+                    }catch (_: Exception){ }
+                }
+            })
+        }
+
+        mFirebaseAuth.currentUser?.uid?.let {
+            favoriteRef.child(it).addValueEventListener(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (d in snapshot.children){
+                        cnt++
+                        Log.d("cclo", cnt.toString())
+
+                    }
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    try {
+                        error.toException()
+                    }catch (_: Exception){ }
+                }
+            })
+        }
 
         binding.favoriteCertification.setOnClickListener{
 
@@ -242,22 +248,24 @@ class CertificationActivity : AppCompatActivity() {
                 else{
                     // 즐겨찾기 해제
                     clicked = false
-                    favoriteRef.child(mFirebaseAuth.currentUser!!.uid).addValueEventListener(object: ValueEventListener{
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            lateinit var gKey : String
-                            for (d in snapshot.children){
-                                if(d.child("cerTitle").value.toString() == binding.certificationTitle.text.toString()){
-                                    d.ref.removeValue()
+                    mFirebaseAuth.currentUser?.uid?.let { it1 ->
+                        favoriteRef.child(it1).addValueEventListener(object: ValueEventListener{
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                lateinit var gKey : String
+                                for (d in snapshot.children){
+                                    if(d.child("cerTitle").value.toString() == binding.certificationTitle.text.toString()){
+                                        d.ref.removeValue()
+                                    }
                                 }
                             }
-                        }
 
-                        override fun onCancelled(error: DatabaseError) {
-                            try {
-                                error.toException()
-                            }catch (_: Exception){ }
-                        }
-                    })
+                            override fun onCancelled(error: DatabaseError) {
+                                try {
+                                    error.toException()
+                                }catch (_: Exception){ }
+                            }
+                        })
+                    }
 
                     binding.favoriteCertification.setColorFilter(Color.WHITE)
                     Toast.makeText(this, binding.certificationTitle.text.toString() + "가 즐겨찾기에서 해제되었습니다.", Toast.LENGTH_SHORT).show()
@@ -325,7 +333,78 @@ class BookAdapter(val contents: MutableList<Book>, val context: Context):Recycle
             path+="Engineer_Information_Communication_note.jpg"
         }else if(contents[position].cert_title=="정보통신기사" && !contents[position].flag){
             path+="Engineer_Information_Communication_practice.jpg"
+        }else if(contents[position].cert_title=="CSTS 일반" && contents[position].flag){
+            path+="csts.jpg"
+        }else if(contents[position].cert_title=="전자캐드기능사" && contents[position].flag){
+            path+="Craftsman_Electronic_CAD_note.jpg"
+        }else if(contents[position].cert_title=="전자캐드기능사" && !contents[position].flag){
+            path+="Craftsman_Electronic_CAD_practice.jpg"
+        }else if(contents[position].cert_title=="전자기사" && contents[position].flag){
+            path+="electronic article writing.jpg"
+        }else if(contents[position].cert_title=="전자기사" && !contents[position].flag){
+            path+="electronic engineer practice.jpg"
+        }else if(contents[position].cert_title=="3D프린터개발산업기사" && contents[position].flag) {
+            path += "3D printer development industry engineer handwriting practice.jpg"
+        }else if(contents[position].cert_title=="리눅스마스터1급" && contents[position].flag){
+            path+="Linux Master Level 1.jpg"
+        }else if(contents[position].cert_title=="리눅스마스터2급" && contents[position].flag){
+        path+="Linux Master Level 2.jpg"
+        }else if(contents[position].cert_title=="네트워크관리사1급" && contents[position].flag){
+        path+="Network Administrator Level 1 .jpg"
+        }else if(contents[position].cert_title=="네트워크관리사2급" && contents[position].flag){
+            path+="Network Administrator Level 1 .jpg"
+        }else if(contents[position].cert_title=="빅데이터 분석기사" && contents[position].flag){
+            path+="Big data analysis article writing.jpg"
+        }else if(contents[position].cert_title=="빅데이터 분석기사" && !contents[position].flag){
+            path+="Big data analysis article  practice.jpg"
+        }else if(contents[position].cert_title=="SQLP" && contents[position].flag){
+            path+="SQLP.jpg"
+        }else if(contents[position].cert_title=="SQLD" && contents[position].flag){
+            path+="SQLD.jpg"
+        }else if(contents[position].cert_title=="DAP" && contents[position].flag){
+            path+="Data Architecture Specialist.jpg"
+        }else if(contents[position].cert_title=="DAsp" && contents[position].flag){
+            path+="Data Architecture Associate Specialist.jpg"
+        }else if(contents[position].cert_title=="코딩능력마스터 2급" && contents[position].flag){
+            path+="Coding Ability Master Level 2.jpg"
+        }else if(contents[position].cert_title=="파이썬마스터 3급" && contents[position].flag){
+            path+="Python Master Level 3.jpg"
+        }else if(contents[position].cert_title=="파이썬마스터 1급" && contents[position].flag){
+            path+="Python Master Level 1.jpg"
+        }else if(contents[position].cert_title=="게임그래픽전문가" && contents[position].flag){
+            path+="game graphics expert write.jpg"
+        }else if(contents[position].cert_title=="게임그래픽전문가" && !contents[position].flag){
+            path+="game graphics expert practice.jpg"
+        }else if(contents[position].cert_title=="SW코딩자격 1급" && contents[position].flag){
+            path+="sw coding qualification level 1.jpg"
+        }else if(contents[position].cert_title=="정보처리기사" && contents[position].flag){
+            path+="information processing engineer write.jpg"
+        }else if(contents[position].cert_title=="정보처리기사" && !contents[position].flag){
+            path+="information processing engineer practice.jpg"
+        }else if(contents[position].cert_title=="컴퓨터활용능력1급" && contents[position].flag){
+            path+="Computer literacy level 1 write.jpg"
+        }else if(contents[position].cert_title=="컴퓨터활용능력1급" && !contents[position].flag){
+            path+="Computer literacy level 1 practice.jpg"
+        }else if(contents[position].cert_title=="정보처리산업기사" && contents[position].flag){
+            path+="Information processing industry engineer write.jpg"
+        }else if(contents[position].cert_title=="정보처리산업기사" && !contents[position].flag){
+            path+="Information processing industry engineer practice.jpg"
+        }else if(contents[position].cert_title=="전자계산기기사" && contents[position].flag){
+            path+="electronic calculator write.jpg"
+        }else if(contents[position].cert_title=="ATC캐드마스터" && contents[position].flag){
+            path+="ATC.jpg"
+        }else if(contents[position].cert_title=="일반기계기사" && contents[position].flag){
+            path+="mechanical engineer write.jpg"
+        }else if(contents[position].cert_title=="일반기계기사" && !contents[position].flag){
+            path+="mechanical engineer practice.jpg"
+        }else if(contents[position].cert_title=="정보보안기사" && contents[position].flag){
+            path+="Information Security Industry Engineer write.jpg"
+        }else if(contents[position].cert_title=="정보보안기사" && !contents[position].flag){
+            path+="Information Security Industry Engineer practice.jpg"
         }
+
+
+
         val pathRef=storageRef.child(path)
         pathRef.downloadUrl.addOnSuccessListener {
             Glide.with(binding.certImg)
