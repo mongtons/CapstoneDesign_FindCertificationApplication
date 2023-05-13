@@ -32,7 +32,7 @@ class AiFragment : Fragment() {
     lateinit var messageList:MutableList<Message>
 
     var url = "https://api.openai.com/v1/completions"
-    val apiKey="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" //ChatGPT의 OpenAI를 사용하기 위한 APIkey
+    val apiKey="" //ChatGPT의 OpenAI를 사용하기 위한 APIkey
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
