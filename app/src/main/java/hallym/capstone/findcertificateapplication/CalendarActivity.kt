@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import hallym.capstone.findcertificateapplication.calendar.AdapterMonth
 import hallym.capstone.findcertificateapplication.databinding.ActivityCalendarBinding
 
-
-
 class CalendarActivity : AppCompatActivity() {
     val binding by lazy {
         ActivityCalendarBinding.inflate(layoutInflater)
@@ -29,12 +27,12 @@ class CalendarActivity : AppCompatActivity() {
         val monthListManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         val monthListAdapter = AdapterMonth()
 
-        binding.calendarCustom.layoutManager = monthListManager
-        binding.calendarCustom.adapter = monthListAdapter
-//        binding.calendarCustom.addItemDecoration(
-//        )
+        binding.calendarCustom.apply {
+            layoutManager=monthListManager
+            adapter=monthListAdapter
+            scrollToPosition(Int.MAX_VALUE/2)
+        }
 
-            //scrollToPosition(Int.MAX_VALUE/2)
 
         val snap = PagerSnapHelper()
         snap.attachToRecyclerView(binding.calendarCustom)
