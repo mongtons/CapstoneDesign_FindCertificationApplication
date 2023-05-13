@@ -26,20 +26,14 @@ class AdapterDay(val tempMonth:Int, val dayList: MutableList<Date>, val certMont
     var testDay1=0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        ViewHolder(
-            ListItemDayBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent, false
-            )
-        )
+        ViewHolder(ListItemDayBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         val binding = (holder as ViewHolder).binding
 
         // 클릭 이벤트 리스너 설정
         binding.itemDayLayout.setOnClickListener {
-            Toast.makeText(
-                binding.itemDayLayout.context,
+            Toast.makeText(binding.itemDayLayout.context,
 //                "${dayList[position]}",
                 "${holder.adapterPosition}",
                 Toast.LENGTH_SHORT
@@ -71,20 +65,17 @@ class AdapterDay(val tempMonth:Int, val dayList: MutableList<Date>, val certMont
                     for (data in certification.children) {
                         val title = data.child("title").value.toString()
                         if (title == i) {
-                            Log.d("reftitle","즐겨찾기된 자격증에서의 title값 : $reftitle")
-                            val testMonth = data.child("testDay")
-                                .child("pass").child("note").child("2st")
-                                .child("jun").child("month").value.toString().toInt()
                             testDay1 = data.child("testDay")
                                 .child("pass").child("note").child("2st")
                                 .child("jun").child("day1").value.toString().toInt()
-                            Log.d("testMonth", "title의 월 : $testMonth")
                             Log.d("testDay1","title의 일 : $testDay1")
                             break
                         }
                     }
                 }
                 if((tempMonth==certMonth) && (dayList[position].date.toString()==testDay1.toString())){
+                    //AdapterMonth에서 받아온 certMonth(해당 자격증 일정의 월)과 현 달력의 월이 같은 지 확인
+                    //dayList의 date를 이용하고 데이터베이스에서 받아온 일(testDay1)을 둘이 비교하여 같은 날이 있는 지 확인
                     var cnt=0
                     val positionList= mutableListOf<Int>()
                     for((i,date) in dayList.withIndex()){
@@ -93,6 +84,9 @@ class AdapterDay(val tempMonth:Int, val dayList: MutableList<Date>, val certMont
                             positionList.add(i)
                         }
                     }
+                    //달력에는 앞전 달의 일과 뒷 달의 일이 같이 출력되므로 해당 일이 2번 이상 존재하는 지 체크하고
+                    // 알맞은 일인 dayList의 position을 positionList에 넣어 어디에 색칠할 지 구분할 때 사용
+
                     Log.d("kim", positionList[cnt-1].toString())
                     if(testDay1<=10){
                         if(position==positionList[0])
@@ -103,6 +97,8 @@ class AdapterDay(val tempMonth:Int, val dayList: MutableList<Date>, val certMont
                     }else{
                         binding.oneday.setBackgroundColor(Color.parseColor("#AAAAAA"))
                     }
+                    //testDay1이 10일 이하 일 때 먼저 저장했던 position을 사용
+                    //testDay1이 20일 이상 일 때 나중에 저장했던 position을 사용
                 }
             }
 

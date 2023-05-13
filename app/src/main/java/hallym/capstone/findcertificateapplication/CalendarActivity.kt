@@ -19,11 +19,6 @@ class CalendarActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-//        binding.exam.setOnClickListener{
-//            intent.putExtra("title", this.intent.getStringExtra("Title"))
-//            startActivity(intent)
-//        }
-
         val monthListManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         val monthListAdapter = AdapterMonth()
 

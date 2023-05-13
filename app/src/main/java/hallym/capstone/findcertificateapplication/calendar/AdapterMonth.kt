@@ -77,6 +77,7 @@ class AdapterMonth() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
                 val dayListManager = GridLayoutManager(binding.itemMonthDayList.context,7)
                 val dayListAdapter = AdapterDay(tempMonth, dayList, (testMonth-1))
+                //해당 자격증의 월은 월을 처리하는 AdapterMonth에서 따로 처리하여 testMonth라는 변수에 넣어 AdapterDay로 보냄
 
                 binding.itemMonthDayList.apply{
                     layoutManager = dayListManager

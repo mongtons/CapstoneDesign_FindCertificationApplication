@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         supportFragmentManager.beginTransaction().replace(R.id.fragment_position, HomeFragment()).commit()
+        //MainActivity를 기준으로 두고 Home, search, Ai 등 화면으로 이동하기 위해 fragment 생성
 
         var params : AppBarLayout.LayoutParams = binding.toolbar.layoutParams as AppBarLayout.LayoutParams
         binding.bottomBar.setOnItemSelectedListener{
@@ -82,16 +83,21 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+        //하단의 Bottom Bar를 터치하여 해당 이름에 알맞는 Fragment로 화면 이동
+        //params로 스크롤이 필요하지 않는 곳은 SCROLL_FLAG_NO_SCROLL을 지정하여 하단바 감춰지지 않게 설정
     }
 
     override fun onSupportNavigateUp(): Boolean {
         moveTaskToBack(true)
         return super.onSupportNavigateUp()
     }
+    //좌측 상단의 뒤로가기 버튼을 누르면 어플리케이션이 꺼지는 함수
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
+    //상단의 캘린더버튼과 기타 건의 버튼을 넣기 위한 상단 메뉴 생성함수
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val intent: Intent
@@ -132,6 +138,7 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+        //해당 이름에 알맞은 상단 메뉴를 누르면 개발자에게 메일을 보내거나 캘린더로 화면 전환
     }
 
     fun setDataAtFragment(loginFragment: LoginFragment, s: String) { // login fragment에 전달할 데이터 설정 및 화면 전환
