@@ -21,12 +21,11 @@
         android:layout_height="13dp"
         android:textSize="12sp"
         android:background="@color/white"/>
-    <TextView
+    <View
         android:id="@+id/twoday"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="13dp"
         android:textSize="12sp"
-        android:background="@color/grey"
-        android:text=""/>
+        android:background="@color/white"/>
 
 </LinearLayout>

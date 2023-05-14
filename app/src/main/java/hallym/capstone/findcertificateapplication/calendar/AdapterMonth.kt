@@ -3,13 +3,14 @@ package hallym.capstone.findcertificateapplication.calendar
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import hallym.capstone.findcertificateapplication.databinding.ListItemMonthBinding
+import hallym.capstone.findcertificateapplication.datatype.Book
+import hallym.capstone.findcertificateapplication.datatype.testmonth
 import java.util.*
 
 class MonthViewHolder(val binding : ListItemMonthBinding):RecyclerView.ViewHolder(binding.root)
@@ -18,7 +19,13 @@ class MonthViewHolder(val binding : ListItemMonthBinding):RecyclerView.ViewHolde
 class AdapterMonth() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     val currentMonth = Calendar.getInstance().get(Calendar.MONTH)
     val center=Int.MAX_VALUE/2
-    var testMonth=0
+    val npassMonthList = mutableListOf<Int>()
+    val ntestMonthList = mutableListOf<Int>()
+    val nperiodMonthList = mutableListOf<Int>()
+    val ppassMonthList = mutableListOf<Int>()
+    val ptestMonthList = mutableListOf<Int>()
+    val pperiodMonthList = mutableListOf<Int>()
+    val testMonthList = mutableListOf<Int>()
     private val calendar: Calendar = Calendar.getInstance()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
@@ -31,7 +38,7 @@ class AdapterMonth() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         calendar.time=Date()
         calendar.set(Calendar.DAY_OF_MONTH, 1)
         calendar.add(Calendar.MONTH, /*(position + currentMonth ) % 12)*/ position-center)
-        calendar.set(Calendar.YEAR, 2023)
+//        calendar.set(Calendar.YEAR, 2023)
 
         binding.itemMonthText.text = String.format("%d년 %d월", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1)
 
@@ -66,17 +73,51 @@ class AdapterMonth() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     for (data in certification.children) {
                         val title = data.child("title").value.toString()
                         if (title == i) {
-                            Log.d("reftitle","즐겨찾기된 자격증에서의 title값 : $reftitle")
-                            testMonth = data.child("testDay")
-                                .child("pass").child("note").child("2st")
-                                .child("jun").child("month").value.toString().toInt()
-                            Log.d("testMonth", "title의 월 : $testMonth")
+                            val ntestMonth = data.child("testDay").child("test").child("note")
+                            val ptestMonth = data.child("testDay").child("test").child("practice")
+                            val nperiodMonth = data.child("testDay").child("period").child("note")
+                            val pperiodMonth = data.child("testDay").child("period").child("practice")
+                            val npassMonth = data.child("testDay").child("pass").child("note")
+                            val ppassMonth = data.child("testDay").child("pass").child("practice")
+                            testMonthList.add(npassMonth.child("1st").child("mar").child("month").value.toString().toInt()-1)//0
+                            testMonthList.add(npassMonth.child("2st").child("jun").child("month").value.toString().toInt()-1)//1
+                            testMonthList.add(npassMonth.child("4st").child("oct").child("month").value.toString().toInt()-1)//2
+
+                            testMonthList.add(ntestMonth.child("1st").child("mar").child("month").value.toString().toInt()-1)//3
+                            testMonthList.add(ntestMonth.child("2st").child("jun").child("month").value.toString().toInt()-1)//4
+                            testMonthList.add(ntestMonth.child("4st").child("oct").child("month").value.toString().toInt()-1)//5
+                            testMonthList.add(ntestMonth.child("4st").child("ste").child("month").value.toString().toInt()-1)//6
+
+                            testMonthList.add(nperiodMonth.child("1st").child("feb").child("month").value.toString().toInt()-1)//7
+                            testMonthList.add(nperiodMonth.child("2st").child("jun").child("month").value.toString().toInt()-1)//8
+                            testMonthList.add(nperiodMonth.child("2st").child("may").child("month").value.toString().toInt()-1)//9
+                            testMonthList.add(nperiodMonth.child("4st").child("ste").child("month").value.toString().toInt()-1)//10
+
+                            if(ppassMonth.exists()){
+                                testMonthList.add(ppassMonth.child("1st").child("may").child("month").value.toString().toInt()-1)//11
+                                testMonthList.add(ppassMonth.child("2st").child("aug").child("month").value.toString().toInt()-1)//12
+                                testMonthList.add(ppassMonth.child("4st").child("dec").child("month").value.toString().toInt()-1)//13
+
+                                testMonthList.add(ptestMonth.child("1st").child("apr").child("month").value.toString().toInt()-1)//14
+                                testMonthList.add(ptestMonth.child("1st").child("may").child("month").value.toString().toInt()-1)//15
+                                testMonthList.add(ptestMonth.child("2st").child("aug").child("month").value.toString().toInt()-1)//16
+                                testMonthList.add(ptestMonth.child("2st").child("jul").child("month").value.toString().toInt()-1)//17
+                                testMonthList.add(ptestMonth.child("4st").child("dec").child("month").value.toString().toInt()-1)//18
+                                testMonthList.add(ptestMonth.child("4st").child("nov").child("month").value.toString().toInt()-1)//19
+
+                                testMonthList.add(pperiodMonth.child("1st").child("mar").child("month").value.toString().toInt()-1)//20
+                                testMonthList.add(pperiodMonth.child("2st").child("jul").child("month").value.toString().toInt()-1)//21
+                                testMonthList.add(pperiodMonth.child("4st").child("oct").child("month").value.toString().toInt()-1)//22
+                                break
+                            }
                             break
                         }
                     }
                 }
+                Log.d("testMonth","testMonthList : " + testMonthList)
                 val dayListManager = GridLayoutManager(binding.itemMonthDayList.context,7)
-                val dayListAdapter = AdapterDay(tempMonth, dayList, (testMonth-1))
+                val dayListAdapter = AdapterDay(tempMonth, dayList, testMonthList)
+
                 //해당 자격증의 월은 월을 처리하는 AdapterMonth에서 따로 처리하여 testMonth라는 변수에 넣어 AdapterDay로 보냄
 
                 binding.itemMonthDayList.apply{
@@ -98,3 +139,6 @@ class AdapterMonth() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return Int.MAX_VALUE
     }
 }
+
+
+
