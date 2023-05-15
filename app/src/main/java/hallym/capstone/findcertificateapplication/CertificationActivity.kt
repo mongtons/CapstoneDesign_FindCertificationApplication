@@ -331,8 +331,6 @@ class BookAdapter(val contents: MutableList<Book>, val context: Context):Recycle
             path+="Industrial_Engineer_Information_Communication_practice.jpg"
         }else if(contents[position].cert_title=="정보통신기사" && contents[position].flag){
             path+="Engineer_Information_Communication_note.jpg"
-        }else if(contents[position].cert_title=="정보통신기사" && !contents[position].flag){
-            path+="Engineer_Information_Communication_practice.jpg"
         }else if(contents[position].cert_title=="CSTS 일반" && contents[position].flag){
             path+="csts.jpg"
         }else if(contents[position].cert_title=="전자캐드기능사" && contents[position].flag){
@@ -340,21 +338,21 @@ class BookAdapter(val contents: MutableList<Book>, val context: Context):Recycle
         }else if(contents[position].cert_title=="전자캐드기능사" && !contents[position].flag){
             path+="Craftsman_Electronic_CAD_practice.jpg"
         }else if(contents[position].cert_title=="전자기사" && contents[position].flag){
-            path+="electronic article writing.jpg"
+            path+=" electronic article writing.jpg"
         }else if(contents[position].cert_title=="전자기사" && !contents[position].flag){
             path+="electronic engineer practice.jpg"
         }else if(contents[position].cert_title=="3D프린터개발산업기사" && contents[position].flag) {
-            path += "3D printer development industry engineer handwriting practice.jpg"
-        }else if(contents[position].cert_title=="리눅스마스터1급" && contents[position].flag){
-            path+="Linux Master Level 1.jpg"
-        }else if(contents[position].cert_title=="리눅스마스터2급" && contents[position].flag){
-        path+="Linux Master Level 2.jpg"
-        }else if(contents[position].cert_title=="네트워크관리사1급" && contents[position].flag){
+            path+="3D printer development industry engineer handwriting practice.jpg"
+        }else if(contents[position].cert_title=="리눅스마스터 1급" && contents[position].flag){
+            path+=" Linux Master Level 1.jpg"
+        }else if(contents[position].cert_title=="리눅스 마스터 2급" && contents[position].flag){
+        path+=" Linux Master Level 2.jpg"
+        }else if(contents[position].cert_title=="네트워크관리사 1급" && contents[position].flag){
         path+="Network Administrator Level 1 .jpg"
-        }else if(contents[position].cert_title=="네트워크관리사2급" && contents[position].flag){
+        }else if(contents[position].cert_title=="네트워크관리사 2급" && contents[position].flag){
             path+="Network Administrator Level 1 .jpg"
         }else if(contents[position].cert_title=="빅데이터 분석기사" && contents[position].flag){
-            path+="Big data analysis article writing.jpg"
+            path+=" Big data analysis article writing.jpg"
         }else if(contents[position].cert_title=="빅데이터 분석기사" && !contents[position].flag){
             path+="Big data analysis article  practice.jpg"
         }else if(contents[position].cert_title=="SQLP" && contents[position].flag){
@@ -363,7 +361,7 @@ class BookAdapter(val contents: MutableList<Book>, val context: Context):Recycle
             path+="SQLD.jpg"
         }else if(contents[position].cert_title=="DAP" && contents[position].flag){
             path+="Data Architecture Specialist.jpg"
-        }else if(contents[position].cert_title=="DAsp" && contents[position].flag){
+        }else if(contents[position].cert_title=="DAsP" && contents[position].flag){
             path+="Data Architecture Associate Specialist.jpg"
         }else if(contents[position].cert_title=="코딩능력마스터 2급" && contents[position].flag){
             path+="Coding Ability Master Level 2.jpg"
@@ -381,10 +379,10 @@ class BookAdapter(val contents: MutableList<Book>, val context: Context):Recycle
             path+="information processing engineer write.jpg"
         }else if(contents[position].cert_title=="정보처리기사" && !contents[position].flag){
             path+="information processing engineer practice.jpg"
-        }else if(contents[position].cert_title=="컴퓨터활용능력1급" && contents[position].flag){
-            path+="Computer literacy level 1 write.jpg"
-        }else if(contents[position].cert_title=="컴퓨터활용능력1급" && !contents[position].flag){
-            path+="Computer literacy level 1 practice.jpg"
+        }else if(contents[position].cert_title=="컴퓨터활용능력 1급" && contents[position].flag){
+            path+=" Computer literacy level 1 write.jpg"
+        }else if(contents[position].cert_title=="컴퓨터활용능력 1급" && !contents[position].flag){
+            path+=" Computer literacy level 1 practice.jpg"
         }else if(contents[position].cert_title=="정보처리산업기사" && contents[position].flag){
             path+="Information processing industry engineer write.jpg"
         }else if(contents[position].cert_title=="정보처리산업기사" && !contents[position].flag){
@@ -398,10 +396,62 @@ class BookAdapter(val contents: MutableList<Book>, val context: Context):Recycle
         }else if(contents[position].cert_title=="일반기계기사" && !contents[position].flag){
             path+="mechanical engineer practice.jpg"
         }else if(contents[position].cert_title=="정보보안기사" && contents[position].flag){
-            path+="Information Security Industry Engineer write.jpg"
+            path+=" Information Security Industry Engineer write.jpg"
         }else if(contents[position].cert_title=="정보보안기사" && !contents[position].flag){
-            path+="Information Security Industry Engineer practice.jpg"
+            path+=" Information Security Industry Engineer practice.jpg"
+        }else if(contents[position].cert_title=="정보보안산업기사" && contents[position].flag){
+            path+=" Information Security Industry Engineer write.jpg"
+        }else if(contents[position].cert_title=="정보보안산업기사" && !contents[position].flag){
+            path+=" Information Security Industry Engineer practice.jpg"
+        }else if(contents[position].cert_title=="컴퓨터시스템응용기술사" && contents[position].flag){
+            path+="Computer system application engineer.jpg"
+        }else if(contents[position].cert_title=="통신기기기능사" && contents[position].flag){
+            path+="Communication equipment technician write.jpg"
+        }else if(contents[position].cert_title=="통신기기기능사" && !contents[position].flag){
+            path+="Communication equipment technician practice.jpg"
+        }else if(contents[position].cert_title=="무선설비기사" && contents[position].flag){
+            path+="wireless facility engineer write.jpg"
+        }else if(contents[position].cert_title=="무선설비기사" && !contents[position].flag){
+            path+="wireless facility engineer practice.jpg"
+        }else if(contents[position].cert_title=="통신선로산업기사" && contents[position].flag){
+            path+="Communication line industry engineer write.jpg"
+        }else if(contents[position].cert_title=="통신선로산업기사" && !contents[position].flag){
+            path+="Communication line industry engineer practice.jpg"
+        }else if(contents[position].cert_title=="임베디드기사" && contents[position].flag){
+            path+="Embedded article.jpg"
+        }else if(contents[position].cert_title=="정보시스템감리사" && contents[position].flag){
+            path+="Information system manager.jpg"
+        }else if(contents[position].cert_title=="웹디자인기능사" && contents[position].flag){
+            path+="web design technician write.jpg"
+        }else if(contents[position].cert_title=="웹디자인기능사" && !contents[position].flag){
+            path+="web design technician practice.jpg"
+        }else if(contents[position].cert_title=="컴퓨터그래픽스운용기능사" && contents[position].flag){
+            path+="Computer Graphics Operation Specialist write.jpg"
+        }else if(contents[position].cert_title=="컴퓨터그래픽스운용기능사" && !contents[position].flag){
+            path+="Computer Graphics Operation Specialist practice.jpg"
+        }else if(contents[position].cert_title=="ADsP" && contents[position].flag){
+            path+="ADSP.jpg"
+        }else if(contents[position].cert_title=="ADP" && contents[position].flag){
+            path+="ADP write.jpg"
+        }else if(contents[position].cert_title=="ADP" && !contents[position].flag){
+            path+="ADP practice.jpg"
+        }else if(contents[position].cert_title=="게임기획전문가" && contents[position].flag){
+            path+="Game Planning Specialist write.jpg"
+        }else if(contents[position].cert_title=="게임기획전문가" && !contents[position].flag){
+            path+="Game Planning Specialist practice.jpg"
+        }else if(contents[position].cert_title=="게임프로그래밍전문가" && contents[position].flag){
+            path+="game programming expert.jpg"
+        }else if(contents[position].cert_title=="전자계산기조직응용기사" && contents[position].flag){
+            path+="Electronic Calculator Organization Application Article write.jpg"
+        }else if(contents[position].cert_title=="전자계산기조직응용기사" && !contents[position].flag){
+            path+="Electronic Calculator Organization Application Article practice.jpg"
+        }else if(contents[position].cert_title=="멀티미디어콘텐츠제작전문가" && contents[position].flag){
+            path+="Multimedia content production specialist.jpg"
+        }else if(contents[position].cert_title=="전파전자통신기사" && contents[position].flag){
+            path+="radio electronic communication engineer.jpg"
         }
+
+
 
 
 
