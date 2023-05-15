@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.AppBarLayout
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
             var bundle = Bundle()
 
+
             when(it.title){
                 "HOME" ->{
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_position, HomeFragment()).commit()
@@ -61,12 +63,21 @@ class MainActivity : AppCompatActivity() {
                     binding.toolbar.layoutParams = params
                 }
                 "COMMUNITY" ->{
+                    // 로그인된 경우
                     if(mFirebaseAuth.currentUser != null) {
-                        supportFragmentManager.beginTransaction().replace(R.id.fragment_position, CommunityFragment()).commit()
-                        params.setScrollFlags(0)
-                        params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL
-                        binding.toolbar.layoutParams = params
-                    }else {
+                        // 이메일 인증이 완료된 사용자인 경우
+                        if(mFirebaseAuth.currentUser!!.isEmailVerified == true){
+                            supportFragmentManager.beginTransaction().replace(R.id.fragment_position, CommunityFragment()).commit()
+                            params.setScrollFlags(0)
+                            params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL
+                            binding.toolbar.layoutParams = params
+                        }else{
+                            // 이메일 인증이 안된 사용자인 경우 mypage로 이동
+                            Toast.makeText(this, "이메일 인증 후 이용 가능합니다.\nMYPAGE에서 이메일 인증을 진행해주세요.", Toast.LENGTH_SHORT).show()
+                            supportFragmentManager.beginTransaction().replace(R.id.fragment_position, MyPageFragment()).commit()
+                        }
+                    }else{
+                        // 로그인 안된 경우 로그인 화면으로 이동
                         setDataAtFragment(LoginFragment(), "community")
                     }
                 }

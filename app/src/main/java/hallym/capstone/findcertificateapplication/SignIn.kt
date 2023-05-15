@@ -21,25 +21,32 @@ class SignIn : AppCompatActivity() {
 
     lateinit var binding: ActivitySignInBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main2)
+
+        // firebase 인증 객체 생성
         mFirebaseAuth = FirebaseAuth.getInstance()
+        // firebase realtime database에서 loginTest 객체 생성
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("loginTest")
 
+        // SignIn Activity 바인딩 생성
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 회원가입 버튼 클릭 시
         binding.btnSignin.setOnClickListener(View.OnClickListener {
-            // 회원가입 처리 시작
+            // 입력한 닉네임, 이메일, 비밀번호 변수에 string으로 저장
             var strname = binding.etName.text.toString()
             var strEmail = binding.etEmail.text.toString()
             var strPwd = binding.etPwd.text.toString()
-            
-            //FirebaseAuth 진행
+
+            //FirebaseAuth를 이용해 이메일/비밀번호로 새 유저 생성 시작
             mFirebaseAuth.createUserWithEmailAndPassword(strEmail, strPwd)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        // firebase Authentication에 해당 계정 추가 완료된 경우
+
                         // 사용자 모델 생성
                         var firebaseUser = mFirebaseAuth.currentUser
                         var account = UserAccount()
@@ -55,10 +62,12 @@ class SignIn : AppCompatActivity() {
 
                             }
                         ).addOnCompleteListener{ }
+
                         //SetValue : database insert (삽입) 행위
                         mDatabaseRef.child("UserAccount").child(firebaseUser.uid).setValue(account)
                         Toast.makeText(this, "회원가입에 성공하셨습니다.", Toast.LENGTH_SHORT).show()
                         Log.d("cclo", "회원가입 완료")
+
 
                         finish()
                     } else if(task.exception?.message.isNullOrEmpty()){ // 입력이 제대로 안됐을 경우
@@ -75,4 +84,5 @@ class SignIn : AppCompatActivity() {
                 }
         })
     }
+
 }

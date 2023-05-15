@@ -64,9 +64,33 @@ class MyPageFragment : Fragment() {
             changeDiaglog("비밀번호")
         }
 
-//        binding.changeNickname.setOnClickListener {
-//            changeDiaglog("닉네임")
-//        }
+        // 이메일 인증 메일 전송
+        binding.EmailVerify.setOnClickListener {
+            // 이메일 인증 메일 보내기
+            mFirebaseAuth.currentUser!!.sendEmailVerification()!!
+                .addOnCompleteListener { task ->
+                    if(task.isSuccessful){
+                        // 인증 메일 전송 완료 시 확인 요청 토스트 메시지
+                        Toast.makeText(context, "이메일 인증 메일이 전송되었습니다.\n인증을 진행해주세요.", Toast.LENGTH_SHORT).show()
+
+                        // 인증 메일 전송 후 로그아웃 ( 로그아웃 안하면 isEmailVerified 변경된 값을 아예 못 받아옴)
+                        Toast.makeText(context, "다시 로그인하세요.", Toast.LENGTH_SHORT).show()
+                        Log.d("cclo", mFirebaseAuth.currentUser!!.email.toString()+ "로그아웃 시도")
+                        mFirebaseAuth.signOut()
+                        Log.d("cclo", "로그아웃 완료")
+                        binding.userId.text = "로그인하세요."
+
+                        val mActivity = activity as MainActivity
+                        mActivity.setDataAtFragment(LoginFragment(), "mypage") // MainActivty에서 Login으로 이동하도록 함
+                    }else{
+                        // 인증 메일 전송 실패 시 토스트 메시지
+                        Toast.makeText(context, "이메일 인증 메일 전송에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+
+        }
+
 
         // 로그아웃
         binding.logout.setOnClickListener {
@@ -89,6 +113,9 @@ class MyPageFragment : Fragment() {
             Toast.makeText(context, "회원탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show()
             Log.d("cclo", "회원탈퇴 완료")
             binding.userId.text = "로그인하세요."
+
+            val mActivity = activity as MainActivity
+            mActivity.setDataAtFragment(LoginFragment(), "mypage") // MainActivty에서 Login으로 이동하도록 함
         }
 
         //자격증 즐겨찾기 데이터 출력
