@@ -42,7 +42,13 @@
             android:exported="false" />
         <activity
             android:name=".BoardActivity"
-            android:exported="false" />
+            android:exported="false" >
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android:intent.action.VIEW"/>
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".CalendarActivity"
             android:exported="false" />
