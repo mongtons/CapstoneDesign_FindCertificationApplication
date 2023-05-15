@@ -1,9 +1,7 @@
 package hallym.capstone.findcertificateapplication.datatype
 
-
-data class Examdaydata(
+data class ExamdayResult(
     val no:String,
     val type:String,
-    val date:String,
-    val month:Boolean
+    val date:String
 )

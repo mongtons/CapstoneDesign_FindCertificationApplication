@@ -9,14 +9,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.databinding.ActivityExamdayBinding
 import hallym.capstone.findcertificateapplication.databinding.ExamdayItemBinding
 import hallym.capstone.findcertificateapplication.databinding.FreeCommunityItemBinding
 import hallym.capstone.findcertificateapplication.datatype.Examdaydata
 import hallym.capstone.findcertificateapplication.datatype.FreeBoard
+import hallym.capstone.findcertificateapplication.examdayfragment.PassFragment
+import hallym.capstone.findcertificateapplication.examdayfragment.PeriodFragment
+import hallym.capstone.findcertificateapplication.examdayfragment.TestFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,18 +40,19 @@ class Examday : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val examdayList = mutableListOf<Examdaydata>(
-            Examdaydata("응시일정", "123",),
-            Examdaydata("응시일정", "456",)
-        )
-        val layoutManager = LinearLayoutManager(this)
-        layoutManager.orientation = LinearLayoutManager.VERTICAL
-        binding.examdayRecycler.layoutManager = layoutManager
-        binding.examdayRecycler.adapter = ExamdaydataAdapter(examdayList)
-        binding.examdayRecycler.addItemDecoration(ExamdaydataDecoration(this))
+//        val examdayList = mutableListOf<Examdaydata>(
+//            Examdaydata("응시일정", "123",),
+//            Examdaydata("응시일정", "456",)
+//        )
+//        val layoutManager = LinearLayoutManager(this)
+//        layoutManager.orientation = LinearLayoutManager.VERTICAL
+//        binding.examdayRecycler.layoutManager = layoutManager
+//        binding.examdayRecycler.adapter = ExamdaydataAdapter(examdayList)
+//        binding.examdayRecycler.addItemDecoration(ExamdaydataDecoration(this))
 
         ref.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                val examdayList= mutableListOf<String>()
                 for(ds in snapshot.children){
                     if(ds.child("title").value == intent.getStringExtra("title")){
                         if (ds.child("period").hasChildren()){
@@ -57,6 +65,26 @@ class Examday : AppCompatActivity() {
                         }else{
                             binding.period.append(ds.child("period").value.toString())
                         }
+
+                        if(ds.child("testDay").hasChildren()){
+                            val title=ds.child("title").value.toString()
+                            val viewpager=binding.examdayView
+                            viewpager.adapter=ExamdayFragmentAdapter(this@Examday, title)
+                            val testDay=ds.child("testDay")
+                            if(testDay.hasChild("period")){
+                                examdayList.add("시험 접수일")
+                            }
+                            if(testDay.hasChild("test")){
+                                examdayList.add("시험일")
+                            }
+                            if(testDay.hasChild("pass")){
+                                examdayList.add("합격자 발표일")
+                            }
+                            TabLayoutMediator(binding.tab, viewpager){ tab, position ->
+                                tab.text=examdayList[position]
+                            }.attach()
+                        }
+
                         if(ds.child("condition").hasChildren()){
                             var conditionText=""
                             if(ds.child("condition").hasChild("1st")) {
@@ -183,27 +211,16 @@ class Examday : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 }
-class ExamdaydataViewHolder(val itemBinding: ExamdayItemBinding): RecyclerView.ViewHolder(itemBinding.root)
-class ExamdaydataAdapter(val contents:MutableList<Examdaydata>): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
-    =ExamdaydataViewHolder(ExamdayItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val binding=(holder as ExamdaydataViewHolder).itemBinding
-        binding.examdayTitle.text=contents[position].title
-        binding.examdayText.text=contents[position].text
+class ExamdayFragmentAdapter(activity: FragmentActivity, title:String): FragmentStateAdapter(activity){
+    val fragments: List<Fragment>
+    init {
+        fragments= listOf(PeriodFragment(title), TestFragment(title), PassFragment(title))
     }
     override fun getItemCount(): Int {
-        return contents.size
+        return fragments.size
     }
-}
-class ExamdaydataDecoration(val context: Context): RecyclerView.ItemDecoration(){
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        super.getItemOffsets(outRect, view, parent, state)
-        outRect.set(10, 10, 10, 10)
+
+    override fun createFragment(position: Int): Fragment {
+        return fragments[position]
     }
 }

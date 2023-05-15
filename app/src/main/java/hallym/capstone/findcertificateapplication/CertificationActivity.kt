@@ -416,7 +416,7 @@ class BookAdapter(val contents: MutableList<Book>, val context: Context):Recycle
         binding.bookTitle.text="제목: ${contents[position].title}"
         binding.bookAuthor.text="저자: ${contents[position].author}"
         binding.bookPublish.text="출판사: ${contents[position].publish}"
-        binding.bookCost.text="자격: ${contents[position].cost}"
+        binding.bookCost.text="가격: ${contents[position].cost}"
         binding.itemRoot.setOnClickListener {
             val intent=Intent(Intent.ACTION_VIEW, Uri.parse(contents[position].uri))
             context.startActivity(intent)

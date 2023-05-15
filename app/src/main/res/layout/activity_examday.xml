@@ -81,10 +81,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:background="@color/iceTeal"/>
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/examdayRecycler"
+                        <com.google.android.material.tabs.TabLayout
+                            android:id="@+id/tab"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            app:tabSelectedTextColor="@color/annapolosBlue"
+                            app:tabIndicatorColor="@color/mediaDarkShadeOfCyan"
+                            app:tabTextAppearance="@style/tabTextStyle"/>
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:id="@+id/examday_view"
+                            android:background="@color/cottonBall"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
