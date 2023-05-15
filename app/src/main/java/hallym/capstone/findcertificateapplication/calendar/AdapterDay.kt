@@ -13,7 +13,6 @@ import com.google.android.play.integrity.internal.w
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import hallym.capstone.findcertificateapplication.databinding.ListItemDayBinding
-import hallym.capstone.findcertificateapplication.datatype.testmonth
 import java.util.*
 
 val mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()// 파이어베이스 인증

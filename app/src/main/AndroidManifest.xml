@@ -10,7 +10,7 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/playstore"
+        android:icon="@drawable/app_icon"
         android:label="자격증 메이트"
         android:supportsRtl="true"
         android:theme="@style/Theme.FindCertificateApplication"

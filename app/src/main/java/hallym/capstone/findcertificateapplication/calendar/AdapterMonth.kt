@@ -9,8 +9,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import hallym.capstone.findcertificateapplication.databinding.ListItemMonthBinding
-import hallym.capstone.findcertificateapplication.datatype.Book
-import hallym.capstone.findcertificateapplication.datatype.testmonth
 import java.util.*
 
 class MonthViewHolder(val binding : ListItemMonthBinding):RecyclerView.ViewHolder(binding.root)
