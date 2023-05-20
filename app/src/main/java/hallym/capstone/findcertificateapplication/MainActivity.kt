@@ -114,8 +114,13 @@ class MainActivity : AppCompatActivity() {
         val intent: Intent
         return when(item.title){
             "일정" -> {
-                intent=Intent(this, CalendarActivity::class.java)
-                startActivity(intent)
+                if(mFirebaseAuth.currentUser != null){
+                    intent=Intent(this, CalendarActivity::class.java)
+                    startActivity(intent)
+                }else{
+                    Toast.makeText(this, "로그인 후 이용 가능합니다.", Toast.LENGTH_SHORT).show()
+                }
+
                 true
             }
             "버그 건의" -> {
