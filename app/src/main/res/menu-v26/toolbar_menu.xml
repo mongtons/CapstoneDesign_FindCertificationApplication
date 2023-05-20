@@ -8,9 +8,8 @@
         android:iconTint="@color/mediaDarkShadeOfCyan"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/setting"
-        android:title="설정"/>
-    <item
-        android:id="@+id/helper"
-        android:title="도움말"/>
+        android:id="@+id/find"
+        android:title="버그 건의"/>
+    <item android:id="@+id/mail"
+        android:title="신고하기"/>
 </menu>
