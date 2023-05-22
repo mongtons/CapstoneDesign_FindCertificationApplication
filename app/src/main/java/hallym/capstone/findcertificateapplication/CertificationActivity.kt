@@ -212,11 +212,11 @@ class CertificationActivity : AppCompatActivity() {
 
                     Log.d("cclo", "데이터 스냅샷 이후 cnt : " + cnt.toString())
                     // 즐겨찾기 2개인 경우 ==> 더 추가 불가
-                    if(cnt == 2){
+                    if(cnt == 1){
                         Toast.makeText(this@CertificationActivity, "최대 즐겨찾기 개수(1)를 초과하였습니다.", Toast.LENGTH_SHORT).show()
                     }
                     // 즐겨찾기 2개 미만인 경우 ==> 더 추가 가능
-                    else if(cnt < 2){
+                    else if(cnt < 1){
                         clicked = true
 
                         // 찜하기 버튼 색상 변경
