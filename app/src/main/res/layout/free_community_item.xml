@@ -3,15 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_root"
     android:layout_width="match_parent"
-    android:layout_height="53dp"
+    android:layout_height="60dp"
     android:layout_margin="5dp"
     android:background="@color/white"
     app:cardCornerRadius="5dp"
     app:cardElevation="1dp">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         android:padding="5dp">
         <TextView
             android:id="@+id/board_title"
@@ -19,25 +18,26 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textColor="@color/annapolosBlue"
-            android:textSize="21sp"/>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/board_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/annapolosBlue"
-                android:textSize="10sp"/>
-            <TextView
-                android:id="@+id/board_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="3dp"
-                android:textColor="@color/annapolosBlue"
-                android:textSize="12sp"
-                android:layout_alignBottom="@id/board_user"
-                android:layout_alignParentRight="true"/>
-        </RelativeLayout>
-    </LinearLayout>
+            android:textSize="21sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:id="@+id/board_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/annapolosBlue"
+            android:textSize="10sp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"/>
+        <TextView
+            android:id="@+id/board_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:textColor="@color/annapolosBlue"
+            android:textSize="12sp"
+            android:layout_alignBottom="@id/board_user"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>

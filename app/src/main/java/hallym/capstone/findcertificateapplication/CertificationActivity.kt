@@ -95,7 +95,7 @@ class CertificationActivity : AppCompatActivity() {
                                     nbook.child("bookprice").value.toString(),
                                     nbook.child("person").value.toString(),
                                     nbook.child("publish").value.toString(),
-                                    nbook.child("Link").value.toString(),
+                                    nbook.child("link").value.toString(),
                                     true
                                 )
                             )
@@ -107,7 +107,7 @@ class CertificationActivity : AppCompatActivity() {
                                         pbook.child("bookprice").value.toString(),
                                         pbook.child("person").value.toString(),
                                         pbook.child("publish").value.toString(),
-                                        pbook.child("Link").value.toString(),
+                                        pbook.child("link").value.toString(),
                                         false
                                     )
                                 )
