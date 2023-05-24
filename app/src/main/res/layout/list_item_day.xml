@@ -19,13 +19,11 @@
         android:id="@+id/oneday"
         android:layout_width="match_parent"
         android:layout_height="13dp"
-        android:textSize="12sp"
-        android:background="@color/white"/>
+        android:textSize="12sp" />
     <View
         android:id="@+id/twoday"
         android:layout_width="match_parent"
         android:layout_height="13dp"
-        android:textSize="12sp"
-        android:background="@color/white"/>
+        android:textSize="12sp" />
 
 </LinearLayout>
