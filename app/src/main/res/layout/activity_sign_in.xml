@@ -13,13 +13,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="center"
         android:layout_margin="20dp">
 
         <EditText
             android:id="@+id/et_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="5dp"
+            android:layout_marginBottom="13dp"
             android:ems="10"
             android:hint="닉네임 입력하세요"
             android:inputType="text" />
@@ -29,6 +31,9 @@
             android:id="@+id/et_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="5dp"
+            android:layout_marginBottom="13dp"
             android:ems="10"
             android:hint="이메일을 입력하세요"
             android:inputType="textEmailAddress" />
@@ -38,6 +43,9 @@
             android:id="@+id/et_pwd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="5dp"
+            android:layout_marginBottom="13dp"
             android:ems="10"
             android:hint="비밀번호를 입력하세요"
             android:inputType="textPassword" />
@@ -46,7 +54,7 @@
     <Button
         android:id="@+id/btn_signin"
         android:layout_width="wrap_content"
-        android:layout_height="130dp"
+        android:layout_height="170dp"
         android:text="회원가입"
         android:textSize="20sp"
         android:textColor="@color/silverWhite"

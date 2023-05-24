@@ -39,9 +39,15 @@ class PeriodFragment(title:String) : Fragment() {
                 for(cert in snapshot.children){
                     if(cert.child("title").value.toString()==certTitle){
                         val period=cert.child("testDay").child("period")
-                        for(date in period.children){
-                            for(i in 1..4) {
-                                findMonth(date.child("${i}st"), date.key.toString(), examDayList)
+                        if(period.hasChild("note") || period.hasChild("practice")) {
+                            for (date in period.children) {
+                                for (i in 1..4) {
+                                    findMonth(date.child("${i}st"), date.key.toString(), examDayList)
+                                }
+                            }
+                        }else{
+                            for (date in period.children) {
+                                findMonth(date, "", examDayList)
                             }
                         }
                         var flag=false

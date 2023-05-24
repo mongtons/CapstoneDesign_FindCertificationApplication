@@ -45,11 +45,11 @@ class AdapterDay(
 
         // 클릭 이벤트 리스너 설정
         binding.itemDayLayout.setOnClickListener {
-            Toast.makeText(binding.itemDayLayout.context,
-//                "${dayList[position]}",
-                "${holder.adapterPosition}",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(binding.itemDayLayout.context,
+////                "${dayList[position]}",
+//                "${holder.adapterPosition}",
+//                Toast.LENGTH_SHORT
+//            ).show()
         }
 
         // Firebase 데이터베이스에서 자격증과 즐겨찾기 목록 데이터 가져오기

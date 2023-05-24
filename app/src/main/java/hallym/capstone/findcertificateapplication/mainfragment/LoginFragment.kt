@@ -74,7 +74,7 @@ class LoginFragment : Fragment() {
                             // main에서 클릭한 것에 따라 community / MyPage로 이동
                             if(data == "community"){
                                 // 이메일 인증이 완료된 경우에만 커뮤니티 이용 가능
-                                if(mFirebaseAuth.currentUser!!.isEmailVerified == true){
+                                if(mFirebaseAuth.currentUser?.isEmailVerified == true){
                                     // community를 선택해서 로그인하게 된 경우 ==> 로그인 완료 후 community 화면으로 이동
                                     fragmentManager?.beginTransaction()?.remove(this)?.commit()
                                     fragmentManager?.beginTransaction()?.replace(R.id.fragment_position, CommunityFragment())?.commit()
