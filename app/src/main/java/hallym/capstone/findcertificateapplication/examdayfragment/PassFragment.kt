@@ -37,9 +37,15 @@ class PassFragment(title:String) : Fragment() {
                 for(cert in snapshot.children) {
                     if (cert.child("title").value.toString() == certTitle) {
                         val period = cert.child("testDay").child("pass")
-                        for(date in period.children){
-                            for(i in 1..4) {
-                                find.findMonth(date.child("${i}st"), date.key.toString(), examDayList)
+                        if(period.hasChild("note") || period.hasChild("practice")) {
+                            for (date in period.children) {
+                                for (i in 1..4) {
+                                    find.findMonth(date.child("${i}st"), date.key.toString(), examDayList)
+                                }
+                            }
+                        }else{
+                            for (date in period.children) {
+                                find.findMonth(date, "", examDayList)
                             }
                         }
                         var flag=false

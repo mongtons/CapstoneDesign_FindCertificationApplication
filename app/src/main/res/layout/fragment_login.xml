@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/cottonBall"
-    android:padding="10dp"
+    android:paddingHorizontal="10dp"
     android:gravity="center"
     tools:context=".mainfragment.LoginFragment">
 
@@ -20,7 +20,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:orientation="horizontal"
-            android:layout_gravity="center"
             android:gravity="center">
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -32,6 +31,9 @@
                     android:id="@+id/et_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="5dp"
+                    android:layout_marginBottom="13dp"
                     android:ems="10"
                     android:hint="이메일을 입력하세요"
                     android:inputType="textEmailAddress" />
@@ -40,6 +42,8 @@
                     android:id="@+id/et_pwd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="5dp"
                     android:ems="10"
                     android:hint="비밀번호를 입력하세요"
                     android:inputType="textPassword"
@@ -64,7 +68,7 @@
 
             <Button
                 android:id="@+id/findID"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginRight="5dp"
@@ -75,11 +79,11 @@
 
             <Button
                 android:id="@+id/findPW"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginRight="5dp"
-                android:text="비밀번호 찾기"
+                android:text="비밀번호찾기"
                 android:textSize="15sp"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/mediaDarkShadeOfCyan"/>
@@ -87,7 +91,7 @@
 
             <Button
                 android:id="@+id/btn_signin"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="회원가입"
