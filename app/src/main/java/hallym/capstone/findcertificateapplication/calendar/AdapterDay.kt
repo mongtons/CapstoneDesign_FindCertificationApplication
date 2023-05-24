@@ -91,28 +91,27 @@ class AdapterDay(
                             val ntest = data.child("testDay").child("test").child("note")
                             val ptest = data.child("testDay").child("test").child("practice")
 
-                            val q:Queue<Int> = LinkedList<Int>()
+                            val q: Queue<Int> = LinkedList<Int>()
                             if (ntest.hasChildren()) {
                                 val months = listOf("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "ste", "oct", "nov", "dec")
-
                                 for (i in 1..4) {
                                     val child = ntest.child("$i" + "st")
                                     if (child.hasChildren()) {
                                         child.children.forEach { monthChild ->
                                             val month = months.indexOf(monthChild.key)
                                             if (month >= 0) {
-                                                for(month in months) {
-                                                    for(date in child.child(month).children){
+                                                for (month in months) {
+                                                    for (date in child.child(month).children) {
                                                         //Log.d("cclo", "$i 번째 : " + date.value)
                                                         q.add(date.value.toString().toInt())
                                                         //Log.d("cclo", "$q")
-                                                        if(date.key.toString() == "month"){
-                                                            val daymonthList =  mutableListOf<Int>()
-                                                            for( k in 0..q.size - 1){
+                                                        if (date.key.toString() == "month") {
+                                                            val daymonthList = mutableListOf<Int>()
+                                                            for (k in 0..q.size - 1) {
                                                                 daymonthList.add(q.poll())
                                                             }
 
-                                                            if(ntestList.size == 0){
+                                                            if (ntestList.size == 0) {
                                                                 ntestList.add(daymonthList)
                                                             }
 
@@ -128,22 +127,21 @@ class AdapterDay(
 
                                                     }
                                                 }
-
                                             }
                                         }
                                     }
                                 }
                                 Log.d("cclo", "$ntestList")
 
-                                for(w in 0..ntestList.size-1){
-                                    for(n in 0..ntestList[w].size-2){
-                                        if((tempMonth==ntestList[w][ntestList[w].size- 1]-1) && (dayList[position].date.toString()==ntestList[w][n].toString())){
+                                for (w in 0..ntestList.size - 1) {
+                                    for (n in 0..ntestList[w].size - 2) {
+                                        if ((tempMonth == ntestList[w][ntestList[w].size - 1] - 1) && (dayList[position].date.toString() == ntestList[w][n].toString())) {
                                             //AdapterMonth에서 받아온 certMonth(해당 자격증 일정의 월)과 현 달력의 월이 같은 지 확인
                                             //dayList의 date를 이용하고 데이터베이스에서 받아온 일(testDay1)을 둘이 비교하여 같은 날이 있는 지 확인
-                                            var cnt=0
-                                            val positionList= mutableListOf<Int>()
-                                            for((i,date) in dayList.withIndex()){
-                                                if(date.date.toString()==ntestList[w][n].toString()){
+                                            var cnt = 0
+                                            val positionList = mutableListOf<Int>()
+                                            for ((i, date) in dayList.withIndex()) {
+                                                if (date.date.toString() == ntestList[w][n].toString()) {
                                                     ++cnt
                                                     positionList.add(i)
                                                 }
@@ -151,52 +149,37 @@ class AdapterDay(
                                             //달력에는 앞전 달의 일과 뒷 달의 일이 같이 출력되므로 해당 일이 2번 이상 존재하는 지 체크하고
                                             // 알맞은 일인 dayList의 position을 positionList에 넣어 어디에 색칠할 지 구분할 때 사용
 
-                                            Log.d("kim", positionList[cnt-1].toString())
-                                            if(cnt>=2 && ntestList[w][n]<=12){
+                                            Log.d("kim", positionList[cnt - 1].toString())
+                                            if (cnt >= 2 && ntestList[w][n] <= 12) {
                                                 if (position == positionList[0]) {
                                                     if (binding.oneday.background != null) {
-                                                        binding.twoday.setBackgroundColor(
-                                                            Color.parseColor(
-                                                                "#0000CC"
-                                                            )
-                                                        )
+                                                        binding.twoday.setBackgroundColor(Color.parseColor("#0000CC"))
                                                     } else {
-                                                        binding.oneday.setBackgroundColor(
-                                                            Color.parseColor(
-                                                                "#0000CC"
-                                                            )
-                                                        )
+                                                        binding.oneday.setBackgroundColor(Color.parseColor("#0000CC"))
                                                     }
                                                 }
-                                            }else if(cnt>=2 && ntestList[w][n]>23){
-                                                if(position==positionList[1]) {
+                                            } else if (cnt >= 2 && ntestList[w][n] > 23) {
+                                                if (position == positionList[1]) {
                                                     if (binding.oneday.background != null) {
-                                                        binding.twoday.setBackgroundColor(
-                                                            Color.parseColor(
-                                                                "#0000CC"
-                                                            )
-                                                        )
+                                                        binding.twoday.setBackgroundColor(Color.parseColor("#0000CC"))
                                                     } else {
-                                                        binding.oneday.setBackgroundColor(
-                                                            Color.parseColor(
-                                                                "#0000CC"
-                                                            )
-                                                        )
+                                                        binding.oneday.setBackgroundColor(Color.parseColor("#0000CC"))
                                                     }
                                                 }
-                                            }else{
+                                            } else {
                                                 if (binding.oneday.background != null) {
                                                     binding.twoday.setBackgroundColor(Color.parseColor("#0000CC"))
                                                 } else {
                                                     binding.oneday.setBackgroundColor(Color.parseColor("#0000CC"))
                                                 }
+
                                             }
                                             //testDay1이 10일 이하 일 때 먼저 저장했던 position을 사용
                                             //testDay1이 20일 이상 일 때 나중에 저장했던 position을 사용
                                         }
                                     }
-                                }
-                            }else{
+                                }//note와 practice가 있을때
+                            } else {
                                 val months = listOf("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "ste", "oct", "nov", "dec")
                                 for (i in 1..4) {
                                     val child = nontest.child("$i" + "st")
@@ -204,18 +187,18 @@ class AdapterDay(
                                         child.children.forEach { monthChild ->
                                             val month = months.indexOf(monthChild.key)
                                             if (month >= 0) {
-                                                for(month in months) {
-                                                    for(date in child.child(month).children){
+                                                for (month in months) {
+                                                    for (date in child.child(month).children) {
                                                         //Log.d("cclo", "$i 번째 : " + date.value)
                                                         q.add(date.value.toString().toInt())
                                                         //Log.d("cclo", "$q")
-                                                        if(date.key.toString() == "month"){
-                                                            val daymonthList =  mutableListOf<Int>()
-                                                            for( k in 0..q.size - 1){
+                                                        if (date.key.toString() == "month") {
+                                                            val daymonthList = mutableListOf<Int>()
+                                                            for (k in 0..q.size - 1) {
                                                                 daymonthList.add(q.poll())
                                                             }
 
-                                                            if(ntestList.size == 0){
+                                                            if (ntestList.size == 0) {
                                                                 ntestList.add(daymonthList)
                                                             }
 
@@ -238,15 +221,15 @@ class AdapterDay(
                                 }
                                 Log.d("cclo", "$ntestList")
 
-                                for(w in 0..ntestList.size-1){
-                                    for(n in 0..ntestList[w].size-2){
-                                        if((tempMonth==ntestList[w][ntestList[w].size- 1]-1) && (dayList[position].date.toString()==ntestList[w][n].toString())){
+                                for (w in 0..ntestList.size - 1) {
+                                    for (n in 0..ntestList[w].size - 2) {
+                                        if ((tempMonth == ntestList[w][ntestList[w].size - 1] - 1) && (dayList[position].date.toString() == ntestList[w][n].toString())) {
                                             //AdapterMonth에서 받아온 certMonth(해당 자격증 일정의 월)과 현 달력의 월이 같은 지 확인
                                             //dayList의 date를 이용하고 데이터베이스에서 받아온 일(testDay1)을 둘이 비교하여 같은 날이 있는 지 확인
-                                            var cnt=0
-                                            val positionList= mutableListOf<Int>()
-                                            for((i,date) in dayList.withIndex()){
-                                                if(date.date.toString()==ntestList[w][n].toString()){
+                                            var cnt = 0
+                                            val positionList = mutableListOf<Int>()
+                                            for ((i, date) in dayList.withIndex()) {
+                                                if (date.date.toString() == ntestList[w][n].toString()) {
                                                     ++cnt
                                                     positionList.add(i)
                                                 }
@@ -254,40 +237,24 @@ class AdapterDay(
                                             //달력에는 앞전 달의 일과 뒷 달의 일이 같이 출력되므로 해당 일이 2번 이상 존재하는 지 체크하고
                                             // 알맞은 일인 dayList의 position을 positionList에 넣어 어디에 색칠할 지 구분할 때 사용
 
-                                            Log.d("kim", positionList[cnt-1].toString())
-                                            if(cnt>=2 && ntestList[w][n]<=12){
+                                            Log.d("kim", positionList[cnt - 1].toString())
+                                            if (cnt >= 2 && ntestList[w][n] <= 12) {
                                                 if (position == positionList[0]) {
                                                     if (binding.oneday.background != null) {
-                                                        binding.twoday.setBackgroundColor(
-                                                            Color.parseColor(
-                                                                "#0000CC"
-                                                            )
-                                                        )
+                                                        binding.twoday.setBackgroundColor(Color.parseColor("#0000CC"))
                                                     } else {
-                                                        binding.oneday.setBackgroundColor(
-                                                            Color.parseColor(
-                                                                "#0000CC"
-                                                            )
-                                                        )
+                                                        binding.oneday.setBackgroundColor(Color.parseColor("#0000CC"))
                                                     }
                                                 }
-                                            }else if(cnt>=2 && ntestList[w][n]>23){
-                                                if(position==positionList[1]) {
+                                            } else if (cnt >= 2 && ntestList[w][n] > 23) {
+                                                if (position == positionList[1]) {
                                                     if (binding.oneday.background != null) {
-                                                        binding.twoday.setBackgroundColor(
-                                                            Color.parseColor(
-                                                                "#0000CC"
-                                                            )
-                                                        )
+                                                        binding.twoday.setBackgroundColor(Color.parseColor("#0000CC"))
                                                     } else {
-                                                        binding.oneday.setBackgroundColor(
-                                                            Color.parseColor(
-                                                                "#0000CC"
-                                                            )
-                                                        )
+                                                        binding.oneday.setBackgroundColor(Color.parseColor("#0000CC"))
                                                     }
                                                 }
-                                            }else{
+                                            } else {
                                                 if (binding.oneday.background != null) {
                                                     binding.twoday.setBackgroundColor(Color.parseColor("#0000CC"))
                                                 } else {
@@ -300,8 +267,7 @@ class AdapterDay(
                                     }
                                 }
                             }
-
-                            val q1:Queue<Int> = LinkedList<Int>()
+                            val q1: Queue<Int> = LinkedList<Int>()
                             if (nperiod.hasChildren()) {
                                 val months = listOf("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "ste", "oct", "nov", "dec")
                                 for (i in 1..4) {
@@ -310,18 +276,18 @@ class AdapterDay(
                                         child.children.forEach { monthChild ->
                                             val month = months.indexOf(monthChild.key)
                                             if (month >= 0) {
-                                                for(month in months) {
-                                                    for(date in child.child(month).children){
+                                                for (month in months) {
+                                                    for (date in child.child(month).children) {
                                                         //Log.d("cclo", "$i 번째 : " + date.value)
                                                         q1.add(date.value.toString().toInt())
                                                         //Log.d("cclo", "$q")
-                                                        if(date.key.toString() == "month"){
-                                                            val daymonthList =  mutableListOf<Int>()
-                                                            for( k in 0..q1.size - 1){
+                                                        if (date.key.toString() == "month") {
+                                                            val daymonthList = mutableListOf<Int>()
+                                                            for (k in 0..q1.size - 1) {
                                                                 daymonthList.add(q1.poll())
                                                             }
 
-                                                            if(nperiodList.size == 0){
+                                                            if (nperiodList.size == 0) {
                                                                 nperiodList.add(daymonthList)
                                                             }
 
@@ -344,15 +310,15 @@ class AdapterDay(
                                 }
                                 Log.d("cclo", "$nperiodList")
 
-                                for(w in 0..nperiodList.size-1){
-                                    for(n in 0..nperiodList[w].size-2){
-                                        if((tempMonth==nperiodList[w][nperiodList[w].size- 1]-1) && (dayList[position].date.toString()==nperiodList[w][n].toString())){
+                                for (w in 0..nperiodList.size - 1) {
+                                    for (n in 0..nperiodList[w].size - 2) {
+                                        if ((tempMonth == nperiodList[w][nperiodList[w].size - 1] - 1) && (dayList[position].date.toString() == nperiodList[w][n].toString())) {
                                             //AdapterMonth에서 받아온 certMonth(해당 자격증 일정의 월)과 현 달력의 월이 같은 지 확인
                                             //dayList의 date를 이용하고 데이터베이스에서 받아온 일(testDay1)을 둘이 비교하여 같은 날이 있는 지 확인
-                                            var cnt=0
-                                            val positionList= mutableListOf<Int>()
-                                            for((i,date) in dayList.withIndex()){
-                                                if(date.date.toString()==nperiodList[w][n].toString()){
+                                            var cnt = 0
+                                            val positionList = mutableListOf<Int>()
+                                            for ((i, date) in dayList.withIndex()) {
+                                                if (date.date.toString() == nperiodList[w][n].toString()) {
                                                     ++cnt
                                                     positionList.add(i)
                                                 }
@@ -360,9 +326,9 @@ class AdapterDay(
                                             //달력에는 앞전 달의 일과 뒷 달의 일이 같이 출력되므로 해당 일이 2번 이상 존재하는 지 체크하고
                                             // 알맞은 일인 dayList의 position을 positionList에 넣어 어디에 색칠할 지 구분할 때 사용
 
-                                            Log.d("kim", positionList[cnt-1].toString())
-                                            if(cnt>=2 && nperiodList[w][n]<=12){
-                                                if(position==positionList[0]) {
+                                            Log.d("kim", positionList[cnt - 1].toString())
+                                            if (cnt >= 2 && nperiodList[w][n] <= 12) {
+                                                if (position == positionList[0]) {
                                                     if (binding.oneday.background != null) {
                                                         binding.twoday.setBackgroundColor(Color.parseColor("#000000"))
                                                     } else {
@@ -370,8 +336,8 @@ class AdapterDay(
                                                     }
 
                                                 }
-                                            }else if(cnt>=2 && nperiodList[w][n]>23){
-                                                if(position==positionList[1]) {
+                                            } else if (cnt >= 2 && nperiodList[w][n] > 23) {
+                                                if (position == positionList[1]) {
                                                     if (binding.oneday.background != null) {
                                                         binding.twoday.setBackgroundColor(Color.parseColor("#000000"))
                                                     } else {
@@ -379,7 +345,7 @@ class AdapterDay(
                                                     }
 
                                                 }
-                                            }else{
+                                            } else {
                                                 if (binding.oneday.background != null) {
                                                     binding.twoday.setBackgroundColor(Color.parseColor("#000000"))
                                                 } else {
@@ -391,7 +357,7 @@ class AdapterDay(
                                         }
                                     }
                                 }
-                            }else{
+                            } else {
                                 val months = listOf("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "ste", "oct", "nov", "dec")
                                 for (i in 1..4) {
                                     val child = nonperiod.child("$i" + "st")
@@ -399,18 +365,18 @@ class AdapterDay(
                                         child.children.forEach { monthChild ->
                                             val month = months.indexOf(monthChild.key)
                                             if (month >= 0) {
-                                                for(month in months) {
-                                                    for(date in child.child(month).children){
+                                                for (month in months) {
+                                                    for (date in child.child(month).children) {
                                                         //Log.d("cclo", "$i 번째 : " + date.value)
                                                         q1.add(date.value.toString().toInt())
                                                         //Log.d("cclo", "$q")
-                                                        if(date.key.toString() == "month"){
-                                                            val daymonthList =  mutableListOf<Int>()
-                                                            for( k in 0..q1.size - 1){
+                                                        if (date.key.toString() == "month") {
+                                                            val daymonthList = mutableListOf<Int>()
+                                                            for (k in 0..q1.size - 1) {
                                                                 daymonthList.add(q1.poll())
                                                             }
 
-                                                            if(nperiodList.size == 0){
+                                                            if (nperiodList.size == 0) {
                                                                 nperiodList.add(daymonthList)
                                                             }
 
@@ -433,15 +399,15 @@ class AdapterDay(
                                 }
                                 Log.d("cclo", "$nperiodList")
 
-                                for(w in 0..nperiodList.size-1){
-                                    for(n in 0..nperiodList[w].size-2){
-                                        if((tempMonth==nperiodList[w][nperiodList[w].size- 1]-1) && (dayList[position].date.toString()==nperiodList[w][n].toString())){
+                                for (w in 0..nperiodList.size - 1) {
+                                    for (n in 0..nperiodList[w].size - 2) {
+                                        if ((tempMonth == nperiodList[w][nperiodList[w].size - 1] - 1) && (dayList[position].date.toString() == nperiodList[w][n].toString())) {
                                             //AdapterMonth에서 받아온 certMonth(해당 자격증 일정의 월)과 현 달력의 월이 같은 지 확인
                                             //dayList의 date를 이용하고 데이터베이스에서 받아온 일(testDay1)을 둘이 비교하여 같은 날이 있는 지 확인
-                                            var cnt=0
-                                            val positionList= mutableListOf<Int>()
-                                            for((i,date) in dayList.withIndex()){
-                                                if(date.date.toString()==nperiodList[w][n].toString()){
+                                            var cnt = 0
+                                            val positionList = mutableListOf<Int>()
+                                            for ((i, date) in dayList.withIndex()) {
+                                                if (date.date.toString() == nperiodList[w][n].toString()) {
                                                     ++cnt
                                                     positionList.add(i)
                                                 }
@@ -449,9 +415,9 @@ class AdapterDay(
                                             //달력에는 앞전 달의 일과 뒷 달의 일이 같이 출력되므로 해당 일이 2번 이상 존재하는 지 체크하고
                                             // 알맞은 일인 dayList의 position을 positionList에 넣어 어디에 색칠할 지 구분할 때 사용
 
-                                            Log.d("kim", positionList[cnt-1].toString())
-                                            if(cnt>=2 && nperiodList[w][n]<=12){
-                                                if(position==positionList[0]) {
+                                            Log.d("kim", positionList[cnt - 1].toString())
+                                            if (cnt >= 2 && nperiodList[w][n] <= 12) {
+                                                if (position == positionList[0]) {
                                                     if (binding.oneday.background != null) {
                                                         binding.twoday.setBackgroundColor(Color.parseColor("#000000"))
                                                     } else {
@@ -459,8 +425,8 @@ class AdapterDay(
                                                     }
 
                                                 }
-                                            }else if(cnt>=2 && nperiodList[w][n]>23){
-                                                if(position==positionList[1]) {
+                                            } else if (cnt >= 2 && nperiodList[w][n] > 23) {
+                                                if (position == positionList[1]) {
                                                     if (binding.oneday.background != null) {
                                                         binding.twoday.setBackgroundColor(Color.parseColor("#000000"))
                                                     } else {
@@ -468,7 +434,7 @@ class AdapterDay(
                                                     }
 
                                                 }
-                                            }else{
+                                            } else {
                                                 if (binding.oneday.background != null) {
                                                     binding.twoday.setBackgroundColor(Color.parseColor("#000000"))
                                                 } else {
@@ -658,6 +624,7 @@ class AdapterDay(
                                         }
                                     }
                                 }
+
                             }
                             val q3:Queue<Int> = LinkedList<Int>()
                             if (ptest.hasChildren()) {
@@ -835,6 +802,7 @@ class AdapterDay(
                                         }
                                     }
                                 }
+
                             }
 
                             val q4:Queue<Int> = LinkedList<Int>()
@@ -1017,6 +985,7 @@ class AdapterDay(
                                         }
                                     }
                                 }
+
                             }
 
                             val q5:Queue<Int> = LinkedList<Int>()
@@ -1195,6 +1164,7 @@ class AdapterDay(
                                         }
                                     }
                                 }
+
                             }
 
                         }
