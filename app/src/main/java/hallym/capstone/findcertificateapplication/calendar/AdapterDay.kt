@@ -17,22 +17,10 @@ import java.util.*
 val mFirebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()// 파이어베이스 인증
 val database: FirebaseDatabase = FirebaseDatabase.getInstance()
 val ref: DatabaseReference =database.getReference()
-var reftitle = ArrayList<String>(3)
-var reffavorite = ArrayList<String>(3)
+//var reftitle = ArrayList<String>(3)
+var reffavorite = String
+lateinit var cerTitle : String
 
-val nonperiodList = mutableListOf<List<Int>>()
-val nontestList = mutableListOf<List<Int>>()
-val nonpassList = mutableListOf<List<Int>>()
-val nopperiodList = mutableListOf<List<Int>>()
-val noptestList = mutableListOf<List<Int>>()
-val noppassList = mutableListOf<List<Int>>()
-
-val nperiodList = mutableListOf<List<Int>>()
-var ntestList = mutableListOf<List<Int>>()
-val npassList= mutableListOf<List<Int>>()
-val pperiodList = mutableListOf<List<Int>>()
-val ptestList = mutableListOf<List<Int>>()
-val ppassList= mutableListOf<List<Int>>()
 
 
 class ViewHolder(val binding : ListItemDayBinding):RecyclerView.ViewHolder(binding.root)
@@ -69,21 +57,31 @@ class AdapterDay(
                     for (ds in favoriteChild.children) {
                         // 로그인한 사용자와 동일한 uid인지 확인
                         if (ds.child("uid").value.toString() == mFirebaseAuth.currentUser?.uid) {
-                            val cerTitle = ds.child("cerTitle").value.toString()
-                            if (!reffavorite.contains(cerTitle)) {
-                                reffavorite.add(cerTitle)
-                                Log.d("reffavorite", "즐겨찾기된 자격증 : $reffavorite")
-                            }
+                            cerTitle = ds.child("cerTitle").value.toString()
+
                         }
                     }
                 }
 
                 // 자격증 목록 가져오기
                 val certification = snapshot.child("Certification")
-                for (i in reffavorite) {
                     for (data in certification.children) {
                         val title = data.child("title")
-                        if (title.value.toString() == i) {
+                        if (title.value.toString() == cerTitle) {
+                            val nonperiodList = mutableListOf<List<Int>>()
+                            val nontestList = mutableListOf<List<Int>>()
+                            val nonpassList = mutableListOf<List<Int>>()
+                            val nopperiodList = mutableListOf<List<Int>>()
+                            val noptestList = mutableListOf<List<Int>>()
+                            val noppassList = mutableListOf<List<Int>>()
+
+                            val nperiodList = mutableListOf<List<Int>>()
+                            var ntestList = mutableListOf<List<Int>>()
+                            val npassList= mutableListOf<List<Int>>()
+                            val pperiodList = mutableListOf<List<Int>>()
+                            val ptestList = mutableListOf<List<Int>>()
+                            val ppassList= mutableListOf<List<Int>>()
+
                             val nonpass = data.child("testDay").child("pass")
                             val noppass = data.child("testDay").child("pass")
                             val nonperiod = data.child("testDay").child("period")
@@ -102,8 +100,6 @@ class AdapterDay(
                             if (ntest.hasChildren()) {
                                 ntestList.clear()
                                 val months = listOf("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "ste", "oct", "nov", "dec")
-
-                                q.clear()
                                 for (i in 1..4) {
                                     val child = ntest.child("$i" + "st")
                                     if (child.hasChildren()) {
@@ -1199,7 +1195,7 @@ class AdapterDay(
                         }
 
                     }
-                }
+
 
             }
             override fun onCancelled(error: DatabaseError) {
