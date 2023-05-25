@@ -13,8 +13,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.AppBarLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
+import hallym.capstone.findcertificateapplication.calendar.ref
 import hallym.capstone.findcertificateapplication.databinding.ActivityMainBinding
 import hallym.capstone.findcertificateapplication.mainfragment.*
 import java.text.SimpleDateFormat
@@ -120,6 +120,27 @@ class MainActivity : AppCompatActivity() {
                 }else{
                     Toast.makeText(this, "로그인 후 이용 가능합니다.", Toast.LENGTH_SHORT).show()
                 }
+
+
+                ref.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        // 즐겨찾기 목록 가져오기
+                        val favorite = snapshot.child("Favorite")
+                        val favoriteChild = mFirebaseAuth.currentUser?.uid?.let { favorite.child(it) }
+                        if (favoriteChild == null) {
+                            Toast.makeText(this@MainActivity, "즐겨찾기 후 이용하시기 바랍니다.", Toast.LENGTH_SHORT)
+                                .show()
+                            val intent = Intent(this@MainActivity, MainActivity::class.java)
+                            startActivity(intent)
+                        }
+                    }
+                    override fun onCancelled(error: DatabaseError) {
+                        try {
+                            error.toException()
+                        } catch (_: Exception) {
+                        }
+                    }
+                })
 
                 true
             }
