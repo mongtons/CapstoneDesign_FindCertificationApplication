@@ -3,9 +3,17 @@ package hallym.capstone.findcertificateapplication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import hallym.capstone.findcertificateapplication.calendar.AdapterMonth
+import hallym.capstone.findcertificateapplication.calendar.cerTitle
+import hallym.capstone.findcertificateapplication.calendar.mFirebaseAuth
+import hallym.capstone.findcertificateapplication.calendar.ref
 import hallym.capstone.findcertificateapplication.databinding.ActivityCalendarBinding
 
 class CalendarActivity : AppCompatActivity() {
@@ -31,6 +39,9 @@ class CalendarActivity : AppCompatActivity() {
 
         val snap = PagerSnapHelper()
         snap.attachToRecyclerView(binding.calendarCustom)
+
+
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
