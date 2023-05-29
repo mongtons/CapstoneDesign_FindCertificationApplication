@@ -37,6 +37,7 @@ class QuestionBoardActivity : AppCompatActivity() {
 
         questionRef.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                //알맞은 해당 문제 번호
                 val qN=when(intent.getLongExtra("qNum",0L)){
                     1L -> "One"
                     2L -> "Two"

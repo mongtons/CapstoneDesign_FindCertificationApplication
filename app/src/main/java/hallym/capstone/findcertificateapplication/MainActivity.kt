@@ -34,15 +34,15 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_position, HomeFragment()).commit()
         //MainActivity를 기준으로 두고 Home, search, Ai 등 화면으로 이동하기 위해 fragment 생성
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_position, HomeFragment()).commit()
 
         var params : AppBarLayout.LayoutParams = binding.toolbar.layoutParams as AppBarLayout.LayoutParams
         binding.bottomBar.setOnItemSelectedListener{
 
             var bundle = Bundle()
-
-
+            //하단의 Bottom Bar를 터치하여 해당 이름에 알맞는 Fragment로 화면 이동
+            //params로 스크롤이 필요하지 않는 곳은 SCROLL_FLAG_NO_SCROLL을 지정하여 하단바 감춰지지 않게 설정
             when(it.title){
                 "HOME" ->{
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_position, HomeFragment()).commit()
@@ -94,24 +94,24 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        //하단의 Bottom Bar를 터치하여 해당 이름에 알맞는 Fragment로 화면 이동
-        //params로 스크롤이 필요하지 않는 곳은 SCROLL_FLAG_NO_SCROLL을 지정하여 하단바 감춰지지 않게 설정
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        //좌측 상단의 뒤로가기 버튼을 누르면 어플리케이션이 꺼지는 함수
         moveTaskToBack(true)
         return super.onSupportNavigateUp()
     }
-    //좌측 상단의 뒤로가기 버튼을 누르면 어플리케이션이 꺼지는 함수
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        //상단의 캘린더버튼과 기타 건의 버튼을 넣기 위한 상단 메뉴 생성함수
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
-    //상단의 캘린더버튼과 기타 건의 버튼을 넣기 위한 상단 메뉴 생성함수
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val intent: Intent
+        //해당 이름에 알맞은 상단 메뉴를 누르면 개발자에게 메일을 보내거나 캘린더로 화면 전환
         return when(item.title){
             "일정" -> {
                 if(mFirebaseAuth.currentUser != null){
@@ -120,8 +120,6 @@ class MainActivity : AppCompatActivity() {
                 }else{
                     Toast.makeText(this, "로그인 후 이용 가능합니다.", Toast.LENGTH_SHORT).show()
                 }
-
-
                 ref.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         // 즐겨찾기 목록 가져오기
@@ -141,16 +139,16 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 })
-
                 true
             }
             "버그 건의" -> {
+                //intent로 개발자에게 메일 보낼 수 있도록 ACTION_SEND로 intent 지정
                 intent= Intent(Intent.ACTION_SEND)
                 intent.data= Uri.parse("mailto:")
                 intent.type="text/plain"
                 val format=SimpleDateFormat("yyyy-MM-dd, HH:mm:ss")
 
-                intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("mongtons990213@gmail.com"))
+                intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(""))
                 intent.putExtra(Intent.EXTRA_SUBJECT, "[자격증 메이트 어플리케이션 버그] ${format.format(Date().time)}")
                 intent.putExtra(Intent.EXTRA_TEXT, "어플리케이션 Version: ${BuildConfig.VERSION_NAME}\n" +
                         "안드로이드 SDK: ${Build.VERSION.SDK_INT}(${Build.VERSION.RELEASE})\n" +
@@ -165,7 +163,7 @@ class MainActivity : AppCompatActivity() {
 
                 val format=SimpleDateFormat("yyyy-MM-dd, HH:mm:ss")
 
-                intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("mongtons990213@gmail.com"))
+                intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(""))
                 intent.putExtra(Intent.EXTRA_SUBJECT, "[자격증 메이트 어플리케이션 유저 신고] ${format.format(Date().time)}")
                 intent.putExtra(Intent.EXTRA_TEXT, "게시판 종류: \n" +
                         "유저 닉네임: \n" +
@@ -175,7 +173,6 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-        //해당 이름에 알맞은 상단 메뉴를 누르면 개발자에게 메일을 보내거나 캘린더로 화면 전환
     }
 
     fun setDataAtFragment(loginFragment: LoginFragment, s: String) { // login fragment에 전달할 데이터 설정 및 화면 전환

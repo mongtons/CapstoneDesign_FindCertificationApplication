@@ -31,8 +31,8 @@ class AiFragment : Fragment() {
     lateinit var binding:FragmentAiBinding
     lateinit var messageList:MutableList<Message>
 
-    var url = "https://api.openai.com/v1/completions"
-    val apiKey="" //ChatGPT의 OpenAI를 사용하기 위한 APIkey
+    var url = "https://api.openai.com/v1/completions" //OpenAI와 통신하기 위한 url
+    val apiKey="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" //ChatGPT의 OpenAI를 사용하기 위한 APIkey
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,11 +44,12 @@ class AiFragment : Fragment() {
         // initializing variables on below line.
         queryEdt = binding.idEdtQuery
         messageList = mutableListOf()
+
         // adding editor action listener for edit text on below line.
+        //EditText에 값을 입력하고 나서 처리하는 리스너
+        //값을 넣고 '확인' 버튼을 누르면 getResponse() 호출, 넣지 않고 누르면 "Please enter your query.."가 화면에 출력된다.
         queryEdt.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEND) {
-                // setting response tv on below line.
-//                responseTV.text = "Please wait.."
                 // validating text
                 if (queryEdt.text.toString().length > 0) {
                     // calling get response to get the response.
@@ -60,6 +61,8 @@ class AiFragment : Fragment() {
             }
             false
         })
+
+        //마찬가지로 EditText에 값을 입력하고 나서 처리하는 리스너이지만, EditTextView 옆 Button을 눌렀을 때 실행되는 리스너
         binding.inputBtn.setOnClickListener {
             val searchText=queryEdt.text.toString()
 
@@ -70,14 +73,16 @@ class AiFragment : Fragment() {
             }
 
             val hide: SearchFragment = SearchFragment()
-            hide.hideKeyboard(requireContext(), this.requireView())
-
-            queryEdt.text.clear()
+            hide.hideKeyboard(requireContext(), this.requireView()) //소프트키보드를 Button을 누르면 내리게하는 메소드
+            queryEdt.text.clear() //EditText의 입력한 값을 지움
         }
+
         val layoutManager=LinearLayoutManager(context)
         layoutManager.orientation=LinearLayoutManager.VERTICAL
         binding.chatMessage.layoutManager=layoutManager
         binding.chatMessage.adapter=AiAdapter(messageList)
+
+        //채팅형식처럼 새로운 데이터가 발생되면 가장 최근 item, messageList의 가장 마지막 item으로 이동
         binding.chatMessage.scrollToPosition(messageList.size-1)
 
         return binding.root
@@ -85,6 +90,7 @@ class AiFragment : Fragment() {
     private fun getResponse(query: String) {
         // setting text on for question on below line.
         messageList.add(Message(true, query))
+        //RecyclerView에 새로운 데이터(새로운 채팅)가 발생하면 Adpater에게 알려줌
         binding.chatMessage.adapter?.notifyDataSetChanged()
         binding.chatMessage.smoothScrollToPosition(messageList.size-1)
         queryEdt.setText("")
@@ -152,6 +158,7 @@ class AiAdapter(val contents:MutableList<Message>):RecyclerView.Adapter<Recycler
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val binding=(holder as AiViewHolder).binding
         binding.itemMessage.text=contents[position].text
+        //사용자와 AI의 문자열 값을 구분하여 item의 위치를 RIGHT, LEFT로 적용
         if(contents[position].id){
             binding.itemRoot.gravity=Gravity.RIGHT
         }else{

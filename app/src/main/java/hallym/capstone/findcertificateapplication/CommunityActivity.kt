@@ -34,6 +34,7 @@ class FreeCommunityActivity : AppCompatActivity() {
         freeBoardRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val boardList = mutableListOf<FreeBoard>()
+                //전체 래퍼런스에서 Free_Board 객체를 사용
                 val freeBoardList=snapshot.child("Free_Board")
                 for (board in freeBoardList.children) {
                     val commentList = mutableListOf<Comment>()
@@ -72,22 +73,22 @@ class FreeCommunityActivity : AppCompatActivity() {
         binding.addBoard.setOnClickListener {
             when(binding.addBoard.isExtended){
                 true ->{
-                    binding.addBoard.shrink()
+                    binding.addBoard.shrink()//버튼 축소
                     val intent=Intent(this, AddBoardActivity::class.java)
                     startActivity(intent)
                 }
-                false -> binding.addBoard.extend()
+                false -> binding.addBoard.extend() //버튼 확장
             }
         }
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
+        onBackPressed() //현재 Activity 뒤로가기(나가기)
         return super.onSupportNavigateUp()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        menuInflater.inflate(R.menu.toolbar_menu, menu) //상단 메뉴를 원하는 메뉴(toolbar_menu.xml)로 구성하기 위해 사용
         return super.onCreateOptionsMenu(menu)
     }
 }

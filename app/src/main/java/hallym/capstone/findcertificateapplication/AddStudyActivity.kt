@@ -22,7 +22,9 @@ class AddStudyActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        //게시글의 타입을 보고 질문 게시글 or 스터딩 게시글 인지 확인
         if(intent.getBooleanExtra("type", false)){
+            //스터딩 게시글
             binding.counting2.visibility=View.GONE
             binding.studySpinner.adapter = ArrayAdapter.createFromResource(
                 this,
@@ -30,13 +32,16 @@ class AddStudyActivity : AppCompatActivity() {
                 android.R.layout.simple_spinner_item
             )
         }else {
+            //질문 게시글
             binding.textView.text="자격증 명"
             binding.counting2.visibility=View.VISIBLE
+            //자격증 종류
             binding.studySpinner.adapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.certification_title,
                 android.R.layout.simple_spinner_item
             )
+            //해당 자격증의 문제 번호
             binding.numberSpinner.adapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.question_number,
@@ -59,11 +64,13 @@ class AddStudyActivity : AppCompatActivity() {
 
             if(intent.getBooleanExtra("update", false)){
                 if(intent.getBooleanExtra("type", true)){
+                    //스터딩은 인원 수+내용, 제목 수정
                     binding.counting2.visibility=View.GONE
 
                     ref.child(intent.getStringExtra("id").toString())
                         .child("userCount").setValue(Integer.parseInt(binding.studySpinner.selectedItem.toString()))
                 }else{
+                    //질문은 자격증 종류, 문제 번호+내용, 제목 수정
                     binding.textView.text="자격증 명"
                     binding.counting2.visibility=View.VISIBLE
 

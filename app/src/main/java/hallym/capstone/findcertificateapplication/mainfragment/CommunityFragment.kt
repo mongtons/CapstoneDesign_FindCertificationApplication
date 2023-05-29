@@ -19,6 +19,7 @@ class CommunityFragment : Fragment() {
         val binding= FragmentCommunityBinding.inflate(inflater, container, false)
         var intent:Intent
 
+        //freeCommunity, studyCommunity 버튼을 클릭했을 때, 해당 Activity로 넘어가는 intent
         binding.freeCommunity.setOnClickListener {
             intent= Intent(activity, FreeCommunityActivity::class.java)
             startActivity(intent)

@@ -44,8 +44,9 @@ class MyPageFragment : Fragment() {
 
         mDatabaseRef.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                //로그인한 현재 유저의 닉네임과 이메일 주소를 화면에 TextView에 출력
                 binding.userId.text = mFirebaseAuth.currentUser?.displayName.toString()
-                binding.userNickname.text = mFirebaseAuth.currentUser!!.email.toString()
+                binding.userNickname.text = mFirebaseAuth.currentUser?.email.toString()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -67,8 +68,7 @@ class MyPageFragment : Fragment() {
         // 이메일 인증 메일 전송
         binding.EmailVerify.setOnClickListener {
             // 이메일 인증 메일 보내기
-            mFirebaseAuth.currentUser!!.sendEmailVerification()!!
-                .addOnCompleteListener { task ->
+            mFirebaseAuth.currentUser?.sendEmailVerification()?.addOnCompleteListener { task ->
                     if(task.isSuccessful){
                         // 인증 메일 전송 완료 시 확인 요청 토스트 메시지
                         Toast.makeText(context, "이메일 인증 메일이 전송되었습니다.\n인증을 진행해주세요.", Toast.LENGTH_SHORT).show()
@@ -95,7 +95,7 @@ class MyPageFragment : Fragment() {
         // 로그아웃
         binding.logout.setOnClickListener {
 
-            Log.d("cclo", mFirebaseAuth.currentUser!!.email.toString()+ "로그아웃 시도")
+            Log.d("cclo", mFirebaseAuth.currentUser?.email.toString()+ "로그아웃 시도")
             mFirebaseAuth.signOut()
             Toast.makeText(context, "로그아웃되었습니다.", Toast.LENGTH_SHORT).show()
             Log.d("cclo", "로그아웃 완료")
@@ -107,8 +107,8 @@ class MyPageFragment : Fragment() {
 
         // 회원탈퇴
         binding.signout.setOnClickListener {
-            Log.d("cclo", mFirebaseAuth.currentUser!!.email.toString() + " 회원탈퇴 진행")
-            mDatabaseRef.child("UserAccount").child(mFirebaseAuth.currentUser!!.uid).removeValue() //Realtime database에서 해당 항목 제거
+            Log.d("cclo", mFirebaseAuth.currentUser?.email.toString() + " 회원탈퇴 진행")
+            mFirebaseAuth.currentUser?.uid?.let { it1 -> mDatabaseRef.child("UserAccount").child(it1).removeValue() } //Realtime database에서 해당 항목 제거
             mFirebaseAuth.currentUser?.delete()     // Authentication에서 해당 항목 제거
             Toast.makeText(context, "회원탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show()
             Log.d("cclo", "회원탈퇴 완료")
@@ -119,41 +119,43 @@ class MyPageFragment : Fragment() {
         }
 
         //자격증 즐겨찾기 데이터 출력
-        favoriteRef.child(mFirebaseAuth.currentUser!!.uid).addValueEventListener(object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var favDataMutableList= mutableListOf<Favorite>()
+        mFirebaseAuth.currentUser?.uid?.let {
+            favoriteRef.child(it).addValueEventListener(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var favDataMutableList= mutableListOf<Favorite>()
 
-                for (d in snapshot.children){
-                    // 로그인한 사용자와 동일한 uid인지 확인
-                    if(d.child("uid").value.toString() == mFirebaseAuth.currentUser!!.uid){
-                        Log.d("cclo", "자격증 이름 : " + d.child("cerTitle").value.toString())
-                        favDataMutableList.add(
-                            Favorite(
-                                d.child("uid").value.toString(),
-                                d.child("cerTitle").value.toString(),
-                                d.child("cerType").value.toString(),
-                                d.child("cerCat").value.toString(),
-                                d.child("cerSubT").value.toString(),
-                                d.child("key").value.toString()
+                    for (d in snapshot.children){
+                        // 로그인한 사용자와 동일한 uid인지 확인
+                        if(d.child("uid").value.toString() == mFirebaseAuth.currentUser?.uid){
+                            Log.d("cclo", "자격증 이름 : " + d.child("cerTitle").value.toString())
+                            favDataMutableList.add(
+                                Favorite(
+                                    d.child("uid").value.toString(),
+                                    d.child("cerTitle").value.toString(),
+                                    d.child("cerType").value.toString(),
+                                    d.child("cerCat").value.toString(),
+                                    d.child("cerSubT").value.toString(),
+                                    d.child("key").value.toString()
+                                )
                             )
-                        )
+                        }
+                    }
+
+                    val layoutManager = LinearLayoutManager(context)
+                    layoutManager.orientation = LinearLayoutManager.VERTICAL
+                    binding.favoriteRecycler.layoutManager = layoutManager
+                    binding.favoriteRecycler.adapter = context?.let {
+                        FavoriteAdapter(favDataMutableList, context!!)
                     }
                 }
 
-                val layoutManager = LinearLayoutManager(context)
-                layoutManager.orientation = LinearLayoutManager.VERTICAL
-                binding.favoriteRecycler.layoutManager = layoutManager
-                binding.favoriteRecycler.adapter = context?.let {
-                    FavoriteAdapter(favDataMutableList, context!!)
+                override fun onCancelled(error: DatabaseError) {
+                    try {
+                        error.toException()
+                    }catch (_: Exception){ }
                 }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                try {
-                    error.toException()
-                }catch (_: Exception){ }
-            }
-        })
+            })
+        }
 
 
 
@@ -164,7 +166,7 @@ class MyPageFragment : Fragment() {
                 val freeBoard=snapshot.child("Free_Board")
                 val studyBoard=snapshot.child("Study_Board")
                 for(data in freeBoard.children){
-                    if(data.child("user").value.toString()==mFirebaseAuth.currentUser!!.displayName.toString()) {
+                    if(data.child("user").value.toString()==mFirebaseAuth.currentUser?.displayName.toString()) {
                         boardMutableList.add(
                             FreeBoard(
                                 data.child("id").value.toString(),
@@ -178,7 +180,7 @@ class MyPageFragment : Fragment() {
                     }
                 }
                 for(data in studyBoard.children){
-                    if(data.child("user").value.toString()==mFirebaseAuth.currentUser!!.displayName.toString()){
+                    if(data.child("user").value.toString()==mFirebaseAuth.currentUser?.displayName.toString()){
                         val userList = mutableListOf<String>()
                         if (data.child("type").value as Boolean) {
                             for (user in data.child("otherUser").children) {
@@ -268,7 +270,11 @@ class MyPageFragment : Fragment() {
                                             ?.addOnCompleteListener { task ->
                                                 if (task.isSuccessful) {
                                                     // 이메일 변경 성공 시
-                                                    mDatabaseRef.child("UserAccount").child(mFirebaseAuth.currentUser!!.uid).child("emailId").setValue(editText.text.toString())
+                                                    mFirebaseAuth.currentUser?.uid?.let { it1 ->
+                                                        mDatabaseRef.child("UserAccount").child(
+                                                            it1
+                                                        ).child("emailId").setValue(editText.text.toString())
+                                                    }
                                                     Toast.makeText(context, "이메일 변경 성공", Toast.LENGTH_LONG).show()
 
                                                 } else{
@@ -282,7 +288,11 @@ class MyPageFragment : Fragment() {
                                             ?.addOnCompleteListener { task ->
                                                 if (task.isSuccessful) {
                                                     // 비밀번호 변경 성공 시
-                                                    mDatabaseRef.child("UserAccount").child(mFirebaseAuth.currentUser!!.uid).child("password").setValue(editText.text.toString())
+                                                    mFirebaseAuth.currentUser?.uid?.let { it1 ->
+                                                        mDatabaseRef.child("UserAccount").child(
+                                                            it1
+                                                        ).child("password").setValue(editText.text.toString())
+                                                    }
                                                     Toast.makeText(context, "비밀번호 변경 성공", Toast.LENGTH_LONG).show()
 
                                                 } else{
@@ -291,57 +301,6 @@ class MyPageFragment : Fragment() {
                                                 }
                                             }
                                     }
-//                                    else if(diaType == "닉네임"){
-//                                        // 닉네임 변경
-//                                        //업데이트할 프로필
-//                                        val profileUpdates = userProfileChangeRequest {
-//                                            displayName = editText.text.toString()
-//                                        }
-//
-//                                        // 변경 전 닉네임 받아오기 ==> 닉네임 변경 후 게시판 user 바꾸기 용
-//                                        var currentName = mFirebaseAuth.currentUser!!.displayName.toString()
-//
-//                                        // 프로필 업데이트
-//                                        user?.updateProfile(profileUpdates)?.addOnCompleteListener { task ->
-//                                            if(task.isSuccessful){
-//                                                // 닉네임 변경 성공 시
-//                                                mDatabaseRef.child("UserAccount").child(mFirebaseAuth.currentUser!!.uid).child("displayName").setValue(editText.text.toString())
-//                                                Log.d("cclo", user.displayName.toString()+ "로 닉네임 변경")
-//                                                Toast.makeText(context, "닉네임 변경 성공", Toast.LENGTH_SHORT).show()
-//
-//                                                // 게시판에서 작성한 글이 있으면 user 새로운 닉네임으로 변경
-//                                                comRef.addValueEventListener(object: ValueEventListener{
-//                                                    override fun onDataChange(snapshot: DataSnapshot) {
-//                                                        val freeBoard=snapshot.child("Free_Board")
-//                                                        val studyBoard=snapshot.child("Study_Board")
-//
-//                                                        //Free_Board에서 이전에 작성한 글이 있는 경우 user명 현재 닉네임으로 변경
-//                                                        for (d in freeBoard.children){
-//                                                            if (d.child("user").value.toString() == currentName){
-//                                                                Log.d("cclo", "변경 전 닉네임 : " + d.value.toString())
-//                                                                //d.child("user")
-//
-//                                                            }
-//                                                        }
-//
-//
-//                                                    }
-//
-//                                                    override fun onCancelled(error: DatabaseError) {
-//                                                        try {
-//                                                            error.toException()
-//                                                        }catch (_: Exception){ }
-//                                                    }
-//                                                })
-//
-//                                            }else{
-//                                                // 닉네임 변경 실패 시
-//                                                Toast.makeText(context, "닉네임 변경 실패", Toast.LENGTH_SHORT).show()
-//                                            }
-//                                        }
-//
-//                                    }
-
                                 } else {
                                     // 로그인 실패 시
                                     Toast.makeText(context, "로그인 실패", Toast.LENGTH_LONG).show()

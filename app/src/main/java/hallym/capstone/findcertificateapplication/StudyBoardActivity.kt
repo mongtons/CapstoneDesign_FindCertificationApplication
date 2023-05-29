@@ -31,6 +31,7 @@ class StudyBoardActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        //참가자가 아니면 댓글 입력 방지
         binding.commentButton.isEnabled=false
         binding.commentText.isEnabled=false
 
@@ -50,13 +51,16 @@ class StudyBoardActivity : AppCompatActivity() {
                             for (user in board.child("otherUser").children) {
                                 userList.add(user.value.toString())
                             }
+                            //게시자이거나 참가자일 때 댓글기능 사용
                             if (firebaseAuth.currentUser?.uid.toString() == intent.getStringExtra("userId") ||
                                 userList.contains(firebaseAuth.currentUser?.uid.toString())) {
                                 binding.commentButton.isEnabled = true
                                 binding.commentText.isEnabled = true
                             }
+                            //신규 참가자일 때
                             if (firebaseAuth.currentUser?.uid.toString() != intent.getStringExtra("userId") &&
                                 !userList.contains(firebaseAuth.currentUser?.uid.toString())) {
+                                //AlertDialog를 사용하여 팝업창으로 참가 여부 확인
                                 val builder = AlertDialog.Builder(this@StudyBoardActivity, R.style.AppTheme_AlertDialogTheme)
                                 builder.setTitle("해당 스터디 게시글에 참가하시겠습니까?")
                                     .setMessage("")
@@ -153,6 +157,7 @@ class StudyBoardActivity : AppCompatActivity() {
         if(binding.user.text==firebaseAuth.currentUser?.displayName.toString()) {
             return super.onCreateOptionsMenu(menu)
         } else {
+            //게시자가 아닌 참자가일 때 나가기버튼만 활성화
             item1?.isVisible = false
             item2?.isVisible = false
             item3?.isVisible = true
@@ -184,7 +189,7 @@ class StudyBoardActivity : AppCompatActivity() {
                         for(board in snapshot.children){
                             for(user in board.child("otherUser").children){
                                 if(user.value.toString()==firebaseAuth.currentUser?.uid){
-                                    user.ref.removeValue()
+                                    user.ref.removeValue() //사용자가 게시글에서 나가면서 게시글 DB에서 삭제
                                     break
                                 }
                             }

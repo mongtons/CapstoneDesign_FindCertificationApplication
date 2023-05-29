@@ -40,21 +40,12 @@ class Examday : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-//        val examdayList = mutableListOf<Examdaydata>(
-//            Examdaydata("응시일정", "123",),
-//            Examdaydata("응시일정", "456",)
-//        )
-//        val layoutManager = LinearLayoutManager(this)
-//        layoutManager.orientation = LinearLayoutManager.VERTICAL
-//        binding.examdayRecycler.layoutManager = layoutManager
-//        binding.examdayRecycler.adapter = ExamdaydataAdapter(examdayList)
-//        binding.examdayRecycler.addItemDecoration(ExamdaydataDecoration(this))
-
         ref.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val examdayList= mutableListOf<String>()
                 for(ds in snapshot.children){
                     if(ds.child("title").value == intent.getStringExtra("title")){
+                        //자격 기한
                         if (ds.child("period").hasChildren()){
                             val dataChild=ds.child("period")
                             var periodText="필기: "
@@ -66,6 +57,7 @@ class Examday : AppCompatActivity() {
                             binding.period.append(ds.child("period").value.toString())
                         }
 
+                        //시험 일정
                         if(ds.child("testDay").hasChildren()){
                             val title=ds.child("title").value.toString()
                             val viewpager=binding.examdayView
@@ -85,6 +77,7 @@ class Examday : AppCompatActivity() {
                             }.attach()
                         }
 
+                        //응시 자격
                         if(ds.child("condition").hasChildren()){
                             var conditionText=""
                             if(ds.child("condition").hasChild("1st")) {
@@ -121,6 +114,8 @@ class Examday : AppCompatActivity() {
                         }else{
                             binding.condition.text="제한 없음"
                         }
+
+                        //시험 방법
                         if(ds.child("testMethod").hasChildren()){
                             val dataChild=ds.child("testMethod")
                             var testMethodText=""
@@ -144,7 +139,9 @@ class Examday : AppCompatActivity() {
                         }else{
                             binding.testMethod.append(ds.child("testMethod").value.toString())
                         }
+
                         var subjectText=""
+                        //응시 과목
                         if(ds.child("subject").child("note").hasChildren()){
                             val dataChild=ds.child("subject")
 
@@ -211,6 +208,7 @@ class Examday : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 }
+//시험 일정 보여주는 Fragment 생성 Adapter
 class ExamdayFragmentAdapter(activity: FragmentActivity, title:String): FragmentStateAdapter(activity){
     val fragments: List<Fragment>
     init {

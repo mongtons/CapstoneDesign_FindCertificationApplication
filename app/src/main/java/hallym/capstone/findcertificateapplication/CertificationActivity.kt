@@ -84,8 +84,8 @@ class CertificationActivity : AppCompatActivity() {
                             binding.examCost.text=costVar
                         }
                         if(ds.child("book").hasChildren()){//교재
-                            val nbook = ds.child("book").child("note")
-                            val pbook = ds.child("book").child("practice")
+                            val nbook = ds.child("book").child("note")//필기
+                            val pbook = ds.child("book").child("practice")//실기
 
                             val bookList= mutableListOf<Book>()
                             bookList.add(
@@ -99,7 +99,7 @@ class CertificationActivity : AppCompatActivity() {
                                     true
                                 )
                             )
-                            if(pbook.exists()){
+                            if(pbook.exists()){//실기교재가 있을때
                                 bookList.add(
                                     Book(
                                         intent.getStringExtra("Title").toString(),
@@ -183,10 +183,8 @@ class CertificationActivity : AppCompatActivity() {
                     for (d in snapshot.children){
                         cnt++
                         Log.d("cclo", cnt.toString())
-
                     }
-
-                    }
+                }
 
                 override fun onCancelled(error: DatabaseError) {
                     try {
@@ -317,13 +315,15 @@ class CompanyDecoration(val context: Context): RecyclerView.ItemDecoration(){
 }
 class BookViewHolder(val binding: BookItemBinding): RecyclerView.ViewHolder(binding.root)
 class BookAdapter(val contents: MutableList<Book>, val context: Context):RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-    val storage=FirebaseStorage.getInstance("gs://findcertificationapplication.appspot.com/")
-    val storageRef=storage.reference
+    val storage=FirebaseStorage.getInstance("") //Firebase Storage 인스턴스
+    val storageRef=storage.reference //root 래퍼런스 가져오기
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
     =BookViewHolder(BookItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val binding=(holder as BookViewHolder).binding
+
+        //root 래퍼런스에 있는 images 폴더
         var path:String="/images/"
         if(contents[position].cert_title=="정보통신산업기사" && contents[position].flag){
             path+="Industrial_Engineer_Information_Communication_note.jpg"
@@ -346,9 +346,9 @@ class BookAdapter(val contents: MutableList<Book>, val context: Context):Recycle
         }else if(contents[position].cert_title=="리눅스마스터 1급" && contents[position].flag){
             path+=" Linux Master Level 1.jpg"
         }else if(contents[position].cert_title=="리눅스 마스터 2급" && contents[position].flag){
-        path+=" Linux Master Level 2.jpg"
+            path+=" Linux Master Level 2.jpg"
         }else if(contents[position].cert_title=="네트워크관리사 1급" && contents[position].flag){
-        path+="Network Administrator Level 1 .jpg"
+            path+="Network Administrator Level 1 .jpg"
         }else if(contents[position].cert_title=="네트워크관리사 2급" && contents[position].flag){
             path+="Network Administrator Level 1 .jpg"
         }else if(contents[position].cert_title=="빅데이터 분석기사" && contents[position].flag){
@@ -451,12 +451,11 @@ class BookAdapter(val contents: MutableList<Book>, val context: Context):Recycle
             path+="radio electronic communication engineer.jpg"
         }
 
-
-
-
-
+        //해당 알맞은 경로에 있는 사진 객체
         val pathRef=storageRef.child(path)
         pathRef.downloadUrl.addOnSuccessListener {
+            //이미지 처리 라이브러리 Glide
+            //certImg 자리에 가져온 이미지 적용
             Glide.with(binding.certImg)
                 .load(it)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -468,6 +467,7 @@ class BookAdapter(val contents: MutableList<Book>, val context: Context):Recycle
         binding.bookPublish.text="출판사: ${contents[position].publish}"
         binding.bookCost.text="가격: ${contents[position].cost}"
         binding.itemRoot.setOnClickListener {
+            //해당 교재 링크로 이동하는 intent
             val intent=Intent(Intent.ACTION_VIEW, Uri.parse(contents[position].uri))
             context.startActivity(intent)
         }

@@ -108,6 +108,7 @@ class BoardActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        //현재 유저가 게시자랑 동일할 때 삭제, 수정 기능
         if(binding.user.text == firebaseAuth.currentUser?.displayName.toString()) {
             menuInflater.inflate(R.menu.board_menu, menu)
             return super.onCreateOptionsMenu(menu)
@@ -147,7 +148,9 @@ class CommentAdapter(val contents:MutableList<Comment>,val activity: Activity, v
 
         if((contents[position].user==firebaseAuth.currentUser?.displayName.toString()) ||
                 firebaseAuth.currentUser?.displayName.toString()==userName){
+            //터치를 길게 눌러 댓글 삭제
             binding.itemRoot.setOnLongClickListener {
+                //길게 누른 자리에 popup을 띄움
                 val popup=PopupMenu(activity, it)
                 popup.menuInflater.inflate(R.menu.comment_menu, popup.menu)
                 popup.setOnMenuItemClickListener {item ->
