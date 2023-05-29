@@ -66,6 +66,8 @@ class PeriodFragment(title:String) : Fragment() {
                         }
                         dateList.add(examDayList[examDayList.size-1])
 
+                        //Queue를 사용하여 list에 있는 일(dateList[i].month==false)은 offer
+                        //월(dateList[i].month==true)이 오면 일 데이터 poll
                         val q:Queue<Examdaydata> = LinkedList<Examdaydata>()
                         for(i in 0 until dateList.size){
                             if(dateList[i].month){
@@ -111,6 +113,7 @@ class PeriodFragment(title:String) : Fragment() {
 
         return binding.root
     }
+    //자격증의 정기 시험 회차의 월/일 데이터와 필기/실기
     fun findMonth(snapshot: DataSnapshot, type:String, examDayList:MutableList<Examdaydata>){
         val monthList= listOf<String>("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "ste", "oct", "nov", "dec")
         val no=when(snapshot.key.toString()){
