@@ -1,4 +1,4 @@
-# FindCertificationApplication
+# CapstoneDesign_FindCertificationApplication
 한림대학교 2023학년도 1학기 소프트웨어 캡스톤디자인   
 # 개요
 ### 팀명: `Accredify` 
@@ -31,3 +31,4 @@
 > Material `1.9.0`   
 > Volley `1.2.1`   
 > Glide `4.15.1`   
+## 프로젝트 요약
