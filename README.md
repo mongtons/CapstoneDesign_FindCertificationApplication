@@ -1,5 +1,5 @@
 # CapstoneDesign_FindCertificationApplication
-한림대학교 2023학년도 1학기 소프트웨어 캡스톤디자인 입선 수상   
+한림대학교 2023학년도 1학기 소프트웨어 캡스톤디자인 입선 수상작   
 # 개요
 ### 팀명: `Accredify` 
 #### 팀 구성원
